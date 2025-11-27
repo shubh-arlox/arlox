@@ -8,6 +8,9 @@ import ScalingCard from "../components/ScalingCard";
 import CTASection from "../components/CTASection";
 import ScientificAdvertisingSection from "@/components/ScientificAdvertisingSection";
 import TenantOwnerSection from "@/components/TenantOwnerSection";
+import TrinitySection from "@/components/TrinitySection";
+import OwnershipSection from "@/components/OwnershipSection";
+import ScientificAdvertisingGrid from "@/components/ScientificAdvertisingGrid";
 
 export default function HomePage() {
   return (
@@ -16,10 +19,14 @@ export default function HomePage() {
       <ScalingCard />
       {/* <GrowthEngine />
       <TenantOwnerWidget />
-      <TrinityFeatures />
+   
       <CompoundWidget />*/}
+      
       <ScientificAdvertisingSection /> 
        <TenantOwnerSection />
+          <TrinitySection />
+          <OwnershipSection/>
+          <ScientificAdvertisingGrid />
       <CTASection />
     </>
   );
