@@ -1,5 +1,15 @@
 "use client";
+
 import { useRef, useState, useEffect, useCallback } from "react";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  SkipBack,
+  SkipForward,
+  Maximize2,
+} from "lucide-react";
 
 export default function ScalingCard() {
   const videoRef = useRef(null);
@@ -12,21 +22,17 @@ export default function ScalingCard() {
   const [duration, setDuration] = useState(0);
   const [hovered, setHovered] = useState(false);
 
-  // Play/pause
   const togglePlay = useCallback(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (v.paused) {
-      v.play();
-    } else {
-      v.pause();
-    }
+    if (v.paused) v.play();
+    else v.pause();
   }, []);
 
-  // Time and play state handlers
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+
     const onTime = () => setCurrentTime(v.currentTime);
     const onLoaded = () => setDuration(v.duration || 0);
     const onPlay = () => setIsPlaying(true);
@@ -45,14 +51,12 @@ export default function ScalingCard() {
     };
   }, []);
 
-  // Step forward/back
   const step = (s) => {
     const v = videoRef.current;
     if (!v) return;
     v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + s));
   };
 
-  // Mute
   const toggleMute = () => {
     const v = videoRef.current;
     if (!v) return;
@@ -61,7 +65,6 @@ export default function ScalingCard() {
     setVolume(v.muted ? 0 : v.volume);
   };
 
-  // Volume
   const onVolumeChange = (val) => {
     const v = videoRef.current;
     if (!v) return;
@@ -71,14 +74,12 @@ export default function ScalingCard() {
     setMuted(val === 0);
   };
 
-  // Seek
   const seek = (p) => {
     const v = videoRef.current;
     if (!v || !isFinite(duration) || duration === 0) return;
     v.currentTime = Math.max(0, Math.min(duration, p * duration));
   };
 
-  // Time format
   const formatTime = (t = 0) => {
     if (!isFinite(t)) return "0:00";
     const total = Math.floor(t);
@@ -87,18 +88,13 @@ export default function ScalingCard() {
     return `${m}:${s}`;
   };
 
-  // Fullscreen
   const toggleFullscreen = async () => {
     const el = containerRef.current;
     if (!el) return;
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else {
-      await el.requestFullscreen?.();
-    }
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await el.requestFullscreen?.();
   };
 
-  // Keyboard support
   useEffect(() => {
     const onKey = (e) => {
       if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) return;
@@ -116,186 +112,186 @@ export default function ScalingCard() {
   }, [togglePlay]);
 
   return (
-    <section className="w-full flex flex-col items-center mb-8">
-      <h2 className="font-bold text-lg md:text-xl mt-4">
+    <section className="w-full flex flex-col items-center mb-8 px-4">
+      <h2 className="font-bold text-lg md:text-xl mt-4 text-center">
         <span className="text-[#385179]">Scaling</span> Is Simple,{" "}
         <span className="underline">Scientific</span>, and Predictable.
       </h2>
 
-      <div className="glass shadow-neumorphic rounded-2xl bg-white bg-opacity-75 max-w-md w-full mt-3 px-0 py-5">
-        <div
-          ref={containerRef}
-          className="bg-[#f5f5f5] border border-gray-200 rounded-2xl overflow-hidden aspect-video relative flex items-center justify-center"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          {/* Video */}
-          <video
-            ref={videoRef}
-            src="/demo.mp4"
-            className="w-full h-full object-cover transition-all duration-150"
-            onClick={togglePlay}
-            controls={false}
-            tabIndex={0}
-            style={{
-              filter: hovered ? "brightness(0.93)" : "brightness(1)",
-              backgroundColor: "#e5e7eb",
-            }}
-          />
+      <div className="glass shadow-neumorphic rounded-2xl bg-white/70 max-w-xl w-full mt-4 p-4 md:p-5">
+        {/* Terminal frame */}
+        <div className="bg-[#f3f4f6] border border-gray-200 rounded-2xl overflow-hidden">
+          {/* Terminal header */}
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#e5e7eb] border-b border-gray-200">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#f87171]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#facc15]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#4ade80]" />
+            <span className="ml-3 text-xs font-medium text-gray-500">
+              scaling-demo.mp4
+            </span>
+          </div>
 
-          {/* Center Play/Pause button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay();
-            }}
-            aria-label={isPlaying ? "Pause" : "Play"}
-            className={`button-neumorphic w-16 h-16 rounded-full flex items-center justify-center absolute transition-opacity duration-200 ring-2 ring-gray-200
-              ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-            style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", background: "rgba(245,245,245,0.7)" }}
-          >
-            {isPlaying ? (
-              <svg width="30" height="30" fill="#385179" viewBox="0 0 24 24">
-                <rect x="6" y="4" width="4" height="16" rx="1" />
-                <rect x="14" y="4" width="4" height="16" rx="1" />
-              </svg>
-            ) : (
-              <svg width="30" height="30" viewBox="0 0 24 24">
-                <polygon points="6,4 20,12 6,20" fill="#385179" />
-              </svg>
-            )}
-          </button>
-
-          {/* Controls: Visible on hover */}
+          {/* Video container */}
           <div
-            className={`absolute left-0 right-0 bottom-0 pb-2 px-3 transition-opacity duration-200
-              ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            ref={containerRef}
+            className="bg-[#f5f5f5] rounded-b-2xl overflow-hidden aspect-video relative flex items-center justify-center"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
-            {/* Progress Bar */}
-            <div
-              className="w-full h-2 bg-gray-100 rounded-full cursor-pointer mb-2"
+            <video
+              ref={videoRef}
+              src="/demo.mp4"
+              className="w-full h-full object-cover transition-all duration-150"
+              onClick={togglePlay}
+              controls={false}
+              tabIndex={0}
+              style={{
+                filter: hovered ? "brightness(0.93)" : "brightness(1)",
+                backgroundColor: "#e5e7eb",
+              }}
+            />
+
+            {/* Center Play/Pause button - softer glow */}
+            <button
               onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const p = Math.max(0, Math.min(1, x / rect.width));
-                seek(p);
+                e.stopPropagation();
+                togglePlay();
+              }}
+              aria-label={isPlaying ? "Pause" : "Play"}
+              className={`w-14 h-14 rounded-full flex items-center justify-center absolute transition-opacity duration-200
+                ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                background:
+                  "radial-gradient(circle at 30% 30%, #ffffff, #e5e7eb)",
+                boxShadow:
+                  "0 6px 12px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.6)",
               }}
             >
+              {isPlaying ? (
+                <Pause className="w-6 h-6 text-[#385179]" />
+              ) : (
+                <Play className="w-6 h-6 text-[#385179]" />
+              )}
+            </button>
+
+            {/* Controls: Visible on hover */}
+            <div
+              className={`absolute left-0 right-0 bottom-0 pb-2 px-3 transition-opacity duration-200
+                ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            >
+              {/* Progress Bar */}
               <div
-                className="h-2 rounded-full"
-                style={{
-                  width: `${(currentTime / (duration || 1)) * 100}%`,
-                  background: "linear-gradient(90deg,#8b95a1,#385179)",
+                className="w-full h-2 bg-gray-200/80 rounded-full cursor-pointer mb-2"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const p = Math.max(0, Math.min(1, x / rect.width));
+                  seek(p);
                 }}
-              />
-            </div>
-
-            {/* Main Controls */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                {/* Rewind */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(-10);
+              >
+                <div
+                  className="h-2 rounded-full"
+                  style={{
+                    width: `${(currentTime / (duration || 1)) * 100}%`,
+                    background: "linear-gradient(90deg,#9ca3af,#385179)",
                   }}
-                  className="button-neumorphic w-9 h-9 rounded-full flex items-center justify-center bg-[#f3f3f3] border border-gray-200"
-                  title="Rewind 10s"
-                >
-                  <svg width="18" height="18" fill="#385179" viewBox="0 0 24 24">
-                    <path d="M11 18V6l-8.5 6L11 18zM21 18V6l-8.5 6L21 18z" />
-                  </svg>
-                </button>
-
-                {/* Play/Pause */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    togglePlay();
-                  }}
-                  className="button-neumorphic w-9 h-9 rounded-full flex items-center justify-center bg-[#f3f3f3] border border-gray-200"
-                  title={isPlaying ? "Pause" : "Play"}
-                >
-                  {isPlaying ? (
-                    <svg width="14" height="14" fill="#385179" viewBox="0 0 24 24">
-                      <rect x="6" y="4" width="4" height="16" rx="1" />
-                      <rect x="14" y="4" width="4" height="16" rx="1" />
-                    </svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 24 24">
-                      <polygon points="6,4 20,12 6,20" fill="#385179" />
-                    </svg>
-                  )}
-                </button>
-
-                {/* Forward */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(10);
-                  }}
-                  className="button-neumorphic w-9 h-9 rounded-full flex items-center justify-center bg-[#f3f3f3] border border-gray-200"
-                  title="Forward 10s"
-                >
-                  <svg width="18" height="18" fill="#385179" viewBox="0 0 24 24">
-                    <path d="M3 18V6l8.5 6L3 18zM13 18V6l8.5 6L13 18z" />
-                  </svg>
-                </button>
-
-                {/* Mute/Unmute */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleMute();
-                  }}
-                  className="button-neumorphic w-9 h-9 rounded-full flex items-center justify-center bg-[#f3f3f3] border border-gray-200"
-                  title={muted ? "Unmute" : "Mute"}
-                >
-                  {muted || volume === 0 ? (
-                    <svg width="14" height="14" fill="#385179" viewBox="0 0 24 24">
-                      <path d="M16.5 12a4.5 4.5 0 0 0-4.5-4.5v9A4.5 4.5 0 0 0 16.5 12z" />
-                      <path d="M19 5l-1.4 1.4L20.2 9 18 11.2 19.4 12.6 21.6 10.4 23 11.8 20.8 14 22.2 15.4 24.4 13.2 21.2 10z" />
-                    </svg>
-                  ) : (
-                    <svg width="14" height="14" viewBox="0 0 24 24">
-                      <path d="M5 9v6h4l5 4V5L9 9H5z" fill="#385179" />
-                    </svg>
-                  )}
-                </button>
-
-                {/* Volume Slider */}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  value={volume}
-                  onClick={(e) => e.stopPropagation()}
-                  onChange={(e) => onVolumeChange(Number(e.target.value))}
-                  className="h-2 w-24 rounded bg-gray-200 accent-[#385179] ml-2"
-                  aria-label="Volume"
                 />
-
-                {/* Time Display */}
-                <div className="text-xs ml-2 text-[#385179] font-mono opacity-80 min-w-[70px] text-center">
-                  {formatTime(currentTime)} / {formatTime(duration)}
-                </div>
               </div>
 
-              {/* Fullscreen */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFullscreen();
-                  }}
-                  className="button-neumorphic w-9 h-9 rounded-full flex items-center justify-center bg-[#f3f3f3] border border-gray-200"
-                  title="Fullscreen"
-                >
-                  <svg width="14" height="14" fill="#385179" viewBox="0 0 24 24">
-                    <path d="M7 14H5v5h5v-2H7v-3zM19 5h-5v2h3v3h2V5zM5 5v5h2V7h3V5H5zM19 19v-5h-2v3h-3v2h5z" />
-                  </svg>
-                </button>
+              {/* Main Controls */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {/* Rewind */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      step(-10);
+                    }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
+                    title="Rewind 10s"
+                  >
+                    <SkipBack className="w-4 h-4 text-[#385179]" />
+                  </button>
+
+                  {/* Play/Pause */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlay();
+                    }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
+                    title={isPlaying ? "Pause" : "Play"}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-4 h-4 text-[#385179]" />
+                    ) : (
+                      <Play className="w-4 h-4 text-[#385179]" />
+                    )}
+                  </button>
+
+                  {/* Forward */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      step(10);
+                    }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
+                    title="Forward 10s"
+                  >
+                    <SkipForward className="w-4 h-4 text-[#385179]" />
+                  </button>
+
+                  {/* Mute/Unmute */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleMute();
+                    }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
+                    title={muted ? "Unmute" : "Mute"}
+                  >
+                    {muted || volume === 0 ? (
+                      <VolumeX className="w-4 h-4 text-[#385179]" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-[#385179]" />
+                    )}
+                  </button>
+
+                  {/* Volume Slider */}
+                  <input
+                    type="range"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={volume}
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={(e) => onVolumeChange(Number(e.target.value))}
+                    className="h-1.5 w-24 rounded bg-gray-200 accent-[#385179] ml-2"
+                    aria-label="Volume"
+                  />
+
+                  {/* Time Display */}
+                  <div className="text-[11px] ml-2 text-[#4b5563] font-mono opacity-80 min-w-[72px] text-center">
+                    {formatTime(currentTime)} / {formatTime(duration)}
+                  </div>
+                </div>
+
+                {/* Fullscreen */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFullscreen();
+                    }}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
+                    title="Fullscreen"
+                  >
+                    <Maximize2 className="w-4 h-4 text-[#385179]" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

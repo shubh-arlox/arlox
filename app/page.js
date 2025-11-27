@@ -6,6 +6,7 @@ import ScalingCard from "../components/ScalingCard";
 // import CompoundWidget from "../components/CompoundWidget";
 // import ScientificAdvertising from "../components/ScientificAdvertising";
 import CTASection from "../components/CTASection";
+import ScientificAdvertisingSection from "@/components/ScientificAdvertisingSection";
 
 export default function HomePage() {
   return (
@@ -15,8 +16,8 @@ export default function HomePage() {
       {/* <GrowthEngine />
       <TenantOwnerWidget />
       <TrinityFeatures />
-      <CompoundWidget />
-      <ScientificAdvertising /> */}
+      <CompoundWidget />*/}
+      <ScientificAdvertisingSection /> 
       <CTASection />
     </>
   );
