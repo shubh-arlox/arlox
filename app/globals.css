@@ -2,28 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Page background */
+/* ----------------------------- Base styles ----------------------------- */
+
+html,
 body {
-  @apply text-slate-800;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e3e8ee 100%);
+  height: 100%;
 }
 
-/* Glassmorphism surface */
+body {
+  @apply text-slate-800 antialiased;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e3e8ee 100%);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* --------------------------- Glassmorphism card ------------------------ */
+
 .glass {
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 1.5rem;
   box-shadow: 0 8px 32px rgba(56, 81, 121, 0.13);
 }
 
-/* Neumorphic button */
+/* --------------------------- Neumorphic button ------------------------- */
+
 .button-neumorphic {
   box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
   background: #f5f5f5;
   border-radius: 1rem;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
+
+.button-neumorphic:hover {
+  transform: translateY(-1px);
+  box-shadow: 10px 10px 20px #cbd3e4, -10px -10px 20px #ffffff;
+}
+
 .button-neumorphic:active {
   box-shadow: inset 5px 5px 10px #d4d4d4, inset -5px -5px 10px #ffffff;
   transform: translateY(1px);
+}
+
+/* Utility: ensure root font and smooth rendering */
+:root {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

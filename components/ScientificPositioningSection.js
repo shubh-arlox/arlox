@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
-  useMotionTemplate,
   useMotionValue,
 } from "framer-motion";
 import {
@@ -14,8 +13,6 @@ import {
   ArrowRight,
   TrendingUp,
   HelpCircle,
-  Microscope,
-  Dices,
   Leaf,
   Diamond,
   Zap,
@@ -29,33 +26,29 @@ import {
   Percent,
   BarChart2,
   CheckCircle2,
-  XCircle,
-  MessageCircle,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
-/* CONSTANTS                                  */
+/* CONSTANTS                                                                  */
 /* -------------------------------------------------------------------------- */
 
-// Base color from your request
+// Base color (kept as JS constant for inline styles)
 const BG_BASE = "#f5f5f5";
 
-// The "convex" popping out look
+// Dark-grey neumorphic look
 const NEU_CARD =
-  "relative rounded-3xl bg-[#f5f5f5] shadow-[9px_9px_18px_#d1d1d1,-9px_-9px_18px_#ffffff]";
+  "relative rounded-3xl bg-[#f5f5f5] shadow-[14px_14px_35px_rgba(15,23,42,0.25),-10px_-10px_28px_rgba(255,255,255,0.9)]";
 
-// The "concave" pressed in look
 const NEU_INSET =
-  "rounded-3xl bg-[#f5f5f5] shadow-[inset_6px_6px_12px_#d1d1d1,inset_-6px_-6px_12px_#ffffff]";
+  "rounded-3xl bg-[#f5f5f5] shadow-[inset_7px_7px_18px_rgba(30,41,59,0.35),inset_-6px_-6px_16px_rgba(255,255,255,0.95)]";
 
-// Small pills
 const NEU_PILL =
-  "rounded-full bg-[#f5f5f5] shadow-[5px_5px_10px_#d1d1d1,-5px_-5px_10px_#ffffff]";
+  "rounded-full bg-[#f5f5f5] shadow-[7px_7px_18px_rgba(30,41,59,0.38),-6px_-6px_16px_rgba(255,255,255,0.95)]";
 
-const PRIMARY_GRADIENT = "from-blue-600 via-indigo-600 to-violet-600";
+const PRIMARY_GRADIENT = "from-[#385179] via-[#4f46e5] to-[#7c3aed]";
 
 /* -------------------------------------------------------------------------- */
-/* UTILITY COMPONENTS                              */
+/* UTILITY COMPONENTS                                                         */
 /* -------------------------------------------------------------------------- */
 
 // 1. MAGNETIC BUTTON EFFECT
@@ -68,6 +61,7 @@ const Magnetic = ({ children, strength = 0.5 }) => {
   const mouseY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
 
   const handleMouseMove = (e) => {
+    if (!ref.current) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     const centerX = left + width / 2;
@@ -107,6 +101,7 @@ const TiltCard = ({ children, className = "" }) => {
       ref={ref}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       onMouseMove={(e) => {
+        if (!ref.current) return;
         const rect = ref.current.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -142,13 +137,14 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
 );
 
 /* -------------------------------------------------------------------------- */
-/* MAIN COMPONENT                               */
+/* MAIN COMPONENT                                                             */
 /* -------------------------------------------------------------------------- */
 
 export default function ScientificPositioningSection() {
   return (
-    <main className="min-h-screen bg-[#f5f5f5] text-slate-800 selection:bg-indigo-500/30 overflow-hidden font-sans">
-      <div className="relative z-10 space-y-24 md:space-y-32 pb-32">
+    // Use bg-transparent so the body's gradient shows through responsively
+    <main className="min-h-screen bg-transparent text-slate-800 selection:bg-indigo-500/30 overflow-hidden font-sans">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 md:space-y-28 pb-24 md:pb-32">
         <HeroSection />
         <ProblemSection />
         <SolutionSection />
@@ -161,21 +157,22 @@ export default function ScientificPositioningSection() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* SECTIONS                                   */
+/* HERO                                                                       */
 /* -------------------------------------------------------------------------- */
 
 function HeroSection() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   return (
-    <section className="relative pt-40 px-4 max-w-7xl mx-auto min-h-[90vh] flex flex-col justify-center">
-      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 items-center">
+    <section className="relative pt-28 sm:pt-32 lg:pt-40 min-h-[70vh] lg:min-h-[90vh] flex flex-col justify-center">
+      <div className="grid gap-10 lg:gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-center">
         {/* LEFT CONTENT */}
         <div className="relative z-10">
           <FadeIn>
-            <div className={`${NEU_INSET} inline-flex items-center gap-2 px-4 py-1.5 mb-6`}>
+            <div
+              className={`${NEU_INSET} inline-flex items-center gap-2 px-4 py-1.5 mb-6`}
+            >
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
               <span className="text-[11px] font-bold uppercase tracking-widest text-slate-500">
                 Market Dominance
@@ -184,42 +181,65 @@ function HeroSection() {
           </FadeIn>
 
           <FadeIn delay={0.1}>
-            <h1 className="text-5xl sm:text-7xl font-black text-slate-800 leading-[0.95] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-800 leading-[0.95] tracking-tight mb-6">
               Become The <br />
-              <span className={`bg-clip-text text-transparent bg-gradient-to-r ${PRIMARY_GRADIENT}`}>
+              <span
+                className={`bg-clip-text text-transparent bg-gradient-to-r ${PRIMARY_GRADIENT}`}
+              >
                 Only Choice.
               </span>
             </h1>
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <p className="text-lg text-slate-500 max-w-lg leading-relaxed mb-10">
-              Scientific Positioning: The proven methodology for market dominance.
-              Replace intuition with <span className="font-semibold text-slate-700">irrefutable data</span>.
+            <p className="text-base sm:text-lg text-slate-500 max-w-lg leading-relaxed mb-8">
+              Scientific Positioning: The proven methodology for market
+              dominance. Replace intuition with{" "}
+              <span className="font-semibold text-slate-700">
+                irrefutable data
+              </span>
+              .
             </p>
           </FadeIn>
 
-          <FadeIn delay={0.3} className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+          <FadeIn
+            delay={0.3}
+            className="flex flex-col sm:flex-row gap-6 items-start sm:items-center"
+          >
             <Magnetic strength={0.2}>
               <button
-                className={`${NEU_CARD} group relative px-8 py-4 text-sm font-bold text-white overflow-hidden transition-all hover:shadow-[12px_12px_24px_#d1d1d1,-12px_-12px_24px_#ffffff] active:translate-y-1`}
+                className={`${NEU_CARD} group relative px-7 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white overflow-hidden transition-all hover:-translate-y-0.5 active:translate-y-0`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${PRIMARY_GRADIENT}`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${PRIMARY_GRADIENT}`}
+                />
                 <div className="relative flex items-center gap-3">
-                  Book Your Free Positioning Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Book Your Free Positioning Audit
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
             </Magnetic>
             <div className="flex flex-col gap-1 text-xs font-medium text-slate-400">
-              <span className="flex items-center gap-2"><TrendingUp className="w-3 h-3 text-green-500"/> Avg. 5.8x ROAS Improvement</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-blue-500"/> 1,000+ Campaigns</span>
-              <span className="flex items-center gap-2"><Diamond className="w-3 h-3 text-purple-500"/> $47M+ Generated</span>
+              <span className="flex items-center gap-2">
+                <TrendingUp className="w-3 h-3 text-green-500" /> Avg. 5.8x
+                ROAS Improvement
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="w-3 h-3 text-blue-500" /> 1,000+
+                Campaigns
+              </span>
+              <span className="flex items-center gap-2">
+                <Diamond className="w-3 h-3 text-purple-500" /> $47M+ Generated
+              </span>
             </div>
           </FadeIn>
         </div>
 
         {/* RIGHT VISUAL */}
-        <motion.div style={{ y: y1 }} className="relative h-[500px] w-full hidden lg:block perspective-1000">
+        <motion.div
+          style={{ y: y1 }}
+          className="relative h-[320px] sm:h-[380px] lg:h-[500px] w-full hidden md:block perspective-1000"
+        >
           <HeroVisual />
         </motion.div>
       </div>
@@ -228,75 +248,90 @@ function HeroSection() {
 }
 
 function HeroVisual() {
+  // Use inline style for the border color (Tailwind can't read JS var at runtime)
   return (
-    <div className={`${NEU_CARD} w-full h-full p-2 flex overflow-hidden border-4 border-[#f5f5f5]`}>
+    <div
+      className={`${NEU_CARD} w-full h-full p-2 flex overflow-hidden border-4`}
+      style={{ borderColor: BG_BASE }}
+    >
       {/* CHAOS SIDE (Left) */}
-      <div className="w-1/2 relative bg-red-50/50 rounded-l-2xl overflow-hidden group">
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 opacity-10">
-          <div className="text-red-900 font-black text-8xl rotate-90 select-none">CHAOS</div>
+      <div className="w-1/2 relative bg-red-50/60 rounded-l-2xl overflow-hidden">
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-0 opacity-10">
+          <div className="text-red-900 font-black text-7xl lg:text-8xl rotate-90 select-none">
+            CHAOS
+          </div>
         </div>
         {[...Array(6)].map((_, i) => (
           <FloatingPill key={i} index={i} />
         ))}
-        {/* Low ROAS indicators */}
         <div className="absolute bottom-4 left-4 flex flex-col gap-2 z-20">
-           <span className="text-xs font-bold text-red-400">1.2x ROAS</span>
-           <span className="text-xs font-bold text-red-400">1.5x ROAS</span>
+          <span className="text-[11px] font-bold text-red-500/90 bg-white/80 px-2 py-1 rounded-full shadow-sm">
+            1.2x ROAS
+          </span>
+          <span className="text-[11px] font-bold text-red-500/90 bg-white/80 px-2 py-1 rounded-full shadow-sm">
+            1.5x ROAS
+          </span>
         </div>
       </div>
 
       {/* ORDER SIDE (Right) */}
-      <div className="w-1/2 relative bg-white/40 rounded-r-2xl overflow-hidden flex flex-col items-center justify-end pb-12">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
-        
-        <div className="relative z-10 w-3/4 space-y-3">
-          <div className={`${NEU_CARD} p-4 mb-4 flex items-center gap-3 bg-white/80`}>
-             <Target className="w-5 h-5 text-blue-600" />
-             <div className="flex-1">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Positioning</div>
-                <div className="text-sm font-bold text-slate-800">Scientific & Proven</div>
-             </div>
+      <div className="w-1/2 relative bg-white/50 rounded-r-2xl overflow-hidden flex flex-col items-center justify-end pb-8 sm:pb-10 lg:pb-12">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.04)_1px,transparent_1px)] bg-[size:20px_20px]" />
+
+        <div className="relative z-10 w-4/5 space-y-3">
+          <div
+            className={`${NEU_CARD} p-3.5 sm:p-4 mb-3 flex items-center gap-3 bg-[#f9fafb]/95`}
+          >
+            <Target className="w-5 h-5 text-blue-600" />
+            <div className="flex-1">
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                Positioning
+              </div>
+              <div className="text-xs sm:text-sm font-bold text-slate-800">
+                Scientific & Proven
+              </div>
+            </div>
           </div>
-          
-          <div className="flex items-end gap-2 h-40">
-             {[30, 45, 60, 80, 100].map((h, i) => (
-               <motion.div 
-                 key={i}
-                 initial={{ height: 0 }}
-                 animate={{ height: `${h}%` }}
-                 transition={{ 
-                   delay: 2 + (i * 0.1), 
-                   type: "spring",
-                   stiffness: 200,
-                   damping: 20
-                 }}
-                 className="flex-1 bg-gradient-to-t from-blue-600 to-indigo-400 rounded-t-md shadow-lg relative group"
-               >
-                 {i === 4 && (
-                    <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 3 }}
-                        className="absolute -top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg"
-                    >
-                        7.0x
-                    </motion.div>
-                 )}
-               </motion.div>
-             ))}
+
+          <div className="flex items-end gap-1.5 sm:gap-2 h-32 sm:h-40">
+            {[30, 45, 60, 80, 100].map((h, i) => (
+              <motion.div
+                key={i}
+                initial={{ height: 0 }}
+                animate={{ height: `${h}%` }}
+                transition={{
+                  delay: 1.5 + i * 0.12,
+                  type: "spring",
+                  stiffness: 210,
+                  damping: 22,
+                }}
+                className="flex-1 bg-gradient-to-t from-blue-700 to-indigo-400 rounded-t-md shadow-[0_18px_30px_rgba(15,23,42,0.45)] relative"
+              >
+                {i === 4 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.4 }}
+                    className="absolute -top-7 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-[0_10px_18px_rgba(22,163,74,0.6)]"
+                  >
+                    7.0x
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* CENTER DIVIDER */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-slate-200 z-20">
-        <motion.div 
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200/80 z-20">
+        <motion.div
           animate={{ top: ["10%", "90%", "10%"] }}
           transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-          className="absolute left-1/2 -translate-x-1/2 w-4 h-8 bg-blue-500 blur-md rounded-full"
+          className="absolute left-1/2 -translate-x-1/2 w-4 h-8 bg-blue-500/80 blur-md rounded-full"
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-xl border border-slate-100">
-           <ArrowRight className="w-5 h-5 text-blue-600" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow-[0_14px_32px_rgba(15,23,42,0.35)] border border-slate-100">
+          <ArrowRight className="w-5 h-5 text-blue-600" />
         </div>
       </div>
     </div>
@@ -306,23 +341,30 @@ function HeroVisual() {
 function FloatingPill({ index }) {
   const randomDuration = 3 + Math.random() * 4;
   const randomX = Math.random() * 100;
-  // Updated chaos terms from PDF
-  const labels = ["Best Quality", "Cheap Price", "Free Shipping", "COD", "Artisanal", "GenZ"];
-  
+  const labels = [
+    "Best Quality",
+    "Cheap Price",
+    "Free Shipping",
+    "COD",
+    "Artisanal",
+    "GenZ",
+  ];
+
   return (
     <motion.div
-      animate={{ 
+      animate={{
         y: [-20, 400],
         rotate: [Math.random() * -20, Math.random() * 20],
-        x: [randomX, randomX + (Math.random() * 40 - 20)]
+        x: [randomX, randomX + (Math.random() * 40 - 20)],
       }}
-      transition={{ 
-        duration: randomDuration, 
-        repeat: Infinity, 
+      transition={{
+        duration: randomDuration,
+        repeat: Infinity,
         ease: "linear",
-        delay: index * 0.8
+        delay: index * 0.8,
       }}
-      className={`absolute top-0 left-[${index * 15}%] ${NEU_PILL} px-3 py-1.5 text-[10px] font-bold text-red-500 bg-white/90 border border-red-100/50 z-20`}
+      style={{ left: `${Math.min(index * 16, 84)}%` }} // clamp to avoid overflow on small widths
+      className={`${NEU_PILL} absolute top-0 px-3 py-1.5 text-[10px] font-bold text-red-500 bg-white/90 border border-red-100/60 z-20`}
     >
       {labels[index]}
     </motion.div>
@@ -330,24 +372,28 @@ function FloatingPill({ index }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* PROBLEM                                     */
+/* PROBLEM                                                                    */
 /* -------------------------------------------------------------------------- */
 
 function ProblemSection() {
   return (
-    <section id="problem" className="max-w-6xl mx-auto px-4">
+    <section id="problem" className="max-w-6xl mx-auto px-2 sm:px-4">
       <FadeIn className="text-center mb-16">
-        <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-6">
-          Why Your Ads Won't Scale Past <span className="text-red-500">$50K/Month</span>
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-800 mb-4 md:mb-6">
+          Why Your Ads Won&apos;t Scale Past{" "}
+          <span className="text-red-500">$50K/Month</span>
         </h2>
-        <p className="text-lg font-semibold text-slate-400 mb-4">(And Why It's Not Your Fault)</p>
-        <p className="text-slate-500 max-w-2xl mx-auto">
-          You've tried everything. New creatives. Different audiences. More budget. 
-          But you're still stuck. Here's the real problem: Your positioning sounds exactly like every other fashion brand.
+        <p className="text-sm sm:text-base md:text-lg font-semibold text-slate-400 mb-3 md:mb-4">
+          (And Why It&apos;s Not Your Fault)
+        </p>
+        <p className="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto">
+          You&apos;ve tried everything—new creatives, new audiences, more
+          budget. But you&apos;re still stuck. The real problem: your positioning
+          sounds exactly like every other fashion brand in your category.
         </p>
       </FadeIn>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {[
           { title: "Premium Quality", sub: "Died from overuse", icon: Diamond },
           { title: "Customer Service", sub: "Unverifiable claim", icon: HelpCircle },
@@ -355,22 +401,31 @@ function ProblemSection() {
           { title: "Affordable Luxury", sub: "Contradiction", icon: Percent },
         ].map((item, i) => (
           <FadeIn key={i} delay={i * 0.1}>
-            <TiltCard className={`${NEU_CARD} group h-48 flex flex-col items-center justify-center p-6 text-center border border-transparent hover:border-red-200/50`}>
-              <div className={`${NEU_INSET} w-14 h-14 rounded-full flex items-center justify-center mb-4 text-slate-400 group-hover:text-red-500 transition-colors group-hover:shadow-[inset_4px_4px_8px_#d1d1d1,inset_-4px_-4px_8px_#ffffff]`}>
-                <item.icon className="w-6 h-6" />
+            <TiltCard
+              className={`${NEU_CARD} group h-40 sm:h-44 md:h-48 flex flex-col items-center justify-center p-4 sm:p-6 text-center border border-transparent hover:border-red-200/60`}
+            >
+              <div
+                className={`${NEU_INSET} w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center mb-3 sm:mb-4 text-slate-400 group-hover:text-red-500 transition-colors`}
+              >
+                <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="font-bold text-slate-700 mb-1 group-hover:line-through decoration-red-500 decoration-2">{item.title}</h3>
-              <p className="text-xs text-red-400 opacity-0 group-hover:opacity-100 transition-opacity font-medium uppercase tracking-wide">
+              <h3 className="text-sm sm:text-base font-bold text-slate-700 mb-1 group-hover:line-through decoration-red-500 decoration-2">
+                {item.title}
+              </h3>
+              <p className="text-[10px] sm:text-xs text-red-400 opacity-0 group-hover:opacity-100 transition-opacity font-medium uppercase tracking-wide">
                 {item.sub}
               </p>
             </TiltCard>
           </FadeIn>
         ))}
       </div>
-      
-      <FadeIn delay={0.4} className="mt-12 text-center">
-        <div className={`${NEU_INSET} inline-block px-6 py-3 text-sm font-medium text-slate-500`}>
-            The Death Spiral: Low CTR → Price War → Shrinking Margins → <span className="text-red-500 font-bold">Scaling Ceiling</span>
+
+      <FadeIn delay={0.4} className="mt-10 md:mt-12 text-center">
+        <div
+          className={`${NEU_INSET} inline-block px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-slate-500`}
+        >
+          The Death Spiral: Low CTR → Price War → Shrinking Margins →{" "}
+          <span className="text-red-500 font-bold">Scaling Ceiling</span>
         </div>
       </FadeIn>
     </section>
@@ -378,48 +433,54 @@ function ProblemSection() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* SOLUTION                                    */
+/* SOLUTION                                                                   */
 /* -------------------------------------------------------------------------- */
 
 function SolutionSection() {
   return (
-    <section id="solution" className="max-w-6xl mx-auto px-4 py-20">
-      <div className={`${NEU_CARD} p-8 md:p-12 overflow-hidden relative`}>
-        {/* Decorative Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+    <section
+      id="solution"
+      className="max-w-6xl mx-auto px-2 sm:px-4 py-16 md:py-20"
+    >
+      <div className={`${NEU_CARD} p-6 sm:p-8 md:p-12 overflow-hidden relative`}>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.06)_1px,transparent_1px)] bg-[size:40px_40px]" />
 
-        <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <div className="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-widest uppercase mb-6">
+            <div className="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] sm:text-xs font-bold tracking-widest uppercase mb-4 sm:mb-6">
               The Antidote
             </div>
-            <h2 className="text-4xl font-bold text-slate-800 mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mb-2">
               Scientific Positioning
             </h2>
-            <p className="text-slate-500 font-medium mb-6">
-                The Difference Between Creative Guessing and Scientific Engineering
+            <p className="text-sm sm:text-base text-slate-500 font-medium mb-5 sm:mb-6">
+              The difference between creative guessing and scientific
+              engineering.
             </p>
-            <p className="text-slate-600 leading-relaxed mb-8">
-              Most agencies position your brand through "intuition". They test 3-5 random angles and pick what "works okay". 
-              That's expensive guessing. <br/><br/>
-              The Arlox team doesn't guess. We <strong>prove</strong> it. We use a 4-stage methodology to engineer positioning that multiplies ROAS.
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 sm:mb-8">
+              Most agencies position your brand through intuition. They test a
+              few random angles and pick what &quot;works okay&quot;. That&apos;s
+              expensive guessing. The Arlox team doesn&apos;t guess—we{" "}
+              <span className="font-semibold">prove</span> it with a four-stage
+              methodology that multiplies ROAS.
             </p>
-            
-            <ul className="space-y-4">
+
+            <ul className="space-y-3 sm:space-y-4">
               {[
-                "Eliminate bias & guessing",
-                "Falsifiable Hypotheses (10-20 angles)",
-                "Controlled Testing with real money",
-                "Causal Proof & Replication"
+                "Eliminate bias & internal guessing.",
+                "Engineer 10–20 falsifiable positioning angles.",
+                "Run controlled tests with real ad spend.",
+                "Find causal proof and scale the winner.",
               ].map((item, i) => (
-                <motion.li 
+                <motion.li
                   key={i}
                   initial={{ x: -20, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-3 text-slate-700 font-medium"
+                  className="flex items-center gap-3 text-sm sm:text-[15px] text-slate-700 font-medium"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                   {item}
                 </motion.li>
               ))}
@@ -428,41 +489,61 @@ function SolutionSection() {
 
           <div className="relative">
             <Magnetic strength={0.1}>
-              <div className={`${NEU_INSET} p-6 md:p-8`}>
-                <div className="flex justify-between items-center mb-6">
-                   <span className="text-xs font-bold text-slate-400 uppercase">Case Study: Hemp Brand</span>
-                   <div className="flex gap-2">
-                      <span className="w-3 h-3 rounded-full bg-red-400/20" />
-                      <span className="w-3 h-3 rounded-full bg-yellow-400/20" />
-                      <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                   </div>
+              <div className={`${NEU_INSET} p-5 sm:p-6 md:p-8`}>
+                <div className="flex justify-between items-center mb-5 sm:mb-6">
+                  <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    Case Study: Hemp Brand
+                  </span>
+                  <div className="flex gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/25" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/25" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80 animate-pulse" />
+                  </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="bg-white rounded-xl p-4 shadow-sm border-l-4 border-red-400 opacity-60 hover:opacity-100 transition-opacity">
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="font-bold text-red-500">CONTROL (Generic)</span>
+                <div className="space-y-4 sm:space-y-5">
+                  <div className="bg-[#f9fafb] rounded-xl p-4 shadow-sm border-l-4 border-red-400/80 opacity-70 hover:opacity-100 transition-opacity">
+                    <div className="flex justify-between text-[10px] sm:text-xs mb-1.5">
+                      <span className="font-bold text-red-500">
+                        CONTROL (Generic)
+                      </span>
                       <span className="text-slate-400">ROAS: 1.2x</span>
                     </div>
-                    <p className="text-sm text-slate-600">"Buy our high quality organic hemp t-shirts."</p>
-                    <p className="text-[10px] text-red-400 mt-2 italic">Problem: Meaningless commodity.</p>
+                    <p className="text-xs sm:text-sm text-slate-600">
+                      &quot;Buy our high quality organic hemp t-shirts.&quot;
+                    </p>
+                    <p className="text-[10px] text-red-400 mt-2 italic">
+                      Problem: sounds like every other hemp brand.
+                    </p>
                   </div>
 
-                  <motion.div 
-                    initial={{ scale: 0.9 }}
-                    whileInView={{ scale: 1 }}
-                    className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-blue-500 scale-105"
+                  <motion.div
+                    initial={{ scale: 0.94, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="bg-[#f9fafb] rounded-xl p-5 sm:p-6 shadow-[0_18px_35px_rgba(15,23,42,0.32)] border-l-4 border-blue-500/90"
                   >
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className="font-bold text-blue-600 flex items-center gap-1"><Zap className="w-3 h-3"/> SCIENTIFIC (Winner)</span>
-                      <span className="font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">ROAS: 6.5x</span>
+                    <div className="flex justify-between text-[10px] sm:text-xs mb-2">
+                      <span className="font-bold text-blue-600 flex items-center gap-1">
+                        <Zap className="w-3 h-3" /> SCIENTIFIC (Winner)
+                      </span>
+                      <span className="font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                        ROAS: 6.5x
+                      </span>
                     </div>
-                    <p className="text-lg font-medium text-slate-800">"Save Soil With Hemp."</p>
-                    <p className="text-xs text-slate-500 mt-1">Shifts narrative from fabric to impact.</p>
+                    <p className="text-sm sm:text-lg font-medium text-slate-800">
+                      &quot;Save Soil With Hemp.&quot;
+                    </p>
+                    <p className="text-[11px] sm:text-xs text-slate-500 mt-1.5">
+                      Shifts the narrative from fabric benefits to soil
+                      regeneration impact.
+                    </p>
                     <div className="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div 
+                      <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: "90%" }}
+                        viewport={{ once: true }}
                         transition={{ duration: 1, delay: 0.5 }}
                         className="h-full bg-blue-500"
                       />
@@ -479,48 +560,55 @@ function SolutionSection() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* EVIDENCE                                    */
+/* EVIDENCE                                                                   */
 /* -------------------------------------------------------------------------- */
 
 function EvidenceSection() {
   return (
-    <section id="evidence" className="max-w-7xl mx-auto px-4 mb-24">
-      <FadeIn className="mb-12 text-center">
-         <h2 className="text-3xl font-bold text-slate-800">Real Brands. Real Results.</h2>
-         <p className="text-slate-500 mt-2">When positioning changes, everything changes.</p>
+    <section
+      id="evidence"
+      className="max-w-7xl mx-auto px-2 sm:px-4 mb-20 md:mb-24"
+    >
+      <FadeIn className="mb-10 md:mb-12 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
+          Real Brands. Real Results.
+        </h2>
+        <p className="text-sm sm:text-base text-slate-500 mt-2">
+          When positioning changes, everything changes.
+        </p>
       </FadeIn>
-      <div className="grid md:grid-cols-4 gap-6">
-         <StatsCard 
-            icon={Leaf}
-            stat="1.2x → 6.5x" 
-            label="ROAS" 
-            desc="Hemp Clothing"
-            detail="From 'Buy Hemp' → 'Save Soil With Hemp'"
-         />
-         <StatsCard 
-            icon={Diamond}
-            stat="Higher Sales" 
-            label="Inquiries" 
-            desc="₹25k Premium Brand"
-            detail="From 'Buy Online' → 'Inquire via WhatsApp'"
-            delay={0.1}
-         />
-         <StatsCard 
-            icon={Zap}
-            stat="2x" 
-            label="ROAS Doubled" 
-            desc="Gen Z Jackets"
-            detail="From 'Quality' → 'Rebellion vs Fast Fashion'"
-            delay={0.2}
-         />
-         <StatsCard 
-            icon={Shirt}
-            stat="1.6x → 4.5x" 
-            label="ROAS" 
-            desc="Bamboo Tees"
-            detail="From 'Bamboo' → 'Natural Organic Athletic Wear'"
-            delay={0.3}
-         />
+      <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <StatsCard
+          icon={Leaf}
+          stat="1.2x → 6.5x"
+          label="ROAS"
+          desc="Hemp Clothing"
+          detail="From “Buy Hemp” → “Save Soil With Hemp”."
+        />
+        <StatsCard
+          icon={Diamond}
+          stat="↑"
+          label="High-Ticket Inquiries"
+          desc="₹25k Premium Brand"
+          detail="From “Buy Online” → “Inquire via WhatsApp”."
+          delay={0.1}
+        />
+        <StatsCard
+          icon={Zap}
+          stat="2x"
+          label="ROAS"
+          desc="Gen Z Jackets"
+          detail="From “Quality” → “Rebellion vs Fast Fashion”."
+          delay={0.2}
+        />
+        <StatsCard
+          icon={Shirt}
+          stat="1.6x → 4.5x"
+          label="ROAS"
+          desc="Bamboo Tees"
+          detail="From “Bamboo” → “Natural Organic Athletic Wear”."
+          delay={0.3}
+        />
       </div>
     </section>
   );
@@ -529,22 +617,30 @@ function EvidenceSection() {
 function StatsCard({ icon: Icon, stat, label, desc, detail, delay = 0 }) {
   return (
     <FadeIn delay={delay}>
-      <motion.div 
-        whileHover={{ y: -10 }}
-        className={`${NEU_CARD} p-6 group transition-all duration-300 h-full flex flex-col`}
+      <motion.div
+        whileHover={{ y: -8 }}
+        className={`${NEU_CARD} p-5 sm:p-6 group transition-all duration-300 h-full flex flex-col`}
       >
-        <div className="flex justify-between items-start mb-6">
-          <div className={`${NEU_INSET} w-10 h-10 flex items-center justify-center text-blue-600`}>
-            <Icon className="w-5 h-5" />
+        <div className="flex justify-between items-start mb-5">
+          <div
+            className={`${NEU_INSET} w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center text-blue-600`}
+          >
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
         </div>
-        
-        <h3 className="text-2xl font-black text-slate-800 mb-1">{stat}</h3>
-        <p className="text-xs font-bold text-blue-600 uppercase tracking-wide mb-4">{label}</p>
-        
-        <div className="border-t border-slate-200 pt-4 mt-auto">
+
+        <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-1">
+          {stat}
+        </h3>
+        <p className="text-[10px] sm:text-xs font-bold text-blue-600 uppercase tracking-wide mb-3 sm:mb-4">
+          {label}
+        </p>
+
+        <div className="border-t border-slate-200 pt-3 sm:pt-4 mt-auto">
           <p className="font-semibold text-slate-700 text-sm">{desc}</p>
-          <p className="text-xs text-slate-500 mt-1 leading-normal">{detail}</p>
+          <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-normal">
+            {detail}
+          </p>
         </div>
       </motion.div>
     </FadeIn>
@@ -552,72 +648,92 @@ function StatsCard({ icon: Icon, stat, label, desc, detail, delay = 0 }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* METHOD (SCROLL DRAW)                        */
+/* METHOD (SCROLL DRAW)                                                       */
 /* -------------------------------------------------------------------------- */
 
 function MethodSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start center", "end center"]
+    offset: ["start center", "end center"],
   });
 
   const steps = [
-    { 
-        title: "Deep Research", 
-        desc: "Forensic analysis of brand, market, and customers to eliminate bias. We don't assume; we investigate.", 
-        icon: Search 
+    {
+      title: "Deep Research",
+      desc: "Forensic analysis of brand, market and customers to eliminate bias. No assumptions—only evidence.",
+      icon: Search,
     },
-    { 
-        title: "Hypothesis Formation", 
-        desc: "Engineering 15-25 falsifiable positioning angles with specific predicted outcomes based on psychology.", 
-        icon: Lightbulb 
+    {
+      title: "Hypothesis Formation",
+      desc: "Engineering 15–25 falsifiable positioning angles with specific predicted outcomes based on psychology.",
+      icon: Lightbulb,
     },
-    { 
-        title: "Systematic Testing", 
-        desc: "We run controlled experiments with real money to prove what works. Rapid testing → Refinement → Confirmation.", 
-        icon: FlaskConical 
+    {
+      title: "Systematic Testing",
+      desc: "Controlled experiments with real ad spend. Rapid testing → refinement → confirmation.",
+      icon: FlaskConical,
     },
-    { 
-        title: "Scale & Dominate", 
-        desc: "Deploy the winning angle everywhere (Ads, LP, Email). From 'Stuck' to 'Scaling'.", 
-        icon: Rocket 
+    {
+      title: "Scale & Dominate",
+      desc: "Deploy the winning angle across ads, LPs and email. From 'stuck' to 'scaling' reliably.",
+      icon: Rocket,
     },
   ];
 
   return (
-    <section id="method" ref={ref} className="max-w-4xl mx-auto px-4 py-20 relative">
-      <h2 className="text-center text-3xl font-bold mb-20">The Scientific Positioning System</h2>
-      
-      {/* THE DRAWING LINE */}
-      <div className="absolute left-[27px] md:left-1/2 top-40 bottom-40 w-1 bg-slate-200 -translate-x-1/2">
-        <motion.div 
+    <section
+      id="method"
+      ref={ref}
+      className="max-w-4xl mx-auto px-2 sm:px-4 py-16 md:py-20 relative"
+    >
+      <h2 className="text-center text-2xl sm:text-3xl font-bold mb-16 md:mb-20">
+        The Scientific Positioning System
+      </h2>
+
+      <div className="absolute left-[27px] md:left-1/2 top-32 bottom-32 w-[2px] bg-slate-200 -translate-x-1/2">
+        <motion.div
           style={{ scaleY: scrollYProgress }}
           className="w-full h-full bg-blue-600 origin-top"
         />
       </div>
 
-      <div className="space-y-20">
+      <div className="space-y-14 md:space-y-20">
         {steps.map((step, i) => (
-          <div key={i} className={`flex items-center gap-8 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} relative`}>
-            
-            {/* CENTRAL NODE */}
+          <div
+            key={i}
+            className={`flex items-center gap-6 md:gap-8 ${
+              i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+            } relative`}
+          >
             <div className="absolute left-[27px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-4 border-blue-600 z-10 shadow-[0_0_0_4px_#f5f5f5]" />
 
-            {/* CONTENT */}
-            <div className={`ml-16 md:ml-0 w-full md:w-[45%] ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-               <FadeIn delay={i * 0.1}>
-                 <div className={`${NEU_CARD} p-6 md:p-8 hover:scale-[1.02] transition-transform`}>
-                    <div className={`mb-4 flex items-center gap-3 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                       <step.icon className="w-6 h-6 text-blue-600" />
-                       <h3 className="text-xl font-bold text-slate-800">{step.title}</h3>
-                    </div>
-                    <p className="text-slate-600 text-sm leading-relaxed">{step.desc}</p>
-                 </div>
-               </FadeIn>
+            <div
+              className={`ml-12 md:ml-0 w-full md:w-[45%] ${
+                i % 2 === 0 ? "md:text-right" : "md:text-left"
+              }`}
+            >
+              <FadeIn delay={i * 0.1}>
+                <div
+                  className={`${NEU_CARD} p-5 sm:p-6 md:p-8 hover:scale-[1.02] transition-transform`}
+                >
+                  <div
+                    className={`mb-3 sm:mb-4 flex items-center gap-3 ${
+                      i % 2 === 0 ? "md:flex-row-reverse" : ""
+                    }`}
+                  >
+                    <step.icon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-800">
+                      {step.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+              </FadeIn>
             </div>
-            
-            {/* SPACER FOR ALTERNATING LAYOUT */}
+
             <div className="hidden md:block w-[45%]" />
           </div>
         ))}
@@ -627,33 +743,37 @@ function MethodSection() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* CTA                                      */
+/* CTA                                                                        */
 /* -------------------------------------------------------------------------- */
 
 function CTASection() {
   return (
-    <section className="max-w-5xl mx-auto px-4 text-center">
-      <div className={`${NEU_CARD} px-6 py-20 md:p-24 relative overflow-hidden`}>
-         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
-         
-         <div className="relative z-10">
-           <h2 className="text-4xl md:text-6xl font-black text-slate-800 mb-6 tracking-tight">
-             Stop Renting Attention.
-             <br />
-             <span className="text-blue-600">Start Owning It.</span>
-           </h2>
-           <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-10">
-             Intuition doesn't scale. Science does. Your winning angle already exists. We just need to find it.
-           </p>
-           
-           <div className="flex justify-center gap-6">
-              <Magnetic strength={0.3}>
-                 <button className="px-8 py-4 rounded-full bg-blue-600 text-white font-bold shadow-[6px_6px_12px_rgba(37,99,235,0.4),-6px_-6px_12px_#ffffff] hover:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.2)] hover:bg-blue-700 transition-all active:scale-95">
-                    Book Positioning Audit
-                 </button>
-              </Magnetic>
-           </div>
-         </div>
+    <section className="max-w-5xl mx-auto px-2 sm:px-4 text-center">
+      <div
+        className={`${NEU_CARD} px-5 sm:px-6 md:px-8 py-16 md:py-20 lg:py-24 relative overflow-hidden`}
+      >
+        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
+
+        <div className="relative z-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 mb-5 sm:mb-6 tracking-tight">
+            Stop Renting Attention.
+            <br />
+            <span className="text-blue-600">Start Owning It.</span>
+          </h2>
+          <p className="text-sm sm:text-base md:text-lg text-slate-500 max-w-2xl mx-auto mb-8 md:mb-10">
+            Intuition doesn&apos;t scale. Science does. Your winning angle
+            already exists in the market. Scientific Positioning finds it and
+            turns it into predictable revenue.
+          </p>
+
+          <div className="flex justify-center gap-4 sm:gap-6">
+            <Magnetic strength={0.3}>
+              <button className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-blue-600 text-white font-bold shadow-[0_18px_35px_rgba(37,99,235,0.55)] hover:shadow-[inset_4px_4px_10px_rgba(15,23,42,0.45)] hover:bg-blue-700 transition-all active:scale-95">
+                Book Positioning Audit
+              </button>
+            </Magnetic>
+          </div>
+        </div>
       </div>
     </section>
   );
