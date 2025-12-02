@@ -1,3 +1,4 @@
+// components/Navbar.js
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
@@ -5,112 +6,166 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 
-const MENU_COLUMNS = [
-  {
-    title: "Strategy",
-    items: [
-      "Scientific Positioning",
-      "Scientific A/B testing",
-      "Scientific Angle testing",
-      "Scientific Copywriting",
-      "Diagnosing & Planning",
-    ],
-  },
-  {
-    title: "Scaling",
-    items: [
-      "10X Facebook & Instagram Scaling",
-      "Omnichannel AI Google Ads",
-      "ROI Max Creative Engine",
-      "TikTok Paid & Organic",
-      "Streaming, TV & Youtube Ads",
-    ],
-  },
-  {
-    title: "Efficiency",
-    items: [
-      "AI CRO Optimisations",
-      "Smart Retargeting & follow through",
-      "Intelligence & Data",
-      "Multi-Channel Tracking",
-      "Emails, WhatsApp, SMS flows",
-      "LTV maximisation",
-    ],
-  },
+// ---- DATA ----
+const NAV_ITEMS = [
+  { label: "Solutions", key: "solutions" },
+  { label: "Tools", key: "tools" },
+  { label: "Products", key: "products" },
+  { label: "Results", key: "results" },
+  { label: "Free", key: "free" },
+  { label: "Company", key: "company" },
 ];
 
-const TOP_LINKS = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Programs", href: "/programs" },
-  { label: "Software", href: "/software" },
-  { label: "Community", href: "/community" },
-  { label: "Media", href: "/media" },
-  { label: "About", href: "/about" },
-];
+const MEGA_CONTENT = {
+  solutions: [
+    {
+      title: "Strategy (Ensure Profits First)",
+      items: [
+        { label: "Scientific Positioning", href: "/solutions/scientific-positioning" },
+        { label: "Market Research & Analysis", href: "/solutions/market-research-analysis" },
+        { label: "Scientific Product testing", href: "/solutions/scientific-product-testing" },
+        { label: "Scientific Angle testing", href: "/solutions/scientific-angle-testing" },
+        { label: "Business Diagnostics", href: "/solutions/business-diagnostics" },
+      ],
+    },
+    {
+      title: "Scaling (Get More Customers)",
+      items: [
+        { label: "Meta Ads Scaling (FB/IG)", href: "/solutions/meta-ads-scaling" },
+        { label: "Google Ads (AI-Driven)", href: "/solutions/google-ads-ai" },
+        { label: "TikTok Growth Engine", href: "/solutions/tiktok-growth-engine" },
+        { label: "YouTube & Streaming Ads", href: "/solutions/youtube-streaming-ads" },
+        { label: "Ad Creative Production System", href: "/solutions/ad-creative-production" },
+      ],
+    },
+    {
+      title: "Efficiency (Make More Per Customer)",
+      items: [
+        { label: "AI CRO Optimisations", href: "/solutions/ai-cro" },
+        { label: "Smart Retargeting", href: "/solutions/smart-retargeting" },
+        { label: "Multi-Channel Tracking", href: "/solutions/multi-channel-tracking" },
+        { label: "Emails/ WhatsApp/ SMS flows", href: "/solutions/lifecycle-flows" },
+        { label: "LTV maximisation", href: "/solutions/ltv-maximisation" },
+      ],
+    },
+  ],
 
-function slugify(text) {
-  return text
-    .toString()
-    .normalize("NFKD")
-    .replace(/[^\w\s-]/g, "")
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "-");
-}
+  tools: [
+    {
+      title: "Tools",
+      items: [{ label: "AI Bot", href: "/tools/ai-bot" }],
+    },
+  ],
 
+  products: [
+    {
+      title: "For Agencies",
+      subtitle: "Get more clients, keep them longer",
+      items: [
+        { label: 'Scale Your Agency & Deliver Better', href: "/products/scale-your-agency" },
+        { label: "Scientific Mediabuying™", href: "/products/scientific-mediabuying" },
+        { label: "Client Retention Mastery™", href: "/products/client-retention-mastery" },
+        { label: "AD Creative Mastery™", href: "/products/ad-creative-mastery" },
+        { label: "1-on-1 Consulting (~$999 per session)", href: "/products/agency-consulting" },
+      ],
+    },
+    {
+      title: "For Fashion Brands",
+      subtitle: "Independently scale to $500K+/month",
+      items: [
+        { label: "Setup Your Marketing Department", href: "/products/fashion-marketing-dept" },
+        { label: "1-on-1 Consulting (~$999 per session)", href: "/products/fashion-consulting" },
+      ],
+    },
+    {
+      title: "For Online Service Businesses",
+      subtitle: "Qualified leads who show up and buy",
+      items: [
+        { label: "Generate 21–53 Appointments / week from LinkedIn", href: "/products/linkedin-appointments" },
+        { label: "1-on-1 Coaching (~$999 per hour)", href: "/products/service-coaching" },
+      ],
+    },
+  ],
+
+  results: [
+    {
+      title: "Results",
+      items: [
+        { label: "Success stories (330+ video testimonials)", href: "/results/success-stories" },
+        { label: "Case studies", href: "/results/case-studies" },
+        { label: "10X Ad Creatives", href: "/results/10x-ad-creatives" },
+        { label: "Reviews (Wall of review)", href: "/results/reviews" },
+      ],
+    },
+  ],
+
+  free: [
+    {
+      title: "Free",
+      items: [
+        { label: "Scaling insights (Blog)", href: "/free/scaling-insights" },
+        { label: "Arlox Channel (Free courses & guides)", href: "/free/arlox-channel" },
+        { label: "Van Channel (Strategy focused)", href: "/free/van-channel" },
+        { label: "Dennis Channel (Execution focused)", href: "/free/dennis-channel" },
+        { label: "BROAS Tool", href: "/free/broas-tool" },
+      ],
+    },
+  ],
+
+  company: [
+    {
+      title: "Company",
+      items: [
+        { label: "Mission", href: "/company/mission" },
+        { label: "Leadership", href: "/company/leadership" },
+        { label: "Values", href: "/company/values" },
+        { label: "Arloxian Way", href: "/company/arloxian-way" },
+        { label: "Our Story", href: "/company/our-story" },
+        { label: "We’re hiring", href: "/company/careers" },
+      ],
+    },
+  ],
+};
+
+// ---------------- NAVBAR ----------------
 export default function Navbar() {
   const [openMobile, setOpenMobile] = useState(false);
-  const [hoverOpen, setHoverOpen] = useState(false);
-  const [mobileSolOpen, setMobileSolOpen] = useState(false);
+  const [openMega, setOpenMega] = useState(null); // key of NAV_ITEMS or null
+  const [mobileOpenKey, setMobileOpenKey] = useState(null);
   const hoverTimeout = useRef(null);
-  const navRef = useRef(null);
 
-  // Close on ESC
+  // ESC closes everything
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
-        setHoverOpen(false);
+        setOpenMega(null);
         setOpenMobile(false);
-        setMobileSolOpen(false);
+        setMobileOpenKey(null);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const openHover = useCallback(() => {
-    clearTimeout(hoverTimeout.current);
-    setHoverOpen(true);
-  }, []);
-
-  const closeHover = useCallback(() => {
-    clearTimeout(hoverTimeout.current);
-    hoverTimeout.current = setTimeout(() => setHoverOpen(false), 140);
-  }, []);
-
-  // prevent body scroll when mobile open
+  // lock scroll when mobile open
   useEffect(() => {
     document.body.style.overflow = openMobile ? "hidden" : "";
   }, [openMobile]);
 
+  const openHover = useCallback((key) => {
+    clearTimeout(hoverTimeout.current);
+    setOpenMega(key);
+  }, []);
+
+  const closeHover = useCallback(() => {
+    clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => setOpenMega(null), 140);
+  }, []);
+
   return (
     <header className="sticky top-0 z-50">
-      {/* Glassmorphic navbar with #f5f5f5 tint */}
-      <div
-        className="
-          bg-[#f5f5f5]/60
-          backdrop-blur-4xl
-          border-b
-          border-white/40
-          shadow-[0_8px_30px_rgba(15,23,42,0.06)]
-        "
-      >
-        <nav
-          ref={navRef}
-          className="max-w-6xl mx-auto px-4"
-          onMouseLeave={closeHover}
-          aria-label="Main navigation"
-        >
+      <div className="bg-[#f5f5f5]/80 backdrop-blur-2xl border-b border-white/60 shadow-[0_12px_40px_rgba(15,23,42,0.10)]">
+        <nav className="max-w-6xl mx-auto px-4" aria-label="Main navigation" onMouseLeave={closeHover}>
           <div className="flex items-center justify-between py-3 md:py-4">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2" aria-label="Home">
@@ -120,58 +175,42 @@ export default function Navbar() {
                 height={42}
                 alt="Arlox logo"
                 className="h-8 w-auto md:h-10"
+                priority
               />
             </Link>
 
-            {/* Desktop links */}
+            {/* Desktop nav */}
             <ul className="hidden md:flex items-center gap-6 text-sm lg:text-base">
-              {TOP_LINKS.map((link) => {
-                if (link.label === "Solutions") {
-                  return (
-                    <li
-                      key={link.label}
-                      className="relative"
-                      onMouseEnter={openHover}
-                      onFocus={openHover}
-                    >
-                      <Link
-                        href={link.href}
-                        className="px-1 text-[#0f1724] font-medium transition-colors hover:text-[#10233a] focus:text-[#10233a]"
-                        onClick={() => setHoverOpen(false)}
-                        aria-haspopup="true"
-                        aria-expanded={hoverOpen}
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  );
-                }
-
-                return (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="px-1 text-[#0f1724] font-medium transition-colors hover:text-[#10233a]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
+              {NAV_ITEMS.map((item) => (
+                <li
+                  key={item.key}
+                  className="relative"
+                  onMouseEnter={() => openHover(item.key)}
+                  onFocus={() => openHover(item.key)}
+                >
+                  <button
+                    type="button"
+                    className="px-1 text-[#0f1724] font-medium transition-colors hover:text-[#10233a] select-none"
+                    aria-haspopup="true"
+                    aria-expanded={openMega === item.key}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
             </ul>
 
-            {/* Right-side CTA + mobile toggle */}
+            {/* Right: call + mobile toggle */}
             <div className="flex items-center gap-3">
               <a
                 href="tel:+911234567890"
-                className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 text-[#0f1724] hover:bg-white/30 transition"
-                aria-label="Call us"
+                className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/40 text-[#0f1724] hover:bg-white/40 transition select-none"
               >
                 <Phone size={16} /> <span className="text-sm">Call</span>
               </a>
 
               <button
-                className="md:hidden p-2 rounded-lg hover:bg-white/20 transition"
+                className="md:hidden p-2 rounded-lg hover:bg-white/40 transition"
                 onClick={() => setOpenMobile((v) => !v)}
                 aria-label="Toggle menu"
                 aria-expanded={openMobile}
@@ -181,135 +220,119 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Mega Menu (Solutions) */}
-          <div
-            className={`absolute left-0 right-0 top-full z-40 transition-all duration-200 ${
-              hoverOpen ? "opacity-100 pointer-events-auto translate-y-2" : "opacity-0 pointer-events-none -translate-y-3"
-            }`}
-            role="dialog"
-            aria-hidden={!hoverOpen}
-            onMouseEnter={openHover}
-            onMouseLeave={closeHover}
-          >
-            <div className="max-w-6xl mx-auto px-4">
-              <div
-                className="
-                  bg-white/70
-                  backdrop-blur-lg
-                  border border-white/50
-                  rounded-2xl
-                  p-6 md:p-8
-                  shadow-[0_12px_40px_rgba(15,23,42,0.08)]
-                "
-              >
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {MENU_COLUMNS.map((col) => (
-                    <div key={col.title}>
-                      <div className="text-xs text-slate-500 uppercase tracking-wider mb-3">
-                        {col.title}
+          {/* Desktop mega menu */}
+          {openMega && (
+            <div
+              className="absolute left-0 right-0 top-full z-40 transition-all duration-200 opacity-100 pointer-events-auto translate-y-2"
+              role="dialog"
+              onMouseEnter={() => openHover(openMega)}
+              onMouseLeave={closeHover}
+            >
+              <div className="max-w-6xl mx-auto px-4">
+                <div className="bg-white/85 backdrop-blur-2xl border border-white/60 rounded-2xl p-6 md:p-8 shadow-[0_18px_50px_rgba(15,23,42,0.18)]">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {MEGA_CONTENT[openMega].map((col) => (
+                      <div key={col.title}>
+                        <div className="text-xs text-slate-500 uppercase tracking-wider mb-2">
+                          {col.title}
+                        </div>
+                        {col.subtitle && (
+                          <p className="text-[11px] text-slate-500 mb-2">{col.subtitle}</p>
+                        )}
+                        <ul className="space-y-2">
+                          {col.items.map((link) => (
+                            <li key={link.label}>
+                              <Link
+                                href={link.href}
+                                className="text-[#071126] text-sm md:text-base hover:text-[#0b2540] transition select-none"
+                                onClick={() => setOpenMega(null)}
+                              >
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ul className="space-y-3">
-                        {col.items.map((item) => (
-                          <li key={item}>
-                            <Link
-                              href={`/solutions/${slugify(item)}`}
-                              className="text-[#071126] text-base hover:text-[#0b2540] transition"
-                              onClick={() => setHoverOpen(false)}
-                            >
-                              {item}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-
-                  {/* Right column CTA (optional on larger screens) */}
-                  <div className="hidden lg:flex items-center justify-center">
-                    <div className="glass p-4 rounded-xl w-full max-w-xs text-center">
-                      <h4 className="text-[#0f1724] font-semibold mb-2">Ready to scale?</h4>
-                      <p className="text-sm text-slate-600 mb-3">Book a call and we’ll audit your account.</p>
-                      <Link href="/book" className="button-neumorphic inline-flex px-4 py-2 rounded-full">
-                        Book a call
-                      </Link>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Mobile menu */}
           {openMobile && (
             <div className="md:hidden pb-4 mt-2">
-              <div
-                className="
-                  rounded-xl
-                  bg-white/95
-                  shadow-[0_8px_30px_rgba(15,23,42,0.06)]
-                  border border-white/60
-                "
-              >
+              <div className="rounded-xl bg-white/95 shadow-[0_12px_40px_rgba(15,23,42,0.10)] border border-white/70">
                 <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
-                  {TOP_LINKS.map((link) => (
-                    <li key={link.label} className="px-4 py-2.5 border-b border-white/8">
-                      {link.label === "Solutions" ? (
-                        <>
-                          <button
-                            onClick={() => setMobileSolOpen((v) => !v)}
-                            className="w-full flex items-center justify-between text-left"
-                            aria-expanded={mobileSolOpen}
-                            aria-controls="mobile-solutions"
-                          >
-                            <span>{link.label}</span>
-                            <span className="text-slate-500">{mobileSolOpen ? "−" : "+"}</span>
-                          </button>
+                  {NAV_ITEMS.map((item) => {
+                    const isOpen = mobileOpenKey === item.key;
+                    return (
+                      <li
+                        key={item.key}
+                        className="px-4 py-2.5 border-b border-white/40"
+                      >
+                        <button
+                          onClick={() =>
+                            setMobileOpenKey((prev) => (prev === item.key ? null : item.key))
+                          }
+                          className="w-full flex items-center justify-between text-left select-none"
+                          aria-expanded={isOpen}
+                        >
+                          <span>{item.label}</span>
+                          <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
+                        </button>
 
-                          <div
-                            id="mobile-solutions"
-                            className={`mt-3 space-y-2 transition-all duration-200 overflow-hidden ${
-                              mobileSolOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
-                            }`}
-                          >
-                            {MENU_COLUMNS.map((col) => (
-                              <div key={col.title} className="px-2">
-                                <div className="text-xs uppercase text-slate-400 mb-1">{col.title}</div>
-                                <div className="grid gap-1">
-                                  {col.items.map((item) => (
-                                    <Link
-                                      key={item}
-                                      href={`/solutions/${slugify(item)}`}
-                                      className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
-                                      onClick={() => {
-                                        setOpenMobile(false);
-                                        setMobileSolOpen(false);
-                                      }}
-                                    >
-                                      {item}
-                                    </Link>
-                                  ))}
-                                </div>
+                        <div
+                          className={`mt-2 transition-all duration-200 overflow-hidden ${
+                            isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"
+                          }`}
+                        >
+                          {MEGA_CONTENT[item.key].map((col) => (
+                            <div key={col.title} className="px-2 py-1">
+                              <div className="text-xs uppercase text-slate-400 mb-1">
+                                {col.title}
                               </div>
-                            ))}
-                          </div>
-                        </>
-                      ) : (
-                        <Link href={link.href} onClick={() => setOpenMobile(false)}>
-                          {link.label}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
+                              {col.subtitle && (
+                                <p className="text-[11px] text-slate-500 mb-1">
+                                  {col.subtitle}
+                                </p>
+                              )}
+                              <div className="grid gap-1">
+                                {col.items.map((link) => (
+                                  <Link
+                                    key={link.label}
+                                    href={link.href}
+                                    className="py-1 px-2 rounded hover:bg-slate-100 text-sm block select-none"
+                                    onClick={() => {
+                                      setOpenMobile(false);
+                                      setMobileOpenKey(null);
+                                    }}
+                                  >
+                                    {link.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
 
-                <div className="px-4 py-3 border-t border-white/8 flex gap-2">
+                <div className="px-4 py-3 border-t border-white/40 flex gap-2">
                   <a
                     href="tel:+911234567890"
-                    className="button-neumorphic px-4 py-2 rounded-full inline-flex items-center gap-2"
+                    className="px-4 py-2 rounded-full inline-flex items-center gap-2 bg-[#0f1724] text-white text-sm font-medium"
                   >
                     <Phone size={16} /> Call
                   </a>
-                  <Link href="/book" className="px-4 py-2 rounded-full border border-slate-300 ml-auto">
+                  <Link
+                    href="/book"
+                    className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium text-[#0f1724] ml-auto"
+                    onClick={() => setOpenMobile(false)}
+                  >
                     Book a Call
                   </Link>
                 </div>
