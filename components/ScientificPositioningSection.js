@@ -21,10 +21,7 @@ import {
   Lightbulb,
   FlaskConical,
   Rocket,
-  EyeOff,
-  MousePointer2,
   Percent,
-  BarChart2,
   CheckCircle2,
 } from "lucide-react";
 
@@ -32,10 +29,8 @@ import {
 /* CONSTANTS                                                                  */
 /* -------------------------------------------------------------------------- */
 
-// Base color (kept as JS constant for inline styles)
 const BG_BASE = "#f5f5f5";
 
-// Dark-grey neumorphic look
 const NEU_CARD =
   "relative rounded-3xl bg-[#f5f5f5] shadow-[14px_14px_35px_rgba(15,23,42,0.25),-10px_-10px_28px_rgba(255,255,255,0.9)]";
 
@@ -51,7 +46,6 @@ const PRIMARY_GRADIENT = "from-[#385179] via-[#4f46e5] to-[#7c3aed]";
 /* UTILITY COMPONENTS                                                         */
 /* -------------------------------------------------------------------------- */
 
-// 1. MAGNETIC BUTTON EFFECT
 const Magnetic = ({ children, strength = 0.5 }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -87,7 +81,6 @@ const Magnetic = ({ children, strength = 0.5 }) => {
   );
 };
 
-// 2. 3D TILT CARD
 const TiltCard = ({ children, className = "" }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -123,7 +116,6 @@ const TiltCard = ({ children, className = "" }) => {
   );
 };
 
-// 3. FADE UP WRAPPER
 const FadeIn = ({ children, delay = 0, className = "" }) => (
   <motion.div
     initial={{ opacity: 0, y: 40 }}
@@ -142,7 +134,6 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
 
 export default function ScientificPositioningSection() {
   return (
-    // Use bg-transparent so the body's gradient shows through responsively
     <main className="min-h-screen bg-transparent text-slate-800 selection:bg-indigo-500/30 overflow-hidden font-sans">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 md:space-y-28 pb-24 md:pb-32">
         <HeroSection />
@@ -167,7 +158,6 @@ function HeroSection() {
   return (
     <section className="relative pt-28 sm:pt-32 lg:pt-40 min-h-[70vh] lg:min-h-[90vh] flex flex-col justify-center">
       <div className="grid gap-10 lg:gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-center">
-        {/* LEFT CONTENT */}
         <div className="relative z-10">
           <FadeIn>
             <div
@@ -235,10 +225,10 @@ function HeroSection() {
           </FadeIn>
         </div>
 
-        {/* RIGHT VISUAL */}
+        {/* RIGHT VISUAL - visible on all screens */}
         <motion.div
           style={{ y: y1 }}
-          className="relative h-[320px] sm:h-[380px] lg:h-[500px] w-full hidden md:block perspective-1000"
+          className="relative h-[260px] sm:h-[320px] lg:h-[500px] w-full mt-8 md:mt-0 perspective-1000"
         >
           <HeroVisual />
         </motion.div>
@@ -248,13 +238,12 @@ function HeroSection() {
 }
 
 function HeroVisual() {
-  // Use inline style for the border color (Tailwind can't read JS var at runtime)
   return (
     <div
       className={`${NEU_CARD} w-full h-full p-2 flex overflow-hidden border-4`}
       style={{ borderColor: BG_BASE }}
     >
-      {/* CHAOS SIDE (Left) */}
+      {/* CHAOS SIDE */}
       <div className="w-1/2 relative bg-red-50/60 rounded-l-2xl overflow-hidden">
         <div className="absolute inset-0 flex flex-col items-center justify-center z-0 opacity-10">
           <div className="text-red-900 font-black text-7xl lg:text-8xl rotate-90 select-none">
@@ -274,7 +263,7 @@ function HeroVisual() {
         </div>
       </div>
 
-      {/* ORDER SIDE (Right) */}
+      {/* ORDER SIDE */}
       <div className="w-1/2 relative bg-white/50 rounded-r-2xl overflow-hidden flex flex-col items-center justify-end pb-8 sm:pb-10 lg:pb-12">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.04)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
@@ -293,6 +282,7 @@ function HeroVisual() {
             </div>
           </div>
 
+          {/* Graph bars */}
           <div className="flex items-end gap-1.5 sm:gap-2 h-32 sm:h-40">
             {[30, 45, 60, 80, 100].map((h, i) => (
               <motion.div
@@ -323,7 +313,7 @@ function HeroVisual() {
         </div>
       </div>
 
-      {/* CENTER DIVIDER */}
+      {/* DIVIDER */}
       <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200/80 z-20">
         <motion.div
           animate={{ top: ["10%", "90%", "10%"] }}
@@ -363,7 +353,7 @@ function FloatingPill({ index }) {
         ease: "linear",
         delay: index * 0.8,
       }}
-      style={{ left: `${Math.min(index * 16, 84)}%` }} // clamp to avoid overflow on small widths
+      style={{ left: `${Math.min(index * 16, 84)}%` }}
       className={`${NEU_PILL} absolute top-0 px-3 py-1.5 text-[10px] font-bold text-red-500 bg-white/90 border border-red-100/60 z-20`}
     >
       {labels[index]}
@@ -388,8 +378,8 @@ function ProblemSection() {
         </p>
         <p className="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto">
           You&apos;ve tried everything—new creatives, new audiences, more
-          budget. But you&apos;re still stuck. The real problem: your positioning
-          sounds exactly like every other fashion brand in your category.
+          budget. The real problem: your positioning sounds exactly like every
+          other fashion brand in your category.
         </p>
       </FadeIn>
 
@@ -458,11 +448,10 @@ function SolutionSection() {
               engineering.
             </p>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 sm:mb-8">
-              Most agencies position your brand through intuition. They test a
-              few random angles and pick what &quot;works okay&quot;. That&apos;s
-              expensive guessing. The Arlox team doesn&apos;t guess—we{" "}
-              <span className="font-semibold">prove</span> it with a four-stage
-              methodology that multiplies ROAS.
+              Most agencies position your brand through intuition. The Arlox
+              team uses a four‑stage methodology that{" "}
+              <span className="font-semibold">proves</span> which angle wins and
+              then scales it.
             </p>
 
             <ul className="space-y-3 sm:space-y-4">
@@ -510,7 +499,7 @@ function SolutionSection() {
                       <span className="text-slate-400">ROAS: 1.2x</span>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-600">
-                      &quot;Buy our high quality organic hemp t-shirts.&quot;
+                      &quot;Buy our high quality organic hemp t‑shirts.&quot;
                     </p>
                     <p className="text-[10px] text-red-400 mt-2 italic">
                       Problem: sounds like every other hemp brand.
@@ -588,7 +577,7 @@ function EvidenceSection() {
         <StatsCard
           icon={Diamond}
           stat="↑"
-          label="High-Ticket Inquiries"
+          label="High‑Ticket Inquiries"
           desc="₹25k Premium Brand"
           detail="From “Buy Online” → “Inquire via WhatsApp”."
           delay={0.1}
@@ -648,7 +637,7 @@ function StatsCard({ icon: Icon, stat, label, desc, detail, delay = 0 }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* METHOD (SCROLL DRAW)                                                       */
+/* METHOD                                                                     */
 /* -------------------------------------------------------------------------- */
 
 function MethodSection() {
@@ -676,7 +665,7 @@ function MethodSection() {
     },
     {
       title: "Scale & Dominate",
-      desc: "Deploy the winning angle across ads, LPs and email. From 'stuck' to 'scaling' reliably.",
+      desc: "Deploy the winning angle across ads, LPs and email. From “stuck” to “scaling” reliably.",
       icon: Rocket,
     },
   ];
