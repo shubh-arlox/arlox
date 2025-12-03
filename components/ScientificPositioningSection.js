@@ -11,6 +11,7 @@ import {
 import {
   Target,
   ArrowRight,
+  ArrowDown,
   TrendingUp,
   HelpCircle,
   Leaf,
@@ -23,30 +24,64 @@ import {
   Rocket,
   Percent,
   CheckCircle2,
+  EyeOff,
+  MousePointer2,
+  BarChart2,
+  Dices,
+  Microscope,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /* CONSTANTS                                                                  */
 /* -------------------------------------------------------------------------- */
 
-const BG_BASE = "#f5f5f5";
+// Base Background Gradient
+// GLOBAL THEME (Default)
+export const BG_BASE = "from-[#385179] via-[#4f46e5] to-[#7c3aed]";
 
-const NEU_CARD =
-  "relative rounded-3xl bg-[#f5f5f5] shadow-[14px_14px_35px_rgba(15,23,42,0.25),-10px_-10px_28px_rgba(255,255,255,0.9)]";
+export const NEU_FLAT =
+  "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] rounded-3xl border border-white/20";
 
-const NEU_INSET =
-  "rounded-3xl bg-[#f5f5f5] shadow-[inset_7px_7px_18px_rgba(30,41,59,0.35),inset_-6px_-6px_16px_rgba(255,255,255,0.95)]";
+export const NEU_PRESSED =
+  "bg-[#E0E5EC] shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.7),inset_-6px_-6px_10px_0_rgba(255,255,255,0.8)] rounded-3xl border border-white/10";
 
-const NEU_PILL =
-  "rounded-full bg-[#f5f5f5] shadow-[7px_7px_18px_rgba(30,41,59,0.38),-6px_-6px_16px_rgba(255,255,255,0.95)]";
+export const NEU_CONVEX =
+  "bg-gradient-to-br from-[#f0f5fc] to-[#caced4] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] rounded-3xl border border-white/40";
 
-const PRIMARY_GRADIENT = "from-[#385179] via-[#4f46e5] to-[#7c3aed]";
+export const NEU_TOMBSTONE =
+  "rounded-t-[100px] rounded-b-[10px] bg-[#E0E5EC] shadow-[6px_6px_12px_#a3b1c6,-6px_-6px_12px_#ffffff] border border-white/20";
+
+export const PRIMARY_GRADIENT =
+  "from-[#385179] via-[#4f46e5] to-[#7c3aed]";
+
+  // HERO VISUAL EXCLUSIVE THEME
+export const HERO_NEU_FLAT =
+  "bg-[#f5f5f5] shadow-[9px_9px_16px_#d1d9e6,-9px_-9px_16px_#ffffff] rounded-3xl border border-white/40";
+
+export const HERO_NEU_PRESSED =
+  "bg-[#f5f5f5] shadow-[inset_6px_6px_10px_0_#d1d9e6,inset_-6px_-6px_10px_0_#ffffff] rounded-3xl border border-black/5";
+
+export const HERO_NEU_CONVEX =
+  "bg-gradient-to-br from-[#ffffff] to-[#f0f0f0] shadow-[6px_6px_10px_#d1d9e6,-6px_-6px_10px_#ffffff] rounded-3xl border border-white/60";
+
+export const HERO_NEU_TOMBSTONE =
+  "rounded-t-[100px] rounded-b-[20px] bg-[#f5f5f5] shadow-[9px_9px_16px_#d1d9e6,-9px_-9px_16px_#ffffff] border border-white/40";
+
+
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 /* -------------------------------------------------------------------------- */
 /* HOOKS                                                                      */
 /* -------------------------------------------------------------------------- */
 
-// Hook to detect screen size for conditional animations
 function useMediaQuery(query) {
   const [matches, setMatches] = useState(false);
 
@@ -110,7 +145,6 @@ const TiltCard = ({ children, className = "" }) => {
   const rotateX = useTransform(y, [-100, 100], [10, -10]);
   const rotateY = useTransform(x, [-100, 100], [-10, 10]);
 
-  // Only enable tilt on desktop to prevent scroll blocking on mobile
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
   return (
@@ -162,7 +196,10 @@ const FadeIn = ({ children, delay = 0, className = "" }) => (
 
 export default function ScientificPositioningSection() {
   return (
-    <main className="min-h-screen bg-transparent text-slate-800 selection:bg-indigo-500/30 overflow-hidden font-sans">
+    <main
+      className="min-h-screen text-slate-700 selection:bg-indigo-500/30 overflow-hidden font-sans"
+      style={{ backgroundColor: BG_BASE }}
+    >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 md:space-y-28 pb-24 md:pb-32">
         <HeroSection />
         <ProblemSection />
@@ -183,8 +220,6 @@ function HeroSection() {
   const { scrollY } = useScroll();
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // FIX: drastically reduced movement range [0, 80] and conditionally apply it only on desktop.
-  // This prevents the "scrolling down" issue where the image leaves the viewport.
   const yParallax = useTransform(scrollY, [0, 500], [0, 80]);
   const yMotion = isDesktop ? yParallax : 0;
 
@@ -195,7 +230,7 @@ function HeroSection() {
         <div className="relative z-10 text-center lg:text-left">
           <FadeIn>
             <div
-              className={`${NEU_INSET} inline-flex items-center gap-2 px-4 py-1.5 mb-6`}
+              className={`${NEU_PRESSED} inline-flex items-center gap-2 px-4 py-1.5 mb-6`}
             >
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
               <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500">
@@ -232,23 +267,23 @@ function HeroSection() {
           >
             <Magnetic strength={0.2}>
               <button
-                className={`${NEU_CARD} group relative px-8 py-4 text-sm font-bold text-white overflow-hidden transition-all hover:-translate-y-0.5 active:translate-y-0`}
+                className={`${NEU_CONVEX} group relative px-8 py-4 text-sm font-bold text-slate-700 overflow-hidden transition-all hover:-translate-y-0.5 active:translate-y-0`}
               >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${PRIMARY_GRADIENT}`}
-                />
+                <div className="absolute inset-0 bg-transparent group-hover:bg-white/20 transition-colors" />
                 <div className="relative flex items-center gap-3">
-                  Book Free Audit
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                    Book Free Audit
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-indigo-500 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
             </Magnetic>
             <div className="flex flex-col gap-1 text-xs font-medium text-slate-400 items-center sm:items-start">
               <span className="flex items-center gap-2">
-                <TrendingUp className="w-3 h-3 text-green-500" /> Avg. 5.8x ROAS
+                <TrendingUp className="w-3 h-3 text-green-600" /> Avg. 5.8x ROAS
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle2 className="w-3 h-3 text-blue-500" /> 1,000+
+                <CheckCircle2 className="w-3 h-3 text-blue-600" /> 1,000+
                 Campaigns
               </span>
             </div>
@@ -270,37 +305,37 @@ function HeroSection() {
 function HeroVisual() {
   return (
     <div
-      className={`${NEU_CARD} w-full h-full p-2 flex overflow-hidden border-4`}
-      style={{ borderColor: BG_BASE }}
+      className={`${HERO_NEU_FLAT} w-full h-full p-2 flex overflow-hidden border-4 border-[#E0E5EC]`}
     >
-      {/* CHAOS SIDE */}
-      <div className="w-1/2 relative bg-red-50/60 rounded-l-2xl overflow-hidden">
+      {/* CHAOS SIDE (Left) */}
+      <div className="w-1/2 relative bg-red-100/10 rounded-l-2xl overflow-hidden shadow-[inset_-5px_0_15px_rgba(0,0,0,0.05)]">
         <div className="absolute inset-0 flex flex-col items-center justify-center z-0 opacity-10">
           <div className="text-red-900 font-black text-5xl sm:text-7xl lg:text-8xl rotate-90 select-none">
             CHAOS
           </div>
         </div>
-        {/* Reduce pill count on mobile */}
+
         {[...Array(5)].map((_, i) => (
           <FloatingPill key={i} index={i} />
         ))}
+
         <div className="absolute bottom-4 left-2 sm:left-4 flex flex-col gap-2 z-20">
-          <span className="text-[9px] sm:text-[11px] font-bold text-red-500/90 bg-white/80 px-2 py-1 rounded-full shadow-sm w-fit">
+          <span className="text-[9px] sm:text-[11px] font-bold text-red-500/90 bg-[#E0E5EC]/80 px-2 py-1 rounded-full shadow-sm w-fit border border-white/40">
             1.2x ROAS
           </span>
-          <span className="text-[9px] sm:text-[11px] font-bold text-red-500/90 bg-white/80 px-2 py-1 rounded-full shadow-sm w-fit">
+          <span className="text-[9px] sm:text-[11px] font-bold text-red-500/90 bg-[#E0E5EC]/80 px-2 py-1 rounded-full shadow-sm w-fit border border-white/40">
             1.5x ROAS
           </span>
         </div>
       </div>
 
-      {/* ORDER SIDE */}
-      <div className="w-1/2 relative bg-white/50 rounded-r-2xl overflow-hidden flex flex-col items-center justify-end pb-4 sm:pb-8 lg:pb-12">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.04)_1px,transparent_1px)] bg-[size:20px_20px]" />
+      {/* ORDER SIDE (Right) */}
+      <div className="w-1/2 relative bg-[#E0E5EC] rounded-r-2xl overflow-hidden flex flex-col items-center justify-end pb-4 sm:pb-8 lg:pb-12 shadow-[inset_5px_0_15px_rgba(255,255,255,0.8)]">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
         <div className="relative z-10 w-[90%] sm:w-4/5 space-y-2 sm:space-y-3">
           <div
-            className={`${NEU_CARD} p-2 sm:p-4 mb-3 flex items-center gap-2 sm:gap-3 bg-[#f9fafb]/95`}
+            className={`${HERO_NEU_CONVEX} p-2 sm:p-4 mb-3 flex items-center gap-2 sm:gap-3`}
           >
             <Target className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 shrink-0" />
             <div className="flex-1 min-w-0">
@@ -326,14 +361,14 @@ function HeroVisual() {
                   stiffness: 210,
                   damping: 22,
                 }}
-                className="flex-1 bg-gradient-to-t from-blue-700 to-indigo-400 rounded-t-sm sm:rounded-t-md shadow-[0_18px_30px_rgba(15,23,42,0.45)] relative"
+                className="flex-1 bg-gradient-to-t from-blue-700 to-indigo-400 rounded-t-sm sm:rounded-t-md shadow-[5px_5px_10px_rgba(163,177,198,0.4)] relative"
               >
                 {i === 4 && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.4 }}
-                    className="absolute -top-6 sm:-top-7 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full shadow-[0_10px_18px_rgba(22,163,74,0.6)] whitespace-nowrap"
+                    className="absolute -top-6 sm:-top-7 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[8px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full shadow-lg whitespace-nowrap"
                   >
                     7.0x
                   </motion.div>
@@ -345,13 +380,13 @@ function HeroVisual() {
       </div>
 
       {/* DIVIDER */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-slate-200/80 z-20">
+      <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-[#E0E5EC] shadow-[inset_1px_0_2px_rgba(163,177,198,0.5)] z-20">
         <motion.div
           animate={{ top: ["10%", "90%", "10%"] }}
           transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-          className="absolute left-1/2 -translate-x-1/2 w-4 h-8 bg-blue-500/80 blur-md rounded-full"
+          className="absolute left-1/2 -translate-x-1/2 w-4 h-8 bg-blue-500/50 blur-md rounded-full"
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-1.5 sm:p-2 rounded-full shadow-[0_14px_32px_rgba(15,23,42,0.35)] border border-slate-100">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#E0E5EC] p-1.5 sm:p-2 rounded-full shadow-[5px_5px_10px_rgba(163,177,198,0.4),-5px_-5px_10px_rgba(255,255,255,0.8)] border border-white/50">
           <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
         </div>
       </div>
@@ -359,23 +394,17 @@ function HeroVisual() {
   );
 }
 
+
 function FloatingPill({ index }) {
   const randomDuration = 3 + Math.random() * 4;
-  const labels = [
-    "Quality",
-    "Cheap",
-    "Fast",
-    "COD",
-    "Artisan",
-    "GenZ",
-  ];
+  const labels = ["Quality", "Cheap", "Fast", "COD", "Artisan", "GenZ"];
 
   return (
     <motion.div
       animate={{
         y: [-20, 400],
         rotate: [Math.random() * -20, Math.random() * 20],
-        x: [0, Math.random() * 20 - 10], // Reduced horizontal scatter for mobile
+        x: [0, Math.random() * 20 - 10],
       }}
       transition={{
         duration: randomDuration,
@@ -383,74 +412,147 @@ function FloatingPill({ index }) {
         ease: "linear",
         delay: index * 0.8,
       }}
-      style={{ left: `${Math.min(index * 20 + 5, 80)}%` }} // Better spacing logic
-      className={`${NEU_PILL} absolute top-0 px-2 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[10px] font-bold text-red-500 bg-white/90 border border-red-100/60 z-20 whitespace-nowrap`}
+      style={{ left: `${Math.min(index * 20 + 5, 80)}%` }}
+      className={`${HERO_NEU_CONVEX} absolute top-0 px-2 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[10px] font-bold text-red-500 z-20 whitespace-nowrap`}
     >
       {labels[index]}
     </motion.div>
   );
 }
-
 /* -------------------------------------------------------------------------- */
-/* PROBLEM                                                                    */
+/* PROBLEM (THE GRAVEYARD)                                                    */
 /* -------------------------------------------------------------------------- */
 
 function ProblemSection() {
   return (
     <section id="problem" className="max-w-6xl mx-auto px-4">
-      <FadeIn className="text-center mb-12 sm:mb-16">
+      <FadeIn className="text-center mb-24 sm:mb-32">
         <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-800 mb-4 md:mb-6">
           Why Your Ads Won&apos;t Scale Past{" "}
           <span className="text-red-500 block sm:inline">$50K/Month</span>
         </h2>
         <p className="text-sm sm:text-base md:text-lg font-semibold text-slate-400 mb-3 md:mb-4">
-          (And Why It&apos;s Not Your Fault)
+          (The Graveyard of Generic Angles)
         </p>
         <p className="text-sm sm:text-base text-slate-500 max-w-2xl mx-auto leading-relaxed">
-          You&apos;ve tried everything—new creatives, new audiences, more
-          budget. The real problem: your positioning sounds exactly like every
-          other fashion brand in your category.
+          You&apos;ve tried everything. The real problem: your positioning
+          sounds exactly like every other fashion brand in your category.
         </p>
       </FadeIn>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+      {/* GRAVEYARD GRID */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-40 relative z-10">
         {[
           { title: "Premium Quality", sub: "Died from overuse", icon: Diamond },
-          { title: "Service", sub: "Unverifiable", icon: HelpCircle },
+          { title: "Great Service", sub: "Unverifiable", icon: HelpCircle },
           { title: "Sustainable", sub: "10k brands say this", icon: Leaf },
           { title: "Affordable", sub: "Race to bottom", icon: Percent },
-        ].map((item, i) => (
-          <FadeIn key={i} delay={i * 0.1}>
-            <TiltCard
-              className={`${NEU_CARD} group h-36 sm:h-48 flex flex-col items-center justify-center p-3 sm:p-6 text-center border border-transparent hover:border-red-200/60`}
-            >
-              <div
-                className={`${NEU_INSET} w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center mb-2 sm:mb-4 text-slate-400 group-hover:text-red-500 transition-colors`}
+        ].map((item, i) => {
+          // DISALIGNED ZIG-ZAG LOGIC
+          // This creates a wave pattern across the screen on desktop
+          // and a bouncy up-down pattern on mobile.
+
+          let chaosClass = "";
+
+          // Desktop transforms (The Wave/Disaligned look)
+          if (i === 0) {
+            // Start High, Tilted Left
+            chaosClass = "lg:translate-y-0 lg:-rotate-6 lg:z-10";
+          } else if (i === 1) {
+            // Drop Low, Push Right, Tilted Hard Right
+            chaosClass =
+              "lg:translate-y-32 lg:rotate-12 lg:z-0 lg:translate-x-6";
+          } else if (i === 2) {
+            // Mid-High, Push Left, Tilted Left
+            chaosClass =
+              "lg:translate-y-12 lg:-rotate-3 lg:z-10 lg:-translate-x-8";
+          } else if (i === 3) {
+            // Deep Low, Tilted Right
+            chaosClass = "lg:translate-y-48 lg:rotate-6 lg:z-0";
+          }
+
+          // Mobile transform (Simple Zig Zag)
+          const mobileClass =
+            i % 2 !== 0 ? "translate-y-16 rotate-3" : "translate-y-0 -rotate-3";
+
+          return (
+            <FadeIn key={i} delay={i * 0.15}>
+              <TiltCard
+                className={`${NEU_TOMBSTONE} ${chaosClass} ${mobileClass} group relative h-56 sm:h-64 flex flex-col items-center justify-center p-4 sm:p-6 text-center 
+                hover:shadow-[inset_5px_5px_10px_rgba(163,177,198,0.4)] 
+                hover:rotate-0 hover:translate-y-0 hover:translate-x-0 hover:scale-105 hover:z-50 
+                transition-all duration-700 ease-out`}
               >
-                <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <h3 className="text-xs sm:text-base font-bold text-slate-700 mb-1 group-hover:line-through decoration-red-500 decoration-2">
-                {item.title}
-              </h3>
-              <p className="text-[9px] sm:text-xs text-red-400 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity font-medium uppercase tracking-wide">
-                {item.sub}
-              </p>
-            </TiltCard>
-          </FadeIn>
-        ))}
+                <div
+                  className={`${NEU_PRESSED} w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center mb-4 text-slate-400 group-hover:text-red-500 transition-colors rounded-full`}
+                >
+                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+                <h3 className="text-xs sm:text-base font-bold text-slate-700 mb-2 group-hover:line-through decoration-red-500 decoration-2 decoration-wavy">
+                  {item.title}
+                </h3>
+                <p className="text-[9px] sm:text-xs text-red-400 opacity-100 group-hover:opacity-100 transition-opacity font-medium uppercase tracking-wide">
+                  {item.sub}
+                </p>
+
+                {/* VISUAL CRACK AT BOTTOM */}
+                <div className="absolute bottom-6 w-12 h-1 bg-slate-300/50 rounded-full group-hover:bg-red-400/30 transition-colors" />
+              </TiltCard>
+            </FadeIn>
+          );
+        })}
       </div>
 
-      <FadeIn delay={0.4} className="mt-8 sm:mt-12 text-center">
+      {/* DEATH SPIRAL */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="max-w-3xl mx-auto mt-20"
+      >
+        <h3 className="text-xl font-bold text-center text-gray-800 mb-8">
+          The Death Spiral
+        </h3>
         <div
-          className={`${NEU_INSET} inline-block px-4 sm:px-6 py-2 sm:py-3 text-[10px] sm:text-sm font-medium text-slate-500 leading-relaxed`}
+          className={`${NEU_FLAT} p-6 sm:p-8 rounded-3xl md:rounded-full flex flex-col md:flex-row items-center justify-between gap-6 relative z-10`}
         >
-          The Death Spiral: Low CTR → Price War → Shrinking Margins →{" "}
-          <span className="text-red-500 font-bold whitespace-nowrap">
-            Scaling Ceiling
-          </span>
+          <SpiralStep icon={EyeOff} label="Generic Positioning" />
+          <AnimatedArrow />
+          <SpiralStep icon={MousePointer2} label="Low CTR" />
+          <AnimatedArrow />
+          <SpiralStep icon={Percent} label="Forced Discount" />
+          <AnimatedArrow />
+          <SpiralStep icon={BarChart2} label="ROAS Plateau" />
         </div>
-      </FadeIn>
+      </motion.div>
     </section>
+  );
+}
+
+function SpiralStep({ icon: Icon, label }) {
+  return (
+    <div className="flex flex-col items-center text-center max-w-[150px] z-10">
+      <div
+        className={`${NEU_CONVEX} w-12 h-12 flex items-center justify-center text-red-500 mb-2`}
+      >
+        <Icon className="w-6 h-6" />
+      </div>
+      <span className="text-xs font-bold text-gray-700">{label}</span>
+    </div>
+  );
+}
+
+function AnimatedArrow() {
+  return (
+    <motion.div
+      animate={{ opacity: [0.3, 1, 0.3], x: [0, 3, 0] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      className="text-red-300"
+    >
+      <ArrowRight className="w-6 h-6 hidden md:block" />
+      <ArrowDown className="w-6 h-6 md:hidden" />
+    </motion.div>
   );
 }
 
@@ -460,117 +562,163 @@ function ProblemSection() {
 
 function SolutionSection() {
   return (
-    <section
-      id="solution"
-      className="max-w-6xl mx-auto px-4 py-8 sm:py-16 md:py-20"
-    >
-      <div className={`${NEU_CARD} p-5 sm:p-8 md:p-12 overflow-hidden relative`}>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.06)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-        <div className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <div>
-            <div className="inline-block px-3 py-1 sm:px-4 sm:py-1 rounded-full bg-blue-100 text-blue-700 text-[9px] sm:text-xs font-bold tracking-widest uppercase mb-4 sm:mb-6">
+    <section id="solution" className="py-20 sm:py-24 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="text-center mb-16"
+        >
+          <div
+            className={`${NEU_PRESSED} inline-block px-4 py-1.5 rounded-full mb-4`}
+          >
+            <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">
               The Antidote
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mb-3">
-              Scientific Positioning
-            </h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium mb-4 sm:mb-6">
-              The difference between creative guessing and scientific
-              engineering.
-            </p>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 sm:mb-8">
-              Most agencies position your brand through intuition. The Arlox
-              team uses a four‑stage methodology that{" "}
-              <span className="font-semibold">proves</span> which angle wins and
-              then scales it.
-            </p>
-
-            <ul className="space-y-3 sm:space-y-4">
-              {[
-                "Eliminate bias & internal guessing.",
-                "Engineer 10–20 falsifiable angles.",
-                "Run controlled tests with real ad spend.",
-                "Find causal proof and scale the winner.",
-              ].map((item, i) => (
-                <motion.li
-                  key={i}
-                  initial={{ x: -20, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-start sm:items-center gap-3 text-sm sm:text-[15px] text-slate-700 font-medium"
-                >
-                  <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 shrink-0 mt-0.5 sm:mt-0" />
-                  {item}
-                </motion.li>
-              ))}
-            </ul>
+            </span>
           </div>
+          <h2 className="text-3xl font-bold text-gray-800">
+            Scientific Positioning
+          </h2>
+          <p className="text-gray-600 mt-4">We don't guess. We engineer.</p>
+        </motion.div>
 
-          <div className="relative mt-8 lg:mt-0">
-            <Magnetic strength={0.1}>
-              <div className={`${NEU_INSET} p-4 sm:p-6 md:p-8`}>
-                <div className="flex justify-between items-center mb-4 sm:mb-6">
-                  <span className="text-[9px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    Case Study: Hemp Brand
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-16">
+          {/* GUESSING - CHAOTIC DICE ANIMATION */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className={`${NEU_PRESSED} p-6 sm:p-8 rounded-3xl opacity-80`}
+          >
+            <h3 className="text-lg font-bold text-gray-700 mb-4 flex items-center gap-2">
+              <HelpCircle className="w-5 h-5" /> Creative Guessing
+            </h3>
+            <p className="text-sm text-gray-500 mb-6">
+              Brainstorming sessions. "Creative intuition." Testing random
+              angles. Hope strategy.
+            </p>
+            <div className="h-32 sm:h-40 flex items-center justify-center border-2 border-dashed border-slate-300 rounded-xl overflow-hidden relative bg-[#E0E5EC]">
+              <motion.div
+                animate={{
+                  rotate: [0, 360],
+                  x: [0, 15, -15, 0],
+                  y: [0, -15, 15, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear",
+                  times: [0, 0.3, 0.6, 1],
+                }}
+              >
+                <Dices className="w-10 h-10 sm:w-12 sm:h-12 text-slate-400" />
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* ENGINEERING - PRECISION ANIMATION */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className={`${NEU_FLAT} p-6 sm:p-8 rounded-3xl transform md:scale-105 border-2 border-blue-500/10`}
+          >
+            <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Microscope className="w-5 h-5 text-blue-600" /> Scientific
+              Engineering
+            </h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Systematic research. Falsifiable hypotheses. Controlled testing.
+              Causal proof.
+            </p>
+            <div
+              className={`${NEU_PRESSED} h-32 sm:h-40 flex items-center justify-center rounded-xl`}
+            >
+              {/* ANIMATION: Precision Pulse */}
+              <motion.div
+                animate={{ scale: [1, 1.15, 1] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative"
+              >
+                <Target className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 relative z-10" />
+                {/* Ping effect behind target */}
+                <motion.div
+                  animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                  }}
+                  className="absolute inset-0 bg-blue-400 rounded-full -z-10 opacity-20"
+                />
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* COMPARISON CARDS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            {
+              generic: "Sustainable Fashion",
+              gRoas: "1.2x",
+              scientific: "Save Soil With Hemp",
+              sRoas: "6.5x",
+            },
+            {
+              generic: "Premium Denim",
+              gRoas: "2.1x",
+              scientific: "Engineered Fit",
+              sRoas: "6.8x",
+            },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className={`${NEU_FLAT} p-6 rounded-3xl`}
+            >
+              <div className="flex justify-between mb-4">
+                <span className="text-xs font-bold text-slate-400">
+                  GENERIC
+                </span>
+                <span className="text-xs font-bold text-blue-600">
+                  SCIENTIFIC
+                </span>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4">
+                <div
+                  className={`${NEU_PRESSED} flex-1 text-center p-3 sm:p-4 rounded-xl`}
+                >
+                  <span className="text-xs sm:text-sm text-slate-500">
+                    "{item.generic}"
                   </span>
-                  <div className="flex gap-1.5 sm:gap-2">
-                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-red-400/25" />
-                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-yellow-400/25" />
-                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-green-500/80 animate-pulse" />
+                  <div className="text-[10px] sm:text-xs text-red-400 font-bold mt-2">
+                    {item.gRoas} ROAS
                   </div>
                 </div>
-
-                <div className="space-y-3 sm:space-y-5">
-                  <div className="bg-[#f9fafb] rounded-xl p-3 sm:p-4 shadow-sm border-l-4 border-red-400/80 opacity-70 hover:opacity-100 transition-opacity">
-                    <div className="flex justify-between text-[9px] sm:text-xs mb-1.5">
-                      <span className="font-bold text-red-500">
-                        CONTROL (Generic)
-                      </span>
-                      <span className="text-slate-400">ROAS: 1.2x</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-600">
-                      &quot;Buy our high quality organic hemp t‑shirts.&quot;
-                    </p>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
+                <div
+                  className={`${NEU_CONVEX} flex-1 text-center p-3 sm:p-4 rounded-xl border-blue-100`}
+                >
+                  <span className="text-xs sm:text-sm text-slate-800 font-bold">
+                    "{item.scientific}"
+                  </span>
+                  <div className="text-[10px] sm:text-xs text-green-600 font-bold mt-2">
+                    {item.sRoas} ROAS
                   </div>
-
-                  <motion.div
-                    initial={{ scale: 0.94, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-[#f9fafb] rounded-xl p-4 sm:p-6 shadow-[0_18px_35px_rgba(15,23,42,0.32)] border-l-4 border-blue-500/90"
-                  >
-                    <div className="flex justify-between text-[9px] sm:text-xs mb-2">
-                      <span className="font-bold text-blue-600 flex items-center gap-1">
-                        <Zap className="w-3 h-3" /> SCIENTIFIC (Winner)
-                      </span>
-                      <span className="font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
-                        ROAS: 6.5x
-                      </span>
-                    </div>
-                    <p className="text-sm sm:text-lg font-medium text-slate-800">
-                      &quot;Save Soil With Hemp.&quot;
-                    </p>
-                    <p className="text-[10px] sm:text-xs text-slate-500 mt-1.5 leading-normal">
-                      Shifts the narrative from fabric benefits to soil
-                      regeneration impact.
-                    </p>
-                    <div className="mt-3 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: "90%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className="h-full bg-blue-500"
-                      />
-                    </div>
-                  </motion.div>
                 </div>
               </div>
-            </Magnetic>
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -578,90 +726,102 @@ function SolutionSection() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* EVIDENCE                                                                   */
+/* EVIDENCE SECTION                                                           */
 /* -------------------------------------------------------------------------- */
 
 function EvidenceSection() {
+  const cases = [
+    {
+      icon: Leaf,
+      color: "text-green-600",
+      title: "Hemp Brand",
+      before: "Buy Hemp",
+      after: "Save Soil",
+      result: "1.2x → 6.5x",
+      label: "ROAS",
+    },
+    {
+      icon: Diamond,
+      color: "text-purple-600",
+      title: "Premium Brand",
+      before: "Buy Online",
+      after: "Inquire Only",
+      result: "Sales Record",
+      label: "RESULT",
+    },
+    {
+      icon: Zap,
+      color: "text-red-600",
+      title: "Gen Z Brand",
+      before: "Quality",
+      after: "Rebellion",
+      result: "Doubled",
+      label: "ROAS",
+    },
+    {
+      icon: Shirt,
+      color: "text-yellow-600",
+      title: "Bamboo Brand",
+      before: "Bamboo",
+      after: "Athletic",
+      result: "1.6x → 4.5x",
+      label: "ROAS",
+    },
+  ];
+
   return (
-    <section
-      id="evidence"
-      className="max-w-7xl mx-auto px-4 mb-20 md:mb-24"
-    >
-      <FadeIn className="mb-8 md:mb-12 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
-          Real Brands. Real Results.
+    <section id="evidence" className="py-20 sm:py-24 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
+          Real Brands. Real Positioning.
         </h2>
-        <p className="text-sm sm:text-base text-slate-500 mt-2">
-          When positioning changes, everything changes.
-        </p>
-      </FadeIn>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <StatsCard
-          icon={Leaf}
-          stat="1.2x → 6.5x"
-          label="ROAS"
-          desc="Hemp Clothing"
-          detail="From “Buy Hemp” → “Save Soil With Hemp”."
-        />
-        <StatsCard
-          icon={Diamond}
-          stat="↑ Inquiries"
-          label="High‑Ticket"
-          desc="Premium Brand"
-          detail="From “Buy Online” → “Inquire via WhatsApp”."
-          delay={0.1}
-        />
-        <StatsCard
-          icon={Zap}
-          stat="2x"
-          label="ROAS"
-          desc="Gen Z Jackets"
-          detail="From “Quality” → “Rebellion vs Fast Fashion”."
-          delay={0.2}
-        />
-        <StatsCard
-          icon={Shirt}
-          stat="1.6x → 4.5x"
-          label="ROAS"
-          desc="Bamboo Tees"
-          detail="From “Bamboo” → “Natural Organic Athletic Wear”."
-          delay={0.3}
-        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cases.map((c, i) => (
+            <motion.div
+              key={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              transition={{ delay: i * 0.1 }}
+              className={`${NEU_FLAT} p-6 rounded-2xl hover:-translate-y-1 transition-transform duration-300`}
+            >
+              <div
+                className={`${NEU_PRESSED} w-10 h-10 rounded-full flex items-center justify-center ${c.color} mb-4`}
+              >
+                <c.icon className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-gray-800 mb-2">{c.title}</h4>
+              <div className="space-y-2 text-sm mb-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Before:</span>
+                  <span className="text-gray-500 truncate ml-2">
+                    "{c.before}"
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">After:</span>
+                  <span className="text-gray-800 font-bold truncate ml-2">
+                    "{c.after}"
+                  </span>
+                </div>
+              </div>
+              <div
+                className={`${NEU_PRESSED} px-3 py-2 rounded-lg text-center`}
+              >
+                <span className="text-[10px] text-gray-400 uppercase">
+                  {c.label}
+                </span>
+                <div className="text-lg font-bold text-green-600">
+                  {c.result}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
-  );
-}
-
-function StatsCard({ icon: Icon, stat, label, desc, detail, delay = 0 }) {
-  return (
-    <FadeIn delay={delay}>
-      <motion.div
-        whileHover={{ y: -8 }}
-        className={`${NEU_CARD} p-5 sm:p-6 group transition-all duration-300 h-full flex flex-col`}
-      >
-        <div className="flex justify-between items-start mb-4 sm:mb-5">
-          <div
-            className={`${NEU_INSET} w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-blue-600`}
-          >
-            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-          </div>
-        </div>
-
-        <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-1">
-          {stat}
-        </h3>
-        <p className="text-[10px] sm:text-xs font-bold text-blue-600 uppercase tracking-wide mb-3 sm:mb-4">
-          {label}
-        </p>
-
-        <div className="border-t border-slate-200 pt-3 sm:pt-4 mt-auto">
-          <p className="font-semibold text-slate-700 text-sm">{desc}</p>
-          <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-normal">
-            {detail}
-          </p>
-        </div>
-      </motion.div>
-    </FadeIn>
   );
 }
 
@@ -709,11 +869,11 @@ function MethodSection() {
         The Scientific Positioning System
       </h2>
 
-      {/* Vertical Line: Left aligned on mobile, centered on desktop */}
-      <div className="absolute left-[31px] sm:left-[35px] md:left-1/2 top-32 bottom-32 w-[2px] bg-slate-200 md:-translate-x-1/2">
+      {/* Vertical Line */}
+      <div className="absolute left-[31px] sm:left-[35px] md:left-1/2 top-32 bottom-32 w-[2px] bg-slate-300/50 md:-translate-x-1/2 shadow-[inset_1px_1px_2px_#d1d9e6]">
         <motion.div
           style={{ scaleY: scrollYProgress }}
-          className="w-full h-full bg-blue-600 origin-top"
+          className="w-full h-full bg-blue-600 origin-top shadow-[0_0_10px_rgba(37,99,235,0.5)]"
         />
       </div>
 
@@ -726,7 +886,9 @@ function MethodSection() {
             } relative`}
           >
             {/* Dot Indicator */}
-            <div className="absolute left-[24px] sm:left-[28px] md:left-1/2 -translate-x-0 md:-translate-x-1/2 w-4 h-4 rounded-full bg-white border-4 border-blue-600 z-10 shadow-[0_0_0_4px_#f5f5f5] mt-1.5 md:mt-0" />
+            <div
+              className={`absolute left-[24px] sm:left-[28px] md:left-1/2 -translate-x-0 md:-translate-x-1/2 w-4 h-4 rounded-full bg-[#E0E5EC] border-2 border-blue-600 z-10 shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] mt-1.5 md:mt-0`}
+            />
 
             <div
               className={`pl-16 md:pl-0 w-full md:w-[45%] ${
@@ -735,7 +897,7 @@ function MethodSection() {
             >
               <FadeIn delay={i * 0.1}>
                 <div
-                  className={`${NEU_CARD} p-5 sm:p-8 hover:scale-[1.02] transition-transform`}
+                  className={`${NEU_FLAT} p-5 sm:p-8 hover:scale-[1.02] transition-transform`}
                 >
                   <div
                     className={`mb-3 flex items-center gap-3 ${
@@ -770,7 +932,7 @@ function CTASection() {
   return (
     <section className="max-w-5xl mx-auto px-4 text-center">
       <div
-        className={`${NEU_CARD} px-4 sm:px-8 py-16 md:py-24 relative overflow-hidden`}
+        className={`${NEU_FLAT} px-4 sm:px-8 py-16 md:py-24 relative overflow-hidden`}
       >
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
 
@@ -788,7 +950,9 @@ function CTASection() {
 
           <div className="flex justify-center">
             <Magnetic strength={0.3}>
-              <button className="px-8 py-4 rounded-full bg-blue-600 text-white font-bold shadow-[0_18px_35px_rgba(37,99,235,0.55)] hover:shadow-[inset_4px_4px_10px_rgba(15,23,42,0.45)] hover:bg-blue-700 transition-all active:scale-95 text-sm sm:text-base">
+              <button
+                className={`${NEU_CONVEX} px-8 py-4 font-bold text-blue-700 transition-all hover:-translate-y-1 active:scale-95 text-sm sm:text-base`}
+              >
                 Book Positioning Audit
               </button>
             </Magnetic>
