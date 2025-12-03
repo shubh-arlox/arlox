@@ -66,7 +66,7 @@ const columns = [
     title: "Programs",
     links: [
       "Arloxian Media Buyer Academy",
-      "D2C Fashion E‑commerce",
+      "D2C Fashion E-commerce",
       "Agency Growth Accelerator",
       "Arloxian Creative School",
       "Arloxian Copywriting School",
@@ -79,34 +79,38 @@ const columns = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#111827] text-[#9ca3b8] text-xs md:text-[11px]">
-      <div className="max-w-6xl mx-auto px-4 py-10 md:py-14">
-        {/* Top row: logo + columns */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
-          {/* Logo + tagline */}
-          <div className="w-full lg:w-1/5 space-y-3">
+    <footer className="w-full bg-[#111827] text-[#9ca3b8] text-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        
+        {/* Top Section */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+          
+          {/* Logo Section */}
+          <div className="w-full lg:w-1/5 space-y-4">
             <Image
               src="/Arlox_logo_white.jpg"
               alt="Arlox.io"
-              width={140}
-              height={40}
-              className="h-8 w-auto"
+              width={150}
+              height={50}
+              className="h-10 w-auto object-contain"
             />
-            <div className="text-[11px] leading-relaxed text-[#e5e7eb]">
+
+            <div className="text-[12px] leading-relaxed text-[#e5e7eb]">
               <p>You Built It.</p>
               <p>We Scaled It.</p>
             </div>
-            <div className="pt-4 space-y-1 text-[11px]">
+
+            <div className="pt-2 space-y-1 text-[12px]">
               <p className="font-semibold text-[#e5e7eb]">Arloxian Free</p>
-              <p>Community</p>
+              <p className="hover:text-white cursor-pointer">Community</p>
             </div>
           </div>
 
-          {/* Link columns */}
-          <div className="flex-1 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
+          {/* Columns */}
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {columns.map((col) => (
-              <div key={col.title} className="space-y-2">
-                <p className="font-semibold text-[#e5e7eb] text-[11px]">
+              <div key={col.title} className="space-y-3">
+                <p className="font-semibold text-[#e5e7eb] text-[12px]">
                   {col.title}
                 </p>
                 <ul className="space-y-1.5">
@@ -122,37 +126,55 @@ export default function Footer() {
               </div>
             ))}
           </div>
+
         </div>
 
-        {/* Social row */}
-        <div className="mt-8 border-t border-[#1f2937] pt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-          <div className="space-x-4 text-[11px]">
-            <span className="font-semibold text-[#e5e7eb]">Media</span>
-            <span className="hover:text-white cursor-pointer">LinkedIn</span>
-            <span className="hover:text-white cursor-pointer">Youtube</span>
-            <span className="hover:text-white cursor-pointer">Facebook</span>
-            <span className="hover:text-white cursor-pointer">Instagram</span>
-            <span className="hover:text-white cursor-pointer">X</span>
-            <span className="hover:text-white cursor-pointer">TikTok</span>
-            <span className="hover:text-white cursor-pointer">Podcasts</span>
-            <span className="hover:text-white cursor-pointer">Press</span>
+        {/* Social Section */}
+        <div className="mt-10 border-t border-[#1f2937] pt-5">
+          <div className="flex flex-wrap gap-4 text-[12px]">
+            <span className="font-semibold text-[#e5e7eb] pr-2">Media:</span>
+            {[
+              "LinkedIn",
+              "Youtube",
+              "Facebook",
+              "Instagram",
+              "X",
+              "TikTok",
+              "Podcasts",
+              "Press",
+            ].map((platform) => (
+              <span
+                key={platform}
+                className="hover:text-white cursor-pointer transition-colors"
+              >
+                {platform}
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* Bottom legal row */}
-        <div className="mt-4 border-t border-[#1f2937] pt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <p className="text-[10px] text-[#6b7280]">
-            Copyright © 2025 Arlox.io. All Rights Reserved
+        {/* Legal */}
+        <div className="mt-6 border-t border-[#1f2937] pt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p className="text-[11px] text-[#6b7280]">
+            Copyright © {new Date().getFullYear()} Arlox.io. All Rights Reserved
           </p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px]">
-            <span className="hover:text-white cursor-pointer">Privacy Policy</span>
-            <span className="hover:text-white cursor-pointer">Terms of Service</span>
-            <span className="hover:text-white cursor-pointer">Press &amp; Media</span>
-            <span className="hover:text-white cursor-pointer">GDPR</span>
-            <span className="hover:text-white cursor-pointer">Earnings Disclaimer</span>
-            <span className="hover:text-white cursor-pointer">Refunds &amp; Cancellations</span>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-[11px]">
+            {[
+              "Privacy Policy",
+              "Terms of Service",
+              "Press & Media",
+              "GDPR",
+              "Earnings Disclaimer",
+              "Refunds & Cancellations",
+            ].map((item) => (
+              <span key={item} className="hover:text-white cursor-pointer">
+                {item}
+              </span>
+            ))}
           </div>
         </div>
+
       </div>
     </footer>
   );
