@@ -97,17 +97,22 @@ const HeroSection = () => (
   <section className="pt-36 pb-20 px-6 relative overflow-hidden">
     <div className="max-w-7xl mx-auto relative z-10">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-7xl font-extrabold text-slate-800 mb-8 leading-tight tracking-tight">
-          Most Fashion Brands Waste <span className="text-red-500">60%</span> of
-          Ad Budget on <br />
-          <span className="relative inline-block mt-2 text-[#667eea]">
-            Generic Positioning.
-          </span>
-        </h1>
-        <p className="text-xl text-slate-500 max-w-3xl mx-auto mb-10 font-medium leading-relaxed">
-          We Engineer Your Unique Market Position That Multiplies ROAS by{" "}
-          <span className="text-[#667eea] font-bold">3-7x</span>—Guaranteed.
-        </p>
+         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-800 leading-[1.1] sm:leading-[0.95] tracking-tight mb-6">
+                      Become The <br />
+                      <span
+                        className={"bg-clip-text text-transparent bg-gradient-to-r from-[#385179] via-[#4f46e5] to-[#7c3aed]"}
+                      >
+                        Only Choice.
+                      </span>
+                    </h1>
+        <p className="text-base text-center sm:text-lg text-slate-500 max-w-lg mx-auto leading-relaxed mb-8">
+  Scientific Positioning: The proven methodology for market
+  dominance. Replace intuition with{" "}
+  <span className="font-semibold text-slate-700">
+    irrefutable data
+  </span>
+  .
+</p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <NeumorphicButton variant="primary">
             Book Positioning Audit <ArrowRight size={16} />
