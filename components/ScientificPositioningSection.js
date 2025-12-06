@@ -659,6 +659,7 @@ export default function App() {
       <ComparisonTable />
       <ObjectionSection />
       <FooterCTA />
+      
     </div>
   );
 }

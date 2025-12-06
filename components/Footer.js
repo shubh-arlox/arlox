@@ -81,10 +81,8 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#111827] text-[#9ca3b8] text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          
           {/* Logo Section */}
           <div className="w-full lg:w-1/5 space-y-4">
             <Image
@@ -102,7 +100,9 @@ export default function Footer() {
 
             <div className="pt-2 space-y-1 text-[12px]">
               <p className="font-semibold text-[#e5e7eb]">Arloxian Free</p>
-              <p className="hover:text-white cursor-pointer">Community</p>
+              <a href="#" className="hover:text-white cursor-pointer block">
+                Community
+              </a>
             </div>
           </div>
 
@@ -114,19 +114,18 @@ export default function Footer() {
                   {col.title}
                 </p>
                 <ul className="space-y-1.5">
-                  {col.links.map((link) => (
-                    <li
-                      key={link}
-                      className="hover:text-white transition-colors cursor-pointer"
-                    >
-                      {link}
+                  {col.links.map((link, idx) => (
+                    /* key is now unique: column title + index (stable enough for static lists) */
+                    <li key={`${col.title}-${idx}`} className="hover:text-white transition-colors">
+                      <a href="#" className="text-[12px] cursor-pointer">
+                        {link}
+                      </a>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-
         </div>
 
         {/* Social Section */}
@@ -143,12 +142,9 @@ export default function Footer() {
               "Podcasts",
               "Press",
             ].map((platform) => (
-              <span
-                key={platform}
-                className="hover:text-white cursor-pointer transition-colors"
-              >
+              <a key={platform} href="#" className="hover:text-white cursor-pointer transition-colors text-[12px]">
                 {platform}
-              </span>
+              </a>
             ))}
           </div>
         </div>
@@ -168,13 +164,12 @@ export default function Footer() {
               "Earnings Disclaimer",
               "Refunds & Cancellations",
             ].map((item) => (
-              <span key={item} className="hover:text-white cursor-pointer">
+              <a key={item} href="#" className="hover:text-white cursor-pointer text-[11px]">
                 {item}
-              </span>
+              </a>
             ))}
           </div>
         </div>
-
       </div>
     </footer>
   );
