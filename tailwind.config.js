@@ -1,7 +1,9 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,jsx}",
-    "./components/**/*.{js,jsx}"
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", // Ensure this line exists if using App Router
+    "./src/**/*.{js,ts,jsx,tsx,mdx}", // Ensure this line exists if using src directory
   ],
   theme: {
     extend: {
