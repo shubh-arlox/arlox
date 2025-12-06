@@ -2,6 +2,7 @@
 "use client";
 
 import { FlaskConical, Database, Layout, Shield, BarChart3 } from "lucide-react";
+import WhatsappCTA from "./WhatsAppCTA";
 
 export default function ScientificAdsGrid() {
   return (
@@ -87,10 +88,12 @@ function CTACard() {
           Stop guessing. Start engineering your growth.
         </p>
       </div>
+<WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+  <button className="mt-5 inline-flex items-center justify-center rounded-[999px] bg-white px-4 py-2 text-xs md:text-sm font-semibold text-[#2563eb] shadow-[6px_6px_14px_rgba(185,194,211,0.5),-6px_-6px_14px_rgba(255,255,255,1)]">
+    Audit Your Brand
+  </button>
+</WhatsappCTA>
 
-      <button className="mt-5 inline-flex items-center justify-center rounded-[999px] bg-white px-4 py-2 text-xs md:text-sm font-semibold text-[#2563eb] shadow-[6px_6px_14px_rgba(185,194,211,0.5),-6px_-6px_14px_rgba(255,255,255,1)]">
-        Audit Your Brand
-      </button>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 "use client";
 
 import { Zap, Shield, Lock, ArrowRight } from "lucide-react";
+import WhatsappCTA from "./WhatsAppCTA";
 
 const items = [
   {
@@ -95,7 +96,7 @@ export default function TrinitySection() {
         ensuring you go from anxious to unstoppable.
       </p>
     </div>
-
+<WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
     <button
       className="
         self-start md:self-auto
@@ -113,6 +114,7 @@ export default function TrinitySection() {
       Start Scaling Today
       <ArrowRight className="w-4 h-4" />
     </button>
+    </WhatsappCTA>
   </div>
 </div>
 

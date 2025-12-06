@@ -4,6 +4,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
+import WhatsappCTA from "./WhatsAppCTA";
 
 export default function TenantOwnerSection() {
   return (
@@ -24,15 +25,19 @@ export default function TenantOwnerSection() {
         <FlywheelCard />
       </div>
 
-      {/* CTA button */}
-      <div className="mt-10 flex justify-center">
-        <button className="relative inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#f5f6fa] shadow-[10px_10px_26px_rgba(143,155,179,0.35),-10px_-10px_26px_rgba(255,255,255,0.96)]">
-          <span className="px-4 py-2 rounded-full bg-white text-sm md:text-base font-semibold text-[#2550b0] shadow-[6px_6px_12px_rgba(143,155,179,0.3),-6px_-6px_12px_rgba(255,255,255,0.98)]">
-            Start Scaling Today
-          </span>
-          <ArrowRight className="w-4 h-4 text-[#2550b0]" />
-        </button>
-      </div>
+     {/* CTA button */}
+<div className="mt-10 flex justify-center">
+ <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+    {/* CTA Button UI passed as children */}
+    <button className="relative inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#f5f6fa] shadow-[10px_10px_26px_rgba(143,155,179,0.35),-10px_-10px_26px_rgba(255,255,255,0.96)]">
+      <span className="px-4 py-2 rounded-full bg-white text-sm md:text-base font-semibold text-[#2550b0] shadow-[6px_6px_12px_rgba(143,155,179,0.3),-6px_-6px_12px_rgba(255,255,255,0.98)]">
+        Start Scaling Today
+      </span>
+      <ArrowRight className="w-4 h-4 text-[#2550b0]" />
+    </button>
+  </WhatsappCTA>
+</div>
+
     </section>
   );
 }

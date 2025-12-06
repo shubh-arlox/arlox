@@ -18,6 +18,7 @@ import {
   Leaf,
   Percent,
 } from "lucide-react";
+import WhatsappCTA from "./WhatsAppCTA";
 
 /* ========================================================================== */
 /* 1. UI PRIMITIVES & SHARED COMPONENTS                                       */
@@ -141,12 +142,20 @@ const HeroSection = () => (
           <span className="font-semibold text-slate-700">irrefutable data</span>.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
+           <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
           <NeumorphicButton variant="primary">
             Book Positioning Audit <ArrowRight size={16} />
           </NeumorphicButton>
-          <NeumorphicButton variant="secondary">
-            The Science <ArrowDown size={16} />
-          </NeumorphicButton>
+          </WhatsappCTA>
+         <NeumorphicButton 
+  variant="secondary"
+  onClick={() => {
+    // This finds the section with id="method" and scrolls to it
+    document.getElementById("method")?.scrollIntoView({ behavior: "smooth" });
+  }}
+>
+  The Science <ArrowDown size={16} />
+</NeumorphicButton>
         </div>
       </motion.div>
 
@@ -635,9 +644,11 @@ const FooterCTA = () => (
           Every week you delay is another <span className="text-slate-800 font-mono">$10K</span> in lost revenue.
         </p>
         <div className="flex flex-col items-center gap-6">
+         <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
           <NeumorphicButton variant="primary" className="text-xl px-12 py-6 w-full md:w-auto">
             Book Positioning Audit <ArrowRight className="ml-2" />
           </NeumorphicButton>
+          </WhatsappCTA>
         </div>
       </motion.div>
     </div>

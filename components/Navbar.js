@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
+import WhatsAppCTA from "./WhatsAppCTA";
 
 /* NAV DATA (same as before) */
 const NAV_ITEMS = [
@@ -170,9 +171,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Fixed nav: always visible. Use background blur and shadow to match theme. */}
+      {/* Fixed nav: CHANGED z-50 to z-40 */}
       <header
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-40"
         style={{ height: NAV_HEIGHT }}
         aria-hidden={false}
       >
@@ -215,12 +216,12 @@ export default function Navbar() {
 
                 {/* Right side */}
                 <div className="flex items-center gap-3">
-                  <a
-                    href="tel:+911234567890"
-                    className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-slate-300 text-[#0f1724] hover:bg-white/60"
+                  <WhatsAppCTA 
+                    whatsappNumber="+919910220335" 
+                    calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
                   >
                     <Phone size={16} /> <span className="text-sm">Call</span>
-                  </a>
+                  </WhatsAppCTA>
 
                   <button
                     className="md:hidden p-2 rounded-lg hover:bg-white/60"
@@ -236,10 +237,10 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Desktop mega menu */}
+        {/* Desktop mega menu - CHANGED z-50 to z-45 */}
         {openMega && (
           <div
-            className="absolute left-0 right-0 top-full translate-y-2 z-50"
+            className="absolute left-0 right-0 top-full translate-y-2 z-45"
             role="dialog"
             onMouseEnter={() => openHover(openMega)}
             onMouseLeave={closeHover}
@@ -344,10 +345,17 @@ export default function Navbar() {
               </ul>
 
               <div className="px-4 py-3 border-t border-white/70 flex gap-2">
-                <a href="tel:+911234567890" className="px-4 py-2 rounded-full inline-flex items-center gap-2 bg-[#0f1724] text-white text-sm font-medium">
+                <WhatsAppCTA 
+                  whatsappNumber="+919910220335" 
+                  calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+                >
                   <Phone size={16} /> Call
-                </a>
-                <Link href="/book" className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium ml-auto" onClick={() => setOpenMobile(false)}>
+                </WhatsAppCTA>
+                <Link 
+                  href="/book" 
+                  className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium ml-auto" 
+                  onClick={() => setOpenMobile(false)}
+                >
                   Book a Call
                 </Link>
               </div>

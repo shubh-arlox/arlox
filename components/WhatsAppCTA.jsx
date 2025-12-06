@@ -2,121 +2,360 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Phone, X } from "lucide-react";
 
-/* Inline WhatsApp SVG */
+/* -------------------------------- Whatsapp Icon -------------------------------- */
 const WhatsappIcon = (props) => (
-  <svg viewBox="0 0 24 24" width="1em" height="1em" {...props} xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden>
+  <svg
+    viewBox="0 0 24 24"
+    width="1em"
+    height="1em"
+    {...props}
+    fill="currentColor"
+  >
     <path d="M16.6 14c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.2-.5-.5-1-1.1-1.4-1.7-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.3.2-.4.1-.1.1-.3 0-.4-.1-.1-.6-1.3-.8-1.8-.1-.7-.3-.7-.5-.7h-.5c-.2 0-.5.2-.6.3-.6.6-.9 1.3-.9 2.1.1.9.4 1.8 1 2.6 1.1 1.6 2.5 2.9 4.2 3.7.5.2.9.4 1.4.5.5.2 1 .2 1.6.1.7-.1 1.3-.6 1.7-1.2.2-.4.2-.8.1-1.2l-.4-.2zM19 7.5c-2.4-3.9-8.7-3.9-12.4 0-3.2 3.2-3.8 8.1-1.6 12L2 22l5.3-1.4c1.5.8 3.1 1.2 4.7 1.2 5.5 0 9.9-4.4 9.9-9.9 0-2.6-1-5.1-2.8-7z" />
   </svg>
 );
 
-/* Small helper: normalize phone -> digits only (E.164 without +) */
-function normalizePhone(phone) {
-  if (!phone) return "";
-  return phone.replace(/\D/g, "");
+/* -------------------------------- Composer -------------------------------- */
+function WhatsAppComposer({ phoneNumber, defaultMessage = "", onOpen }) {
+  const templates = [
+    "Hi — I'd like to book a strategy call about growth.",
+    "Hey team — I'm interested in your Scientific Positioning service.",
+    "Hello — I want a quick audit of my ads and creative strategy.",
+  ];
+  const emojis = ["🚀", "📈", "💬", "🤝", "⚡"];
+
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [message, setMessage] = useState(defaultMessage || templates[0]);
+  const [copied, setCopied] = useState(false);
+  const charLimit = 600;
+
+  const insertEmoji = (emoji) => {
+    setMessage((prev) =>
+      prev.length + emoji.length + 1 > charLimit ? prev : prev + " " + emoji
+    );
+  };
+
+  const copyMsg = async () => {
+    await navigator.clipboard.writeText(message);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+
+  const openWhatsApp = () => {
+    const phone = phoneNumber.replace(/\D/g, "");
+    if (!phone) return;
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    if (onOpen) onOpen();
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div
+      className="mt-5 p-6 rounded-2xl bg-[#f4f6f8]"
+      style={{
+        boxShadow:
+          "12px 16px 36px rgba(18,24,32,0.55), -10px -10px 28px rgba(255,255,255,0.04)",
+      }}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-12 h-12 flex items-center justify-center rounded-full"
+            style={{
+              background: "#f4f6f8",
+              boxShadow:
+                "inset 6px 6px 16px rgba(18,24,32,0.20), inset -6px -6px 16px rgba(255,255,255,0.03)",
+            }}
+          >
+            <WhatsappIcon className="w-6 h-6 text-[#25D366]" />
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold text-[#111827]">
+              Message on WhatsApp
+            </p>
+            <p className="text-xs text-[#6b7280]">
+              Choose a template or write your message
+            </p>
+          </div>
+        </div>
+
+        <p className="text-xs text-[#6b7280]">{message.length}/600</p>
+      </div>
+
+      {/* Templates */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {templates.map((t) => (
+          <button
+            key={t}
+            onClick={() => {
+              setSelectedTemplate(t);
+              setMessage(t);
+            }}
+            className={`
+              px-4 py-1.5 rounded-full text-sm transition
+              ${
+                selectedTemplate === t
+                  ? "text-white bg-[#5b6ae6]"
+                  : "bg-[#f4f6f8] text-[#374151]"
+              }
+            `}
+            style={{
+              boxShadow:
+                selectedTemplate === t
+                  ? "6px 6px 16px rgba(10,14,20,0.35), -6px -6px 14px rgba(255,255,255,0.03)"
+                  : "6px 6px 14px rgba(18,24,32,0.18), -6px -6px 12px rgba(255,255,255,0.03)",
+            }}
+          >
+            {t.length > 38 ? t.slice(0, 38) + "…" : t}
+          </button>
+        ))}
+      </div>
+
+      {/* Textarea */}
+      <div
+        className="rounded-xl p-4 mb-4"
+        style={{
+          background: "#f4f6f8",
+          boxShadow:
+            "inset 6px 6px 16px rgba(18,24,32,0.18), inset -6px -6px 14px rgba(255,255,255,0.03)",
+        }}
+      >
+        <textarea
+          rows={4}
+          value={message}
+          onChange={(e) => setMessage(e.target.value.slice(0, charLimit))}
+          className="w-full bg-transparent text-sm focus:outline-none resize-none"
+        />
+      </div>
+
+      {/* Emoji Row + Actions */}
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex gap-1">
+          {emojis.map((em) => (
+            <button
+              key={em}
+              onClick={() => insertEmoji(em)}
+              className="text-lg hover:scale-110 transition"
+            >
+              {em}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={copyMsg}
+            className="px-4 py-2 text-xs rounded-lg bg-[#f4f6f8]"
+            style={{
+              boxShadow:
+                "6px 6px 16px rgba(18,24,32,0.22), -6px -6px 12px rgba(255,255,255,0.02)",
+            }}
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
+
+          <button
+            onClick={() => {
+              setMessage(defaultMessage || templates[0]);
+              setSelectedTemplate(null);
+            }}
+            className="px-4 py-2 text-xs rounded-lg bg-[#f4f6f8]"
+            style={{
+              boxShadow:
+                "6px 6px 16px rgba(18,24,32,0.22), -6px -6px 12px rgba(255,255,255,0.02)",
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      {/* WhatsApp Primary Button */}
+      <button
+        onClick={openWhatsApp}
+        className="
+          w-full py-3 rounded-full text-white font-semibold text-base
+          flex items-center justify-center gap-2 active:scale-[0.98] transition
+        "
+        style={{
+          background: "#25D366",
+          boxShadow: "0 12px 28px rgba(4,9,12,0.45)",
+        }}
+      >
+        <WhatsappIcon className="w-5 h-5" />
+        Open WhatsApp
+      </button>
+    </div>
+  );
 }
 
-/* Reusable component */
-export default function WhatsAppCTA({
-  whatsappNumber = "919910220335", // default (replace)
+/* ------------------------------- MAIN CTA ------------------------------- */
+
+export default function WhatsappCTA({
+  whatsappNumber = "919910220335",
   calendlyUrl = "https://calendly.com/arlox-/strategy-call-1",
-  buttonLabel = "Start Scaling Today",
-  defaultMessages = [
-    "Hey! I want to scale smarter, not harder. Can we talk?",
-    "Quick question — can Arlox’s Scientific Positioning work for my brand?",
-    "Hi! I'd like a quick audit of my marketing. What do you need from me?",
-    "I’m ready to scale. Could you guide me through the next steps?",
-    "Hello! Can you help me identify my Blue Swan advantage?"
-  ],
+  children,
 }) {
   const [open, setOpen] = useState(false);
-  const [randomMessage, setRandomMessage] = useState(defaultMessages[0]);
+  const [mounted, setMounted] = useState(false);
 
+  // Client-side mounting check
   useEffect(() => {
-    // pick a random message once on mount/open for slight variety
-    setRandomMessage(defaultMessages[Math.floor(Math.random() * defaultMessages.length)]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setMounted(true);
   }, []);
 
+  // Prevent scroll when modal is open
   useEffect(() => {
-    // lock body scroll when modal open
-    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
+  // Close on Escape key
   useEffect(() => {
-    const onKey = (e) => {
+    if (!open) return;
+    const handleEsc = (e) => {
       if (e.key === "Escape") setOpen(false);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [open]);
 
-  const norm = normalizePhone(whatsappNumber);
-  const waUrl = norm ? `https://wa.me/${norm}?text=${encodeURIComponent(randomMessage)}` : null;
+  // Modal content
+  const modalContent = open ? (
+    <div
+      className="fixed inset-0 flex items-center justify-center p-6"
+      style={{ zIndex: 9999 }}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        onClick={() => setOpen(false)}
+      />
+
+      <div className="relative z-10 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div
+          className="rounded-3xl p-6 bg-[#f4f6f8]"
+          style={{
+            boxShadow:
+              "16px 20px 48px rgba(18,24,32,0.55), -12px -12px 34px rgba(255,255,255,0.03)",
+          }}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold text-[#111827]">
+              Book an Appointment
+            </h2>
+
+            <button
+              className="p-2 rounded-lg hover:bg-white/40"
+              onClick={() => setOpen(false)}
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Calendly Button */}
+          <a
+            href={calendlyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+            className="block w-full rounded-xl py-3 px-4 mb-6 bg-[#f4f6f8]"
+            style={{
+              boxShadow:
+                "8px 10px 28px rgba(18,24,32,0.38), -6px -6px 18px rgba(255,255,255,0.03)",
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center"
+                style={{
+                  background: "#eef2ff",
+                  boxShadow:
+                    "inset 4px 4px 10px rgba(18,24,32,0.12), inset -4px -4px 8px rgba(255,255,255,0.03)",
+                }}
+              >
+                <Phone size={18} className="text-[#203b80]" />
+              </div>
+
+              <span className="text-base font-semibold">Book Call Now</span>
+            </div>
+          </a>
+
+          {/* WhatsApp Composer */}
+          <WhatsAppComposer
+            phoneNumber={whatsappNumber}
+            defaultMessage="Hi — I'd like to book a strategy call."
+            onOpen={() => setOpen(false)}
+          />
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <>
-      {/* Trigger button (you can place this wherever you want) */}
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="button-neumorphic mt-4 px-7 py-3 text-sm md:text-base font-semibold rounded-full shadow-neumorphic hover:scale-105 transition-transform text-[#1f2933]"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-      >
-        {buttonLabel}
-      </button>
-
-      {/* Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Book an appointment">
-          {/* overlay */}
+      {/* Trigger - Just render children directly with click handler */}
+      {children ? (
+        <div
+          onClick={() => setOpen(true)}
+          className="inline-block cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setOpen(true);
+            }
+          }}
+        >
+          {children}
+        </div>
+      ) : (
+        // Standalone button - your original design
+        <div className="flex justify-center">
           <button
-            type="button"
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
-            aria-label="Close modal"
-          />
-
-          <div className="relative z-10 w-full max-w-md bg-white/95 rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-[#2f3f63]">Book an Appointment</h2>
-              <button type="button" className="p-2 rounded-md hover:bg-gray-200" onClick={() => setOpen(false)} aria-label="Close">
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <a
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 button-neumorphic rounded-xl hover:scale-[1.02] transition-transform"
-                aria-label="Book a call (opens in new tab)"
-              >
-                <Phone size={22} />
-                <span className="text-base md:text-lg font-medium">Book Call Now</span>
-              </a>
-
-              <a
-                href={waUrl || "#"}
-                onClick={() => !waUrl && alert("WhatsApp number not configured")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 button-neumorphic rounded-xl hover:scale-[1.02] transition-transform"
-                aria-label="Message on WhatsApp (opens in new tab)"
-              >
-                <WhatsappIcon className="w-5 h-5" />
-                <span className="text-base md:text-lg font-medium">Message on WhatsApp</span>
-              </a>
-            </div>
-          </div>
+            onClick={() => setOpen(true)}
+            className="
+              inline-flex items-center gap-3 px-8 py-3 rounded-full 
+              bg-[#f6f8fb]
+              shadow-[8px_8px_16px_rgba(163,177,198,0.6),-8px_-8px_16px_rgba(255,255,255,0.5)]
+              hover:shadow-[6px_6px_12px_rgba(163,177,198,0.6),-6px_-6px_12px_rgba(255,255,255,0.5)]
+              active:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.5)]
+              transition-all duration-200
+            "
+          >
+            <span
+              className="
+                px-6 py-2 rounded-full font-semibold text-[#2550b0] 
+                bg-[#f5f5f5]
+                shadow-[inset_2px_2px_5px_rgba(163,177,198,0.4),inset_-2px_-2px_5px_rgba(255,255,255,0.4)]
+                hover:shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.5)]
+                active:shadow-[inset_4px_4px_10px_rgba(163,177,198,0.6),inset_-4px_-4px_10px_rgba(255,255,255,0.3)]
+                transition-all duration-200
+              "
+            >
+              Start Scaling Today
+            </span>
+          </button>
         </div>
       )}
+
+      {/* Render modal via Portal to document.body */}
+      {mounted && modalContent && createPortal(modalContent, document.body)}
     </>
   );
 }

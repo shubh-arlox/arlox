@@ -2,6 +2,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import WhatsappCTA from "./WhatsAppCTA";
 
 export default function FinalCtaSection() {
   return (
@@ -24,11 +25,13 @@ export default function FinalCtaSection() {
         {/* Buttons row */}
         <div className="flex flex-col sm:flex-row items-center gap-4">
           {/* Primary CTA – neumorphic pill */}
+          <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
           <button className="inline-flex items-center justify-center rounded-full bg-[#f5f6fa] px-9 py-3 shadow-[12px_12px_30px_rgba(163,175,195,0.5),-10px_-10px_26px_rgba(255,255,255,0.98)]">
             <span className="text-sm md:text-base font-semibold text-[#111827]">
               Start Scaling Today
             </span>
           </button>
+          </WhatsappCTA>
 
           {/* Secondary link */}
           <button className="inline-flex items-center justify-center gap-2 text-sm md:text-base font-semibold text-[#4b5563]">
