@@ -79,11 +79,13 @@ const columns = [
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#111827] text-[#9ca3b8] text-xs">
+    <footer className="w-full flex-none bg-[#111827] text-[#9ca3b8] text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        {/* Top Section */}
+
+        {/* Layout */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          {/* Logo Section */}
+
+          {/* Logo */}
           <div className="w-full lg:w-1/5 space-y-4">
             <Image
               src="/Arlox_logo_white.jpg"
@@ -110,49 +112,37 @@ export default function Footer() {
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {columns.map((col) => (
               <div key={col.title} className="space-y-3">
-                <p className="font-semibold text-[#e5e7eb] text-[12px]">
-                  {col.title}
-                </p>
+                <p className="font-semibold text-[#e5e7eb] text-[12px]">{col.title}</p>
                 <ul className="space-y-1.5">
                   {col.links.map((link, idx) => (
-                    /* key is now unique: column title + index (stable enough for static lists) */
                     <li key={`${col.title}-${idx}`} className="hover:text-white transition-colors">
-                      <a href="#" className="text-[12px] cursor-pointer">
-                        {link}
-                      </a>
+                      <a href="#" className="text-[12px] cursor-pointer">{link}</a>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
+
         </div>
 
-        {/* Social Section */}
+        {/* Social */}
         <div className="mt-10 border-t border-[#1f2937] pt-5">
           <div className="flex flex-wrap gap-4 text-[12px]">
             <span className="font-semibold text-[#e5e7eb] pr-2">Media:</span>
-            {[
-              "LinkedIn",
-              "Youtube",
-              "Facebook",
-              "Instagram",
-              "X",
-              "TikTok",
-              "Podcasts",
-              "Press",
-            ].map((platform) => (
-              <a key={platform} href="#" className="hover:text-white cursor-pointer transition-colors text-[12px]">
-                {platform}
-              </a>
-            ))}
+            {["LinkedIn","Youtube","Facebook","Instagram","X","TikTok","Podcasts","Press"]
+              .map((platform) => (
+                <a key={platform} href="#" className="hover:text-white transition-colors text-[12px]">
+                  {platform}
+                </a>
+              ))}
           </div>
         </div>
 
         {/* Legal */}
         <div className="mt-6 border-t border-[#1f2937] pt-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-[11px] text-[#6b7280]">
-            Copyright © {new Date().getFullYear()} Arlox.io. All Rights Reserved
+            © {new Date().getFullYear()} Arlox.io — All Rights Reserved
           </p>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-[11px]">
@@ -164,12 +154,13 @@ export default function Footer() {
               "Earnings Disclaimer",
               "Refunds & Cancellations",
             ].map((item) => (
-              <a key={item} href="#" className="hover:text-white cursor-pointer text-[11px]">
+              <a key={item} href="#" className="hover:text-white cursor-pointer">
                 {item}
               </a>
             ))}
           </div>
         </div>
+
       </div>
     </footer>
   );

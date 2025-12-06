@@ -1,22 +1,24 @@
 // app/layout.js
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-tr from-[#f5f5f5] to-[#e3e8ee] min-h-screen flex flex-col font-sans">
+      <body className="min-h-screen flex flex-col font-sans">
+        
+        {/* Navbar */}
         <Navbar />
-        <main className="w-full flex-1 overflow-x-hidden">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-            {children}
-          </div>
-          
+
+        {/* Main content must ALWAYS be flex-1 */}
+        <main className="flex-1 w-full">
+          {children}
         </main>
 
-        {/* Footer sits after main — not sticky, just part of page flow */}
-       
+        {/* Footer always LAST */}
+        <Footer />
+
       </body>
     </html>
   );

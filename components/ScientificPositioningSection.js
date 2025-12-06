@@ -650,7 +650,7 @@ const FooterCTA = () => (
 
 export default function App() {
   return (
-    <div className="min-h-screen text-slate-700 selection:bg-[#667eea] selection:text-white pb-10 bg-[#f5f5f5] font-sans">
+    <div className="w-full flex-1 text-slate-700 selection:bg-[#667eea] selection:text-white pb-10 font-sans">
       <HeroSection />
       <ProblemSection />
       <SolutionSection />
@@ -659,7 +659,6 @@ export default function App() {
       <ComparisonTable />
       <ObjectionSection />
       <FooterCTA />
-      
     </div>
   );
 }
