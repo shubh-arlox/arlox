@@ -56,7 +56,7 @@ const MEGA_CONTENT = {
       title: "Tools",
       items: [
         { label: "AI Bot", href: "/tools/ai-bot" },
-        { label: "CRO", href: "https://cro-arlox.vercel.app" },
+        
       ],
     },
   ],
@@ -112,6 +112,7 @@ const MEGA_CONTENT = {
         { label: "Van Channel", href: "/free/van-channel" },
         { label: "Dennis Channel", href: "/free/dennis-channel" },
         { label: "BROAS Tool", href: "/free/broas-tool" },
+        { label: "CRO", href: "https://cro-arlox.vercel.app" },
       ],
     },
   ],
@@ -215,7 +216,7 @@ export default function Navbar() {
                 </ul>
 
                 {/* Right side */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-8">
                   <WhatsAppCTA 
                     whatsappNumber="+919910220335" 
                     calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
@@ -286,82 +287,93 @@ export default function Navbar() {
           </div>
         )}
 
-        {/* Mobile menu */}
-        {openMobile && (
-          <div className="md:hidden pb-4 mt-2" style={{ marginTop: NAV_HEIGHT }}>
-            <div className="rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80">
-              <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
-                {NAV_ITEMS.map((item) => {
-                  const isOpen = mobileKey === item.key;
-                  return (
-                    <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
-                      <button
-                        onClick={() => setMobileKey((prev) => (prev === item.key ? null : item.key))}
-                        className="w-full flex items-center justify-between text-left select-none"
-                        aria-expanded={isOpen}
-                      >
-                        <span>{item.label}</span>
-                        <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
-                      </button>
+       {/* Mobile menu */}
+{openMobile && (
+  <div
+    className="md:hidden pb-4 mt-2 flex justify-center"
+    style={{ marginTop: NAV_HEIGHT }}
+  >
+    {/* Constrain width here: w-full with max-w-md and side padding from the parent */}
+    <div className="w-[calc(100%-2rem)] max-w-md rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80">
+      <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
+        {NAV_ITEMS.map((item) => {
+          const isOpen = mobileKey === item.key;
+          return (
+            <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
+              <button
+                onClick={() =>
+                  setMobileKey((prev) => (prev === item.key ? null : item.key))
+                }
+                className="w-full flex items-center justify-between text-left select-none"
+                aria-expanded={isOpen}
+              >
+                <span>{item.label}</span>
+                <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
+              </button>
 
-                      <div className={`mt-2 overflow-hidden transition-all duration-200 ${isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"}`}>
-                        {MEGA_CONTENT[item.key].map((col) => (
-                          <div key={col.title} className="px-2 py-1">
-                            <div className="text-xs uppercase text-slate-400 mb-1">{col.title}</div>
-                            {col.subtitle && <p className="text-[11px] text-slate-500 mb-1">{col.subtitle}</p>}
-                            <div className="grid gap-1">
-                              {col.items.map((link) =>
-                                isExternal(link.href) ? (
-                                  <a
-                                    key={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
-                                  >
-                                    {link.label}
-                                  </a>
-                                ) : (
-                                  <Link
-                                    key={link.label}
-                                    href={link.href}
-                                    className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
-                                    onClick={() => {
-                                      setOpenMobile(false);
-                                      setMobileKey(null);
-                                    }}
-                                  >
-                                    {link.label}
-                                  </Link>
-                                )
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="px-4 py-3 border-t border-white/70 flex gap-2">
-                <WhatsAppCTA 
-                  whatsappNumber="+919910220335" 
-                  calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
-                >
-                  <Phone size={16} /> Call
-                </WhatsAppCTA>
-                <Link 
-                  href="/book" 
-                  className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium ml-auto" 
-                  onClick={() => setOpenMobile(false)}
-                >
-                  Book a Call
-                </Link>
+              <div
+                className={`mt-2 overflow-hidden transition-all duration-200 ${
+                  isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                {MEGA_CONTENT[item.key].map((col) => (
+                  <div key={col.title} className="px-2 py-1">
+                    <div className="text-xs uppercase text-slate-400 mb-1">
+                      {col.title}
+                    </div>
+                    {col.subtitle && (
+                      <p className="text-[11px] text-slate-500 mb-1">
+                        {col.subtitle}
+                      </p>
+                    )}
+                    <div className="grid gap-1">
+                      {col.items.map((link) =>
+                        isExternal(link.href) ? (
+                          <a
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={link.label}
+                            href={link.href}
+                            className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                            onClick={() => {
+                              setOpenMobile(false);
+                              setMobileKey(null);
+                            }}
+                          >
+                            {link.label}
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          </div>
-        )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="px-4 py-3 border-t border-white/70 flex gap-2">
+        <Link
+          href="https://calendly.com/arlox-/strategy-call-1"
+          className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium ml-auto"
+          onClick={() => setOpenMobile(false)}
+        >
+          Book a Call
+        </Link>
+      </div>
+    </div>
+  </div>
+)}
+
       </header>
 
       {/* NAV SPACER - prevents content jumping under fixed nav */}
