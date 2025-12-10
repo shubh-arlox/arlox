@@ -8,6 +8,13 @@ import {
   Mic, GitBranch, Calculator, Map, RefreshCw, 
   CheckCircle, Lightbulb, HelpCircle, Clock, 
   XCircle, Linkedin, Twitter, Menu, Check , ChevronDown,
+  FileWarning,
+  AlertTriangle,
+  Cross,
+  RockingChair,
+   
+  Theater,
+  Book,
 } from 'lucide-react';
 import WhatsappCTA from '@/components/WhatsAppCTA';
 
@@ -66,7 +73,7 @@ const ArloxianLanding = () => {
             
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 text-gray-900 leading-[1.1]">
               Know More Than Your Competitors. <br />
-              <span className="text-gray-400">Spend Less Finding Out.</span>
+               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#385179] via-[#4f46e5] to-[#7c3aed]">Spend Less Finding Out.</span>
             </h1>
             
             <p className="text-lg text-gray-600 leading-relaxed mb-10 border-l-4 border-blue-500 pl-6">
@@ -272,7 +279,7 @@ const ArloxianLanding = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
             {/* Old Constraint */}
             <motion.div 
-              whileHover={{ scale: 1.02 }}
+              
               className={`${neuPressed} p-8 rounded-3xl opacity-70`}
             >
               <h3 className="text-xl font-bold text-gray-500 mb-6">Old Constraint (Manual Research)</h3>
@@ -404,7 +411,7 @@ const ArloxianLanding = () => {
                    <h4 className="font-bold text-blue-700 flex items-center gap-2">What Happens:</h4>
 
 <p className="text-sm text-gray-600 ml-5 mb-2 mt-2">
-  <li>Kickoff call: We audit your current customer data</li>
+<li>Kickoff call: We audit your current customer data</li>
 <li>Export existing customer records (CRM, Shopify, GA4)</li>
 <li>Identify top 20% revenue-generating customers</li>
 <li>Draft hypothesis document (who we think buys and why)</li>
@@ -1092,12 +1099,13 @@ Deliverable: 90-Day Execution Roadmap</p>
             <p className="text-gray-600 text-sm mb-4">
              Most agencies operate in the 'fast but blind' quadrant. Traditional research firms operate in the 'certain but prohibitively slow' quadrant.
               The Arloxian Protocol occupies the Pareto frontier: <strong>80% of the certainty in 20% of the time.</strong> <br/><br/>You're not choosing 'best.' You're choosing  <strong> which risk you're willing to take:<br/>
-            </strong><br/>
+            </strong>
+            </p>
              <p className="text-center font-semibold">
                         → Risk of slow intelligence gathering (opportunity cost)<br/>
                         → Risk of fast but uninformed execution (wasted ad spend)
                     </p>
-            </p>
+            
               <p className="insight-conclusion font-bold">We optimized for the middle: Fast enough to matter. Certain enough to bet on.</p>
           </div>
         </div>
@@ -1132,166 +1140,617 @@ Deliverable: 90-Day Execution Roadmap</p>
 
       {/* SECTION 7: COST OF INACTION */}
       <section className="py-24 px-6" id="cost-inaction">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">Every Month You Run Ads Without This Costs You $8,000-$25,000</h2>
-          <p className="text-gray-600 text-center mb-12">Not in fees. In wasted ad spend targeting the wrong people.</p>
+  <div className="max-w-5xl mx-auto">
+    <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+      Every Month You Run Ads Without This Costs You <span className="text-red-600">$8,000–$25,000</span>
+    </h2>
 
-          <div className={`${neuConvex} p-10 rounded-[40px]`}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              
-              {/* The Waste */}
-              <div>
-                <h4 className="font-bold text-red-500 mb-4 uppercase text-xs tracking-widest">Your Waste Projection (90 Days)</h4>
-                <div className="space-y-4">
-                  {[
-                      { m: "Month 1", t: "Testing wrong audiences", c: "$8K - $12K" },
-                      { m: "Month 2", t: "Iterating wrong foundation", c: "$7K - $10K" },
-                      { m: "Month 3", t: "Finally getting signal", c: "$5K - $8K" }
-                  ].map((item, i) => (
-                      <div key={i} className={`${neuPressed} p-4 rounded-xl flex justify-between items-center`}>
-                        <div>
-                        <span className="block text-xs font-bold text-gray-600">{item.m}</span>
-                        <span className="text-[10px] text-gray-400">{item.t}</span>
-                        </div>
-                        <span className="font-bold text-red-400">{item.c}</span>
+    <p className="text-gray-600 text-center mb-12">
+      Not in research fees. In wasted ad spend targeting the wrong people with the wrong message.
+    </p>
+
+    <div className={`${typeof neuConvex !== "undefined" ? neuConvex : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]"} p-8 rounded-[28px]`}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Left: calculator + breakdown */}
+        <div className="calculator-card">
+          <div className="calculator-content">
+            <p className="text-sm text-gray-700 mb-4">
+              If you're running ads without validated messaging:
+            </p>
+
+            <div className="cost-breakdown mb-6">
+              <h4 className="text-md font-semibold text-gray-800 mb-3">Cost Breakdown</h4>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li>→ <strong>60–70%</strong> of spend goes to "testing" (learning what doesn't work)</li>
+                <li>→ Average time to find winning message: <strong>3–6 months</strong></li>
+                <li>→ Typical inefficiency cost: <strong>40–50%</strong> of budget</li>
+              </ul>
+            </div>
+
+            {/* Waste projection */}
+            <div>
+              <h4 className="font-bold text-red-500 mb-4 uppercase text-xs tracking-widest">Your Waste Projection (90 Days)</h4>
+
+              <div className="space-y-3">
+                {[
+                  { m: "Month 1", t: "Testing wrong audiences", low: 8000, high: 12000 },
+                  { m: "Month 2", t: "Iterating wrong foundation", low: 7000, high: 10000 },
+                  { m: "Month 3", t: "Finally getting signal", low: 5000, high: 8000 }
+                ].map((item, i) => (
+                  <div key={i} className={`${typeof neuPressed !== "undefined" ? neuPressed : 'bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]'} p-4 rounded-xl flex justify-between items-center border border-white/20`}>
+                    <div>
+                      <span className="block text-xs font-bold text-gray-600">{item.m}</span>
+                      <span className="text-[11px] text-gray-500">{item.t}</span>
                     </div>
-                  ))}
-                  <div className="pt-4 border-t border-gray-300 flex justify-between items-center">
-                    <span className="font-bold text-gray-800">Total Opportunity Cost</span>
-                    <span className="font-bold text-red-600 text-xl">$20,000 - $30,000</span>
+
+                    <div className="text-right">
+                      <div className="font-bold text-red-500">{`$${(item.low/1000).toFixed(0)}K - $${(item.high/1000).toFixed(0)}K`}</div>
+                      {/* mini bar visual */}
+                      <div className="mt-2 w-36 h-2 rounded-full bg-white/60 overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${Math.round((item.low/12000)*100)}%`, background: 'linear-gradient(90deg, rgba(239,68,68,0.95), rgba(239,68,68,0.6))' }} />
+                      </div>
+                    </div>
                   </div>
+                ))}
+
+                <div className="pt-4 border-t border-gray-300 flex justify-between items-center">
+                  <span className="font-bold text-gray-800">Total 90-Day Opportunity Cost:</span>
+                  <span className="font-bold text-red-600 text-xl">$20,000 - $30,000</span>
                 </div>
               </div>
-
-              {/* The ROI */}
-              <div className="flex flex-col justify-center border-l border-gray-300 pl-0 md:pl-12 mt-8 md:mt-0">
-                <div className="mb-8">
-                  <p className="text-sm text-gray-600 mb-1">Meanwhile, Arloxian Research Cost:</p>
-                  <p className="text-4xl font-bold text-gray-800">$4,500</p>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Research Investment</span>
-                    <span className="font-bold text-gray-700">$4,500</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Waste Prevented</span>
-                    <span className="font-bold text-green-500">$20K - $30K</span>
-                  </div>
-                  <div className={`${neuFlat} p-4 rounded-xl bg-green-50 mt-4 text-center`}>
-                    <span className="block text-xs text-green-600 font-bold uppercase tracking-widest mb-1">Immediate ROI</span>
-                    <span className="text-3xl font-bold text-green-700">344% - 566%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Timeline Penalty Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <div className={`${neuFlat} p-6 rounded-2xl border-t-4 border-green-500`}>
-                <div className="flex items-center gap-2 mb-4">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <h4 className="font-bold text-gray-800">Start This Month</h4>
-                </div>
-                <p className="text-[10px] text-green-600 font-bold">2-month head start on competitors.</p>
-            </div>
-            <div className={`${neuFlat} p-6 rounded-2xl border-t-4 border-yellow-500`}>
-                <div className="flex items-center gap-2 mb-4">
-                    <Clock className="w-5 h-5 text-yellow-500" />
-                    <h4 className="font-bold text-gray-800">Wait 3 Months</h4>
-                </div>
-                <p className="text-xs text-gray-600">Wasted ad spend: ~$25K</p>
-            </div>
-            <div className={`${neuFlat} p-6 rounded-2xl border-t-4 border-red-500`}>
-                <div className="flex items-center gap-2 mb-4">
-                    <XCircle className="w-5 h-5 text-red-500" />
-                    <h4 className="font-bold text-gray-800">Wait 12 Months</h4>
-                </div>
-                <p className="text-xs text-gray-600">Wasted ad spend: $80K+</p>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* Right: ROI and comparison */}
+        <div className="flex flex-col justify-center border-l border-transparent md:border-l-gray-200 md:pl-8">
+          <div className="mb-8">
+            <p className="text-sm text-blue-800 font-bold mb-1">Meanwhile, Arloxian Research Cost:</p>
+            <p className="text-4xl font-bold text-gray-800">$4,500</p>
+            <p className="text-xs text-gray-500 mt-1">One-time, front-loaded intelligence</p>
+          </div>
+
+          <div className="space-y-3 text-sm">
+            <h4 className='font-bold text-xl'>The Math:</h4>
+            <div className="flex justify-between">
+              <span className="text-gray-500">Research Investment</span>
+              <span className="font-bold text-gray-700">$4,500</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-gray-500">Waste Prevented (90d)</span>
+              <span className="font-bold text-green-600">$20K - $30K (conservative)</span>
+            </div>
+              
+                <div className={`${typeof neuFlat !== "undefined" ? neuFlat : 'bg-green-50'} p-4 rounded-xl mt-4 text-center border border-white/30`}>
+             
+              <span className="block text-xs text-[#2E8B57] font-bold uppercase tracking-widest mt-1 mb-1">Net Savings:</span>
+              <span className="text-3xl font-bold ">$15,500 - $25,500</span>
+              <div className="text-xs text-gray-500 mt-1">(Based on prevented waste vs $4,500 cost)</div>
+            </div>
+
+            <div className={`${typeof neuFlat !== "undefined" ? neuFlat : 'bg-green-50'} p-4 rounded-xl mt-4 text-center border border-white/30`}>
+               {/* <span className="block  text-[#3CB371] text-xs font-bold uppercase tracking-widest mb-1">Net Savings: </span>
+                            <span className="block  text-l font-bold uppercase tracking-widest mb-1">$15,500 - $25,500</span> */}
+              <span className="block text-xs text-[#228B22] font-bold uppercase tracking-widest mt-1 mb-1">Immediate ROI</span>
+              <span className="text-3xl font-bold text-green-700">344% - 566%</span>
+              <div className="text-xs text-gray-500 mt-1">(You're not buying research. You're buying $20K-$30K back.)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div className={`${typeof neuConvex !== "undefined" ? neuConvex : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]"} p-8 pt-2 rounded-[28px] mt-10`}>
+   <div className="flex flex-col items-center text-center mt-10 max-w-md mx-auto space-y-3">
+
+  <div className="flex items-center gap-2">
+    <h4
+  className="
+    font-bold text-4xl 
+    bg-gradient-to-r from-[#8A2BE2] via-[#FF69B4] to-[#FF8C00]
+    text-transparent bg-clip-text
+    drop-shadow-sm
+  "
+>
+  The Musical Chair
+</h4>
+    
+  </div>
+
+  <p className="text-sm text-gray-600">
+    Brands often wait for the “right moment” before committing to their campaign — 
+    and just like the game of musical chairs, they miss the only opportunity they have.
+  </p>
+
+</div>
+
+
+
+
+      {/* Timeline Penalty Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+       
+        <div className={`${typeof neuFlat !== "undefined" ? neuFlat : 'bg-[#E0E5EC]'} p-6 rounded-2xl border-t-4 border-green-500`}>
+          <div className="flex items-center gap-2 mb-4">
+            <CheckCircle className="w-5 h-5 text-green-500" />
+            <h4 className="font-bold text-gray-800">Start This Month</h4>
+
+          </div>
+          <ul className="text-xs text-gray-600 space-y-2 mb-4">
+                  <li>
+                    Research done: <strong>Week 3</strong>
+                  </li>
+                  <li>
+                    Launch: <strong>Week 4</strong>
+                  </li>
+                  <li>
+                    First data: <strong>30 days</strong>
+                  </li>
+                  <li>
+                    Profitable: <strong>60 Days</strong>
+                  </li>
+                </ul>
+                <p className='font-bold '>Competitive Position:</p>
+          <p className="text-[12px] text-green-600 font-bold">2-month head start on competitors.</p>
+        </div>
+
+        <div className={`${typeof neuFlat !== "undefined" ? neuFlat : 'bg-[#E0E5EC]'} p-6 rounded-2xl border-t-4 border-yellow-500`}>
+          <div className="flex items-center gap-2 mb-4">
+            <Clock className="w-5 h-5 text-yellow-500" />
+            <h4 className="font-bold text-gray-800">Wait 3 Months</h4>
+          </div>
+          
+          <ul className="text-xs text-gray-600 space-y-2 mb-4">
+           
+                   <li className="flex items-start gap-2">
+    <AlertTriangle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
+    Wasted ad spend: <strong>~$20K-$30K (testing blindly)</strong>
+  </li>
+
+  <li className="flex items-start gap-2">
+    <AlertTriangle className="w-4 shrink-0 h-4 text-red-500 mt-0.5" />
+    Competitor intel: <strong>They've interviewed your customers by now</strong>
+  </li>
+  <li className="flex items-start gap-2">
+    <AlertTriangle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
+    Market position: <strong>Competitors have established messaging territory</strong>
+  </li>
+  <li className="flex items-start gap-2">
+    <AlertTriangle className="w-4 h-4 shrink-0 text-red-500 mt-0.5" />
+    Team morale:<strong> 3 months of "failed" tests</strong>
+  </li>
+   </ul>
+          
+        </div>
+
+        <div className={`${typeof neuFlat !== "undefined" ? neuFlat : 'bg-[#E0E5EC]'} p-6 rounded-2xl border-t-4 border-red-500`}>
+          <div className="flex items-center gap-2 mb-4">
+            <XCircle className="w-5 h-5 text-red-500" />
+            <h4 className="font-bold text-gray-800">Wait 12 Months</h4>
+          </div>
+           <ul className="text-xs text-gray-600 space-y-2 mb-4">
+                  <li className="flex items-start gap-2">
+                   <X  className="w-5 h-5 shrink-0 text-red-500"/>
+                    Wasted ad spend: <strong>$80K-$120K</strong>
+                  </li>
+                  
+                     <li className="flex items-start gap-2">
+                   <X  className="w-5 h-5 shrink-0 text-red-500"/>
+                    Market share: <strong>Competitors own the category positioning</strong>
+                  </li>
+                  <li className="flex items-start gap-2">
+                   <X  className="w-5 h-5 shrink-0 text-red-500"/>
+                   Agency relationship:  <strong>Likely churned through 2-3 agencies blaming "the algorithm"</strong>
+                  </li>
+                  <li className="flex items-start gap-2">
+                   <X  className="w-5 h-5 shrink-0 text-red-500"/>
+                    Founder confidence: <strong>Considering shutting down paid acquisition entirely</strong> </li>
+                     
+                  
+                  
+                </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* SECTION 8: CASE STUDY */}
       <section className="py-24 px-6 bg-[#E0E5EC]" id="case-studies">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">What Happens When You Know Before You Spend</h2>
-          
-          <div className={`${neuFlat} p-10 rounded-[40px] relative overflow-hidden`}>
-            <div className="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-bl-2xl">SUSTAINABLE FASHION BRAND</div>
-            
-            <h3 className="text-2xl font-bold text-gray-800 mb-8">From "Eco-Friendly Basics" To "The Capsule Wardrobe For Busy Professionals"</h3>
+  <div className="max-w-5xl mx-auto">
+    <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
+      What Happens When You Know Before You Spend
+    </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-bold text-gray-700 text-sm mb-2 uppercase tracking-wide">The Situation</h4>
-                  <p className="text-sm text-gray-600">$200K revenue. Stuck at $20K/mo spend. Positioning: "Sustainable fashion for conscious consumers."</p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-blue-600 text-sm mb-2 uppercase tracking-wide">Research Revealed</h4>
-                  <ul className="text-sm text-gray-600 space-y-2">
-                    <li>→ Best customers weren't eco-warriors. They were 35-45 pros tired of <strong>decision fatigue</strong>.</li>
-                    <li>→ Trigger: "I waste 30 mins every morning deciding what to wear."</li>
-                  </ul>
-                </div>
-              </div>
+    <div className={`${typeof neuFlat !== "undefined" ? neuFlat : "bg-[#E0E5EC] shadow-[inset_6px_6px_12px_rgba(163,177,198,0.6),inset_-6px_-6px_12px_rgba(255,255,255,0.9)]"} p-8 rounded-[32px] relative overflow-hidden`}>
+      <div className="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-bl-2xl select-none">
+        SUSTAINABLE FASHION BRAND
+      </div>
 
-              <div className={`${neuPressed} p-6 rounded-2xl flex flex-col justify-center`}>
-                <h4 className="font-bold text-gray-800 text-center mb-6">Metrics Transformation</h4>
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-xs text-gray-500">Before ROAS</div>
-                    <div className="text-xl font-bold text-red-400">2.1x</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500">After ROAS</div>
-                    <div className="text-xl font-bold text-green-500">5.8x</div>
-                  </div>
-                </div>
-                <div className="mt-6 pt-6 border-t border-gray-300 text-center">
-                  <div className="text-3xl font-bold text-gray-800">$74K/Mo</div>
-                  <div className="text-xs font-bold text-blue-500 uppercase tracking-widest">Revenue Increase</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className={`${neuConvex} p-4 rounded-xl text-center bg-white/50 italic text-gray-600 text-sm`}>
-              "We were so focused on selling sustainability that we missed what customers actually cared about: saving time. Arloxian found that in 48 hours." — Sarah K., Founder
-            </div>
+      <h3 className="text-2xl font-bold text-gray-800 mb-8">
+        From &quot;Eco-Friendly Basics&quot; To &quot;The Capsule Wardrobe For Busy Professionals&quot;
+      </h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
+        {/* Left column */}
+        <div className="space-y-6">
+          <div>
+            <h4 className="font-bold text-gray-700 text-sm mb-2 uppercase tracking-wide">The Situation</h4>
+            <p className="text-sm text-gray-600">
+              $200K revenue. Stuck at $20K/mo spend. Positioning: &quot;Sustainable fashion for conscious consumers.&quot;
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-blue-600 text-sm mb-2 uppercase tracking-wide">Research Revealed</h4>
+            <ul className="text-sm text-gray-600 space-y-2 list-none">
+              <li>→ Best customers weren&apos;t eco-warriors; they were 35–45 pros tired of <strong>decision fatigue</strong>.</li>
+              <li>→ Real trigger: &quot;I waste 30 mins every morning deciding what to wear.&quot;</li>
+              <li>→ VOC Phrase: &quot;I just want 10 pieces that work together.&quot;</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-green-600 text-sm mb-2 uppercase tracking-wide">The Pivot</h4>
+            <ul className="text-sm text-gray-600 ">
+                            <li>→New messaging: "The 10-Piece Capsule Wardrobe That Eliminates Morning Decision Fatigue"</li>
+                            <li>→Repositioned from "eco-friendly" to "minimalist system"</li>
+                            <li>→Launched "Capsule Wardrobe Quiz" funnel (based on interview insights)</li>
+                        </ul>
+          </div>
+          <div>
+            <h4 className="font-bold text-purple-600 text-sm mb-2 uppercase tracking-wide">Timeline:</h4>
+            <ul className="text-sm text-gray-600"><li>→ Research: 12 days</li>
+                            <li>→ Campaign launch: Day 18</li>
+                            <li>→ Profitable: Day 32</li>
+                            </ul>
           </div>
         </div>
-      </section>
+
+        {/* Right column: metrics card */}
+        <div className={`${typeof neuPressed !== "undefined" ? neuPressed : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.9)]"} p-6 rounded-2xl flex flex-col justify-center`}>
+          <h4 className="font-bold text-gray-800 text-center mb-6">Metrics Transformation</h4>
+
+          <div className="grid grid-cols-2 gap-4 text-center mb-4">
+            <p className=' text-sm font-semibold'>Before Arloxian Research </p>
+            <p className=' text-sm font-semibold'>After Research-Driven Repositioning </p>
+            <div>
+              <div className="text-xs text-gray-500"> ROAS</div>
+              <div className="text-xl font-bold text-red-400">2.1x</div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500"> ROAS</div>
+              <div className="text-xl font-bold text-green-500">5.8x</div>
+            </div>
+
+            <div>
+              <div className="text-xs text-gray-500"> CPA</div>
+              <div className="text-xl font-bold text-gray-400">$95</div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500"> CPA</div>
+              <div className="text-xl font-bold text-green-500">$38</div>
+            </div>
+
+            <div>
+              <div className="text-xs text-gray-500">Rev</div>
+              <div className="text-xl font-bold text-gray-400">$42K</div>
+            </div>
+            <div>
+              <div className="text-xs text-gray-500"> Rev</div>
+              <div className="text-xl font-bold text-green-500">$116K</div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-gray-300 text-center">
+            <div className="text-3xl font-bold text-gray-800">$74K/mo</div>
+            <div className="text-xs font-bold text-blue-500 uppercase tracking-widest">Revenue Increase</div>
+          <div className= "mt-2 text-sm font-bold text-green-500 uppercase tracking-widest">Research Investment: </div><strong>$4,500</strong>
+          <div className= " mt-2 text-sm font-bold text-green-500 uppercase tracking-widest">ROI: </div><strong>1,644%</strong> (first month alone)
+          </div>
+          
+        </div>
+      </div>
+
+      <div className={`${typeof neuConvex !== "undefined" ? neuConvex : "bg-white/60 shadow-[9px_9px_16px_rgba(163,177,198,0.08),-9px_-9px_16px_rgba(255,255,255,0.6)]"} p-4 rounded-xl text-center italic text-gray-600 text-sm`}>
+        &quot;We were so focused on selling sustainability that we missed what customers actually cared about: saving time. Arloxian found that in 48 hours.&quot; — Sarah K., Founder
+      </div>
+    </div>
+  </div>
+</section>
+{/* methodology section  */}
+<section id="methodology" className="py-20 px-6">
+  <div className="max-w-6xl mx-auto">
+    <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
+      The Methodology Behind The Protocol
+    </h2>
+
+    <div className="grid gap-8 md:grid-cols-3">
+
+      {/* ====================== CARD 1 — THE MOM TEST ====================== */}
+      <article
+        className={`
+          ${typeof neuFlat !== "undefined"
+            ? neuFlat
+            : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.5),-9px_-9px_16px_rgba(255,255,255,0.8)]"}
+          p-6 rounded-2xl
+        `}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="
+              w-12 h-12 flex items-center justify-center rounded-xl 
+              bg-[#E0E5EC]
+              shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.9)]
+            "
+          >
+            <Book className="w-6 h-6 text-blue-500" />
+          </div>
+          <h4 className="text-lg font-semibold text-blue-600">The Mom Test</h4>
+        </div>
+
+        <p className="text-xs font-bold text-blue-800 mb-2">BY ROB FITZPATRICK</p>
+
+        <p className="text-sm text-gray-600 mb-4">
+          The gold standard for customer interview methodology. Core principle:
+          ask about <strong>past behavior</strong>, not future intentions.
+          People lie about what they'll do — they tell the truth about what
+          they've done.
+        </p>
+
+        {/* Application */}
+        <div>
+          <h5 className="text-sm font-semibold text-gray-800 mb-2">Our Application:</h5>
+
+          <ul className="space-y-2 text-sm text-gray-700">
+            {[
+              "Trained interviewers in non-leading questions",
+              "Focus on trigger events, not product features",
+              "Extract voice-of-customer language for ad copy",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span
+                  className="
+                    w-7 h-7 flex items-center justify-center rounded-full
+                    bg-[#E0E5EC]
+                    shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.8)]
+                  "
+                >
+                  <Check className="w-4 h-4 text-blue-600" />
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+
+      {/* ====================== CARD 2 — ASK METHOD ====================== */}
+      <article
+        className={`
+          ${typeof neuFlat !== "undefined"
+            ? neuFlat
+            : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.5),-9px_-9px_16px_rgba(255,255,255,0.8)]"}
+          p-6 rounded-2xl
+        `}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="
+              w-12 h-12 flex items-center justify-center rounded-xl 
+              bg-[#E0E5EC]
+              shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.9)]
+            "
+          >
+            <Target className="w-6 h-6 text-purple-600" />
+          </div>
+          <h4 className="text-lg font-semibold text-purple-500">The Ask Method</h4>
+        </div>
+
+        <p className="text-xs font-bold text-purple-800 mb-2">BY RYAN LEVESQUE</p>
+
+        <p className="text-sm text-gray-600 mb-4">
+          Survey-based segmentation framework used by 8-figure brands. Instead of guessing customer segments.
+           Let customers self-identify by their primary pain point.
+           The <strong>Deep Dive Survey </strong> reveals which “bucket” each customer falls into for
+          hyper-personalized messaging.
+        </p>
+
+        <div>
+          <h5 className="text-sm font-semibold text-gray-800 mb-2">Our Application:</h5>
+
+          <ul className="space-y-2 text-sm text-gray-700">
+            {[
+              "Deploy 100+ response surveys post-interviews",
+              "Bucket customers by primary challenge",
+              "Create segment-specific creative briefs",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span
+                  className="
+                    w-7 h-7 flex items-center justify-center rounded-full
+                    bg-[#E0E5EC]
+                    shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.8)]
+                  "
+                >
+                  <Check className="w-4 h-4 text-blue-600" />
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+
+      {/* ====================== CARD 3 — VALUE EQUATION ====================== */}
+      <article
+        className={`
+          ${typeof neuFlat !== "undefined"
+            ? neuFlat
+            : "bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.5),-9px_-9px_16px_rgba(255,255,255,0.8)]"}
+          p-6 rounded-2xl
+        `}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="
+              w-12 h-12 flex items-center justify-center rounded-xl 
+              bg-[#E0E5EC]
+              shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.9)]
+            "
+          >
+            <Calculator className="w-6 h-6 text-green-600" />
+          </div>
+          <h4 className="text-lg font-semibold text-green-700">Value Equation</h4>
+        </div>
+
+        <p className="text-xs font-bold text-green-800 mb-2">BY ALEX HORMOZI</p>
+
+        <p className="text-sm text-gray-600 mb-4">
+          Mathematical framework for offer design: <br />
+          <strong>Value = (Dream Outcome × Likelihood) / (Time Delay × Effort)</strong>
+        </p>
+        <p className="text-sm text-gray-600 mb-4">Maximize numerator (bigger promise + more proof).
+Minimize denominator (faster results + less work)</p>
+
+        <div>
+          <h5 className="text-sm font-semibold text-gray-800 mb-2">Our Application:</h5>
+
+          <ul className="space-y-2 text-sm text-gray-700">
+            {[
+              "Score current offers (1–10 per variable)",
+              "Identify weakest link (where to improve)",
+              "Redesign offer stack based on research insights",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span
+                  className="
+                    w-7 h-7 flex items-center justify-center rounded-full
+                    bg-[#E0E5EC]
+                    shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.8)]
+                  "
+                >
+                  <Check className="w-4 h-4 text-blue-600" />
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
 
       {/* SECTION 9: CTA & FOOTER */}
-      <section className="py-24 px-6 border-t border-gray-300/50">
-        <div className="max-w-4xl mx-auto text-center" id="cta-final">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Stop Guessing. Start Knowing. <br />Launch Smarter.</h2>
-          <p className="text-gray-600 mb-10 text-lg">
-            Two-week intelligence sprint. One comprehensive report. Zero more wondering if you're targeting the right people.
-          </p>
-          
-          <div className="flex flex-col justify-center items-center gap-6">
-            <button className={`${neuFlat} px-10 py-5 text-blue-600 font-bold rounded-full hover:scale-95 active:scale-90 transition-all text-lg flex items-center gap-3`}>
-              Book Your Market Intelligence Audit
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            
-            <button className="px-8 py-2 text-gray-500 font-medium hover:text-gray-900 transition-colors underline">
-              Download Sample Report
-            </button>
+    <section className="py-24 px-6 border-t border-gray-300/50" aria-labelledby="cta-heading">
+  <div className="max-w-4xl mx-auto text-center">
+    <h2
+  id="cta-heading"
+  className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-center"
+>
+  <span
+    className="
+      bg-gradient-to-r from-[#2D2238] to-[#514067]
+      text-transparent bg-clip-text
+    "
+  >
+    Stop Guessing.
+  </span>
 
-            <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-500 font-bold uppercase tracking-widest mt-4">
-              <span className="flex items-center gap-1"><Check className="w-3 h-3" /> $4,500 Flat Fee</span>
-              <span className="flex items-center gap-1"><Check className="w-3 h-3" /> 10-14 Day Turnaround</span>
-              <span className="flex items-center gap-1"><Check className="w-3 h-3" /> No Retainer</span>
-            </div>
-          </div>
-        </div>
-      </section>
+  <span
+    className="
+      bg-gradient-to-r from-[#1F2547] to-[#3E4A7A]
+      text-transparent bg-clip-text
+    "
+  >
+    Start Knowing.
+  </span>
+
+  <br />
+
+  <span
+    className="
+      bg-gradient-to-r from-[#34243E] to-[#A06F3D]
+      text-transparent bg-clip-text
+    "
+  >
+    Launch Smarter.
+  </span>
+</h2>
+
+
+    <p className="text-gray-600 mb-10 text-lg">
+      Two-week intelligence sprint. One comprehensive report. Zero more wondering if you're targeting the right people.
+    </p>
+
+    <div className="flex flex-col items-center gap-6">
+
+      {/* Primary CTA — uses mailto, styled like a button */}
+      <WhatsappCTA 
+                       whatsappNumber="+919910220335" 
+                       calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+                     >
+              <button className={`${neuFlat} px-8 py-4 text-blue-600 font-bold rounded-full hover:scale-95 active:scale-90 transition-all flex items-center justify-center gap-2 text-lg w-full md:w-auto`}>
+                Get Your Market Intelligence Audit
+                <ArrowRight className="w-5 h-5" />
+              </button>
+              </WhatsappCTA>
+      {/* Secondary CTA — download sample report
+      <a
+        href="#"
+        className="
+          px-6 py-3 text-gray-600 font-medium hover:text-gray-900 transition-colors underline
+        "
+        role="button"
+        aria-label="Download sample report"
+      >
+        Download Sample Report
+      </a> */}
+
+      {/* Trust signals */}
+      <div className="mt-4 flex flex-wrap justify-center gap-6 text-xs text-gray-500 font-bold uppercase tracking-widest">
+        <span className="flex items-center gap-2">
+          <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#E0E5EC] shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.9)]">
+            <Check className="w-3.5 h-3.5 text-green-600" aria-hidden />
+          </span>
+          $4,500 Flat Fee
+        </span>
+
+        <span className="flex items-center gap-2">
+          <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#E0E5EC] shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.9)]">
+            <Check className="w-3.5 h-3.5 text-green-600" aria-hidden />
+          </span>
+          10–14 Day Turnaround
+        </span>
+
+        <span className="flex items-center gap-2">
+          <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#E0E5EC] shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.9)]">
+            <Check className="w-3.5 h-3.5 text-green-600" aria-hidden />
+          </span>
+          No Retainer Required
+        </span>
+
+        <span className="flex items-center gap-2">
+          <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#E0E5EC] shadow-[inset_3px_3px_6px_rgba(163,177,198,0.5),inset_-3px_-3px_6px_rgba(255,255,255,0.9)]">
+            <Check className="w-3.5 h-3.5 text-green-600" aria-hidden />
+          </span>
+          Full Report + Source Data
+        </span>
+      </div>
+
+      {/* Micro-copy */}
+      <p className="mt-4 text-sm text-gray-500 max-w-xl">
+        Average client saves <strong>$20K–$30K</strong> in wasted ad spend by knowing their positioning before launch.
+      </p>
+    </div>
+  </div>
+</section>
+
 
     
     </div>
