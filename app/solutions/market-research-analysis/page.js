@@ -383,19 +383,136 @@ return (
   <path d="M 170 395 L 650 395" stroke="#A67B5B" strokeWidth="1.5" opacity="0.3"/>
 
   {/* "THE BRANDING TRAP" TEXT */}
-  <text 
-    x="425"
-    y="430"
-    fontFamily="Arial, sans-serif"
-    fontSize="24"
-    fontWeight="900"
-    fill="#f5f5f5"
-    textAnchor="middle"
-    textShadow
-    style={{ letterSpacing: '2px' }}
+  
+ {/* Add into your <defs> (place before the actual text) */}
+<defs>
+  {/* optional - match to your woodTop. Remove if you already have woodTop */}
+  <linearGradient id="woodTop" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stopColor="#d0a676" />
+    <stop offset="0.5" stopColor="#b88352" />
+    <stop offset="1" stopColor="#8c5b33" />
+  </linearGradient>
+
+  {/* tiny bevel to create crisp rim */}
+  <filter id="carveBevel" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="b" />
+    <feOffset in="b" dx="0.8" dy="0.8" result="o" />
+    <feComposite in="o" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="rimMask" />
+    <feColorMatrix in="rimMask" type="matrix"
+      values="0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0.18 0" result="rim" />
+    <feMerge>
+      <feMergeNode in="rim" />
+      <feMergeNode in="SourceGraphic" />
+    </feMerge>
+  </filter>
+
+  {/* inner carve filter: highlight (top-left) + dark inner shadow (bottom-right) */}
+  <filter id="woodCarve" x="-80%" y="-80%" width="260%" height="260%">
+    {/* <!-- softer alpha of glyph --> */}
+    <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
+
+    {/* <!-- dark inner shadow (cavity) --> */}
+    <feOffset in="blur" dx="3.5" dy="3.5" result="offDark" />
+    <feComposite in="offDark" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="innerDarkMask" />
+    <feFlood floodColor="#1c0f08" floodOpacity="0.85" result="darkFlood" />
+    <feComposite in="darkFlood" in2="innerDarkMask" operator="in" result="innerDark" />
+
+    {/* <!-- light inner highlight along top-left rim --> */}
+    <feOffset in="blur" dx="-2.2" dy="-2.2" result="offLight" />
+    <feComposite in="offLight" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="innerLightMask" />
+    <feFlood floodColor="#fff7ef" floodOpacity="0.65" result="lightFlood" />
+    <feComposite in="lightFlood" in2="innerLightMask" operator="in" result="innerLight" />
+
+    {/* <!-- subtle inner dust/darken toward center to sell depth --> */}
+    <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="centerBlur" />
+    <feColorMatrix in="centerBlur" type="matrix"
+      values="0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0.12 0" result="centerTint" />
+
+    {/* <!-- Compose cavity + highlight + center tint --> */}
+    <feMerge>
+      <feMergeNode in="innerLight" />
+      <feMergeNode in="innerDark" />
+      <feMergeNode in="centerTint" />
+    </feMerge>
+  </filter>
+
+  {/* outer soft cast shadow (long subtle shadow beneath letters) */}
+  <filter id="castShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feOffset dx="0" dy="14" result="off" />
+    <feGaussianBlur in="off" stdDeviation="10" result="blur" />
+    <feColorMatrix in="blur" type="matrix"
+      values="0 0 0 0 0.12
+              0 0 0 0 0.08
+              0 0 0 0 0.05
+              0 0 0 0.28 0" result="shadowColor" />
+    <feBlend in="shadowColor" in2="SourceGraphic" mode="normal" />
+  </filter>
+</defs>
+
+{/* Replace your single <text> with this group */}
+{/* Group positioned at the geometric center of the front face (x=450, y=445) */}
+<g
+  transform="translate(450,445)"
+  fontFamily="Arial, sans-serif"
+  fontSize="24"
+  fontWeight="900"
+  textAnchor="middle"
+  dominantBaseline="middle"    /* vertically centers on the group origin */
+  style={{ letterSpacing: '2px' }}
+>
+  {/* 1) soft cast shadow beneath letters (gives lift off the face) */}
+  <text
+    x="0"
+    y="0"
+    fill="#0b0b0b"
+    opacity="0.18"
+    filter="url(#castShadow)"
   >
     THE BRANDING TRAP
   </text>
+
+  {/* 2) tiny rim highlight (top-left) */}
+  <text
+    x="0"
+    y="0"
+    fill="#fff7ef"
+    opacity="0.28"
+    dx="-1"
+    dy="-1"
+  >
+    THE BRANDING TRAP
+  </text>
+
+  {/* 3) carved cavity — dark interior + inner shadow/highlight */}
+  <text
+    x="0"
+    y="0"
+    fill="#2a1a12"            /* deep cavity color — tweak to match your wood */
+    filter="url(#woodCarve)"
+  >
+    THE BRANDING TRAP
+  </text>
+
+  {/* 4) visible top rim that matches the wood surface */}
+  <text
+    x="0"
+    y="0"
+    fill="url(#woodTop)"      /* use your existing woodTop gradient to blend rim to panel */
+    filter="url(#carveBevel)"
+    style={{ mixBlendMode: 'normal' }}
+  >
+    THE BRANDING TRAP
+  </text>
+</g>
+
+
+
           {/* METAL PLATFORM */}
           <path
             d="M 220 350 L 480 350 L 510 370 L 250 370 Z"
