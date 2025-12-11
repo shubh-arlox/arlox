@@ -510,9 +510,6 @@ return (
     THE BRANDING TRAP
   </text>
 </g>
-
-
-
           {/* METAL PLATFORM */}
           <path
             d="M 220 350 L 480 350 L 510 370 L 250 370 Z"
