@@ -20,7 +20,7 @@ const NAV_ITEMS = [
 const MEGA_CONTENT = {
   solutions: [
     {
-      title: "Strategy (Ensure Profits First)",
+      title: "Strategy ",
       items: [
         { label: "Scientific Positioning", href: "/solutions/scientific-positioning" },
         { label: "Market Research & Analysis", href: "/solutions/market-research-analysis" },
@@ -30,7 +30,7 @@ const MEGA_CONTENT = {
       ],
     },
     {
-      title: "Scaling (Get More Customers)",
+      title: "Scaling ",
       items: [
         { label: "Meta Ads Scaling (FB/IG)", href: "/solutions/meta-ads-scaling" },
         { label: "Google Ads (AI-Driven)", href: "/solutions/google-ads-ai" },
@@ -40,7 +40,7 @@ const MEGA_CONTENT = {
       ],
     },
     {
-      title: "Efficiency (Make More Per Customer)",
+      title: "Efficiency ",
       items: [
         { label: "AI CRO Optimisations", href: "/solutions/ai-cro" },
         { label: "Smart Retargeting", href: "/solutions/smart-retargeting" },
