@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, Microscope, Quote, PieChart, Target, 
   TrendingUp, User, FileText, Rocket, TrendingDown, 
@@ -24,6 +24,12 @@ const neuConvex = "bg-gradient-to-br from-[#f0f5fc] to-[#caced4] shadow-[9px_9px
 const neuIconBtn = "flex items-center justify-center w-[50px] h-[50px] rounded-full bg-[#E0E5EC] shadow-[5px_5px_10px_#a3b1c6,-5px_-5px_10px_#ffffff] hover:shadow-[inset_5px_5px_10px_#a3b1c6,inset_-5px_-5px_10px_#ffffff] transition-all duration-300 text-gray-600 hover:text-black";
 const stepCircle ="w-16 h-16 flex shrink-0 items-center justify-center bg-[#E0E5EC] rounded-full shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.7),inset_-6px_-6px_10px_0_rgba(255,255,255,0.8)]";
 
+//trap 
+
+// const [trapActive, setTrapActive] = useState(false);
+//         const [caught, setCaught] = useState(false);
+// const [trapActive, setTrapActive] = useState(false); const [caught, setCaught] = useState(false);
+
 // Animation Variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -42,8 +48,14 @@ const staggerContainer = {
 
 const ArloxianLanding = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+// const [trapActive, setTrapActive] = useState(false); const [caught, setCaught] = useState(false);
+ 
+const [trapActive, setTrapActive] = useState(false);
+const [caught, setCaught] = useState(false);
+const [selectedCard, setSelectedCard] = useState(null);
+const [hoveredCard, setHoveredCard] = useState(null);
 
-  return (
+return (
     <div className="font-sans text-[#2D3748] bg-[#E0E5EC] min-h-screen selection:bg-gray-300 overflow-x-hidden w-full">
       
       {/* SECTION 1: HERO */}
@@ -56,7 +68,7 @@ const ArloxianLanding = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="z-10 order-2 lg:order-1"
+            className="z-10 order-1 lg:order-1"
           >
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${neuPressed} mb-6 md:mb-8`}>
               <span className="text-[10px] md:text-xs font-semibold tracking-wider uppercase text-blue-700 ">
@@ -108,7 +120,7 @@ const ArloxianLanding = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="relative h-[400px] md:h-[600px] w-full flex items-center justify-center order-1 lg:order-2 mb-8 lg:mb-0"
+            className="relative h-[400px] md:h-[600px] w-full flex items-center justify-center order-2 lg:order-2 mb-8 lg:mb-0"
           >
             {/* Central Microscope Metaphor */}
             <div className={`${neuConvex} w-56 h-56 md:w-72 md:h-72 rounded-full flex items-center justify-center relative z-20`}>
@@ -156,99 +168,883 @@ const ArloxianLanding = () => {
         </div>
       </section>
 
-      {/* SECTION 2: SYSTEMIC DIAGNOSIS */}
-      <section className="py-12 md:py-20 px-4 md:px-6" id="diagnosis">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="max-w-5xl mx-auto text-center mb-12 md:mb-16"
-        >
-          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
-            <span className="text-[10px] font-bold text-red-500 uppercase tracking-widest">THE INDUSTRY FAILURE LOOP</span>
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Why 87% Of Fashion Brands Launch With The Wrong Messaging</h2>
-          <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto">
-            The standard agency playbook: 'Launch fast, test everything, optimize later.' Sounds efficient. Costs you 6-12 months and $50K-$200K discovering what you could have known in Week 1.
-          </p>
-        </motion.div>
+    {/* SECTION 2: THE MOUSETRAP REVELATION */}
+{/* SECTION 2: THE BRANDING TRAP - ISOMETRIC STYLE */}
+<section
+  id="diagnosis"
+  className="pt-24 py-16 md:py-24 px-4 md:px-6 relative bg-[#e8edf3] overflow-hidden"
+> {/* Click anywhere overlay to reset */}
+   <AnimatePresence>
+    {(trapActive || caught) && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={() => {
+          setTrapActive(false);
+          setCaught(false);
+          setSelectedCard(null);
+        }}
+        onTap={() => {
+          setTrapActive(false);
+          setCaught(false);
+          setSelectedCard(null);
+        }}
+        className="absolute inset-0 z-[60] cursor-pointer"
+      />
+    )}
+  </AnimatePresence>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          className="relative max-w-6xl mx-auto mb-16 md:mb-20"
-        >
-          {/* Failure Loop Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 relative z-10">
-            {[
-              { icon: User, color: "text-blue-600", borderColor: "border-blue-600", title: "Persona Guesswork", desc: "Agency builds ICA from founder's assumptions", alert: "No actual interviews" },
-              { icon: FileText, color: "text-blue-400", borderColor: "border-blue-400", title: "Generic Messaging", desc: "Copy uses industry jargon, not customer language", alert: null },
-              { icon: Rocket, color: "text-yellow-500", borderColor: "border-yellow-500", title: "Campaign Launch", desc: "$5K-$20K initial budget deployed", alert: "Wrong audience + wrong message" },
-              { icon: TrendingDown, color: "text-orange-500", borderColor: "border-orange-500", title: "Low CTR / High CPA", desc: "1.2% CTR, $85 CPA (need: $35)", alert: null },
-              { icon: Dices, color: "text-red-500", borderColor: "border-red-500", title: "'Optimization'", desc: "Test 40 variations hoping one works", alert: "Optimizing guesses" },
-              { icon: Wallet, color: "text-red-700", borderColor: "border-red-700", bg: "bg-red-50", title: "Budget Exhausted", desc: "6 months later: 'Market isn't ready'", alert: null },
-            ].map((item, idx) => (
-              <motion.div variants={fadeInUp} key={idx} className={`${neuFlat} p-3 md:p-4 rounded-xl border-t-4 ${item.borderColor} text-center h-full ${item.bg || ''}`}>
-                <item.icon className={`w-5 h-5 md:w-6 md:h-6 mx-auto ${item.color} mb-2`} />
-                <h4 className="font-bold text-gray-800 text-xs mb-1">{item.title}</h4>
-                <p className="text-[9px] md:text-[10px] text-gray-500">{item.desc}</p>
-                {item.alert && <div className="mt-2 text-[8px] md:text-[9px] text-red-400 font-bold">{item.alert}</div>}
-              </motion.div>
+  {/* Subtle texture overlay */}
+  <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+    style={{ 
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` 
+    }} 
+  />
+
+  {/* Header */}
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="max-w-5xl mx-auto text-center mb-12 md:mb-16 relative z-10"
+  >
+    <motion.div 
+      className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-2.5 rounded-full mb-4 md:mb-6"
+      style={{
+        background: '#e8edf3',
+        boxShadow: 'inset 4px 4px 8px #c5cdd6, inset -4px -4px 8px #ffffff'
+      }}
+    >
+      <motion.div 
+        className="w-2 h-2 rounded-full bg-red-500"
+        animate={{
+          scale: [1, 1.3, 1],
+          boxShadow: [
+            '0 0 8px rgba(239, 68, 68, 0.6)',
+            '0 0 16px rgba(239, 68, 68, 0.9)',
+            '0 0 8px rgba(239, 68, 68, 0.6)'
+          ]
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+      <span className="text-[9px] md:text-[10px] font-bold text-red-600 uppercase tracking-wider">Industry Failure Pattern</span>
+    </motion.div>
+    
+    <h2 className="text-2xl md:text-5xl font-bold text-gray-800 mb-4 md:mb-6 leading-tight px-2"
+      style={{ textShadow: '2px 2px 4px rgba(255,255,255,0.5)' }}
+    >
+      Why <span className="text-red-600">87%</span> Of Fashion Brands<br className="hidden md:block" />
+      Launch With The Wrong Messaging
+    </h2>
+    
+    <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
+      The standard agency playbook: <em className="text-gray-700">'Launch fast, test everything, optimize later.'</em>
+    </p>
+    <p className="text-base md:text-xl font-semibold text-red-600 mt-3 md:mt-4 px-2">
+      Costs you 6-12 months and $50K-$200K discovering what you could have known in Week 1.
+    </p>
+  </motion.div>
+
+  {/* THE BRANDING TRAP SECTION */}
+  <div className="relative max-w-7xl mx-auto mb-12 md:mb-20">
+    
+
+    {/* SIDE-BY-SIDE: TRAP + CARD */}
+    <div className="flex flex-col lg:flex-row items-start justify-center gap-6 md:gap-8 mb-12 md:mb-16 px-2 md:px-4 relative ">
+      
+      {/* LEFT: MOUSE TRAP */}
+      <motion.div 
+        className="flex-shrink-0 w-full max-w-[500px] lg:max-w-[550px] mx-auto lg:mx-0"
+        initial={{ opacity: 0, x: -40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+       <svg 
+  viewBox="0 0 800 600" 
+  className="w-full h-auto"
+  preserveAspectRatio="xMidYMid meet"
+  xmlns="http://www.w3.org/2000/svg"
+  style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.15))' }}
+>
+  <defs>
+    {/* Wood gradient */}
+    <linearGradient id="woodTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#D4A574" />
+      <stop offset="100%" stopColor="#C19A6B" />
+    </linearGradient>
+    
+    <linearGradient id="woodSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#B8936A" />
+      <stop offset="100%" stopColor="#A67B5B" />
+    </linearGradient>
+
+    <linearGradient id="woodFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#A67B5B" />
+      <stop offset="100%" stopColor="#8B6F47" />
+    </linearGradient>
+
+    {/* NEW: Back face gradient (darkest) */}
+    <linearGradient id="woodBack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#8B6F47" />
+      <stop offset="100%" stopColor="#6B5436" />
+    </linearGradient>
+
+    {/* Metal gradients */}
+    <linearGradient id="metalDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#666" />
+      <stop offset="50%" stopColor="#555" />
+      <stop offset="100%" stopColor="#444" />
+    </linearGradient>
+
+    <linearGradient id="metalLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#888" />
+      <stop offset="50%" stopColor="#777" />
+      <stop offset="100%" stopColor="#666" />
+    </linearGradient>
+
+    {/* Cheese gradient */}
+    <radialGradient id="cheeseGrad" cx="40%" cy="35%">
+      <stop offset="0%" stopColor="#FFE896" />
+      <stop offset="30%" stopColor="#FFD966" />
+      <stop offset="70%" stopColor="#FFC940" />
+      <stop offset="100%" stopColor="#E6A823" />
+    </radialGradient>
+
+    {/* Platform gradient */}
+    <linearGradient id="platform" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#E8E8E8" />
+      <stop offset="100%" stopColor="#C0C0C0" />
+    </linearGradient>
+  </defs>
+
+  {/* Shadow */}
+  <motion.ellipse 
+    cx="400" cy="550" rx="280" ry="30" 
+    fill="rgba(0,0,0,0.1)" 
+    filter="blur(6px)"
+    animate={{
+      scaleX: [1, 1.05, 1],
+      opacity: [0.1, 0.15, 0.1]
+    }}
+    transition={{ duration: 3, repeat: Infinity }}
+  />
+
+  {/* WOODEN BASE - PROPER 3D ORDER */}
+  
+  
+  {/* 2. RIGHT SIDE */}
+  {/* <path
+    d="M 650 380 L 700 410 L 700 480 L 650 450 Z"
+    fill="url(#woodSide)"
+    stroke="#8B6F47"
+    strokeWidth="3"
+  /> */}
+   {/* 4. BOTTOM FACE */}
+  {/* <path
+    d="M 200 480 L 700 480 L 650 450 L 150 450 Z"
+    fill="url(#woodFront)"
+    stroke="#8B6F47"
+    strokeWidth="3"
+  /> */}
+
+  {/* 3. LEFT SIDE */}
+  <path className="z-[99]"
+    d="M 150 380 L 200 410 L 200 480 L 150 450 Z"
+    fill="url(#woodFront)"
+    stroke="#8B6F47"
+    strokeWidth="3"
+  />
+
+ 
+
+  {/* 5. TOP FACE (render last, in front) */}
+  <path
+    d="M 150 380 L 650 380 L 700 410 L 200 410 Z"
+    fill="url(#woodTop)"
+    stroke="#8B6F47"
+    strokeWidth="3"
+  />
+  {/* 1. BACK FACE (render first, behind everything) */}
+  <path
+    d="M 200 410 L 700 410 L 700 480 L 200 480 Z"
+    fill="url(#woodBack)"
+    stroke="#6B5436"
+    strokeWidth="3"
+  />
+
+  
+  {/* Wood grain detail on top */}
+  <path d="M 160 385 L 640 385" stroke="#A67B5B" strokeWidth="1.5" opacity="0.3"/>
+  <path d="M 165 390 L 645 390" stroke="#A67B5B" strokeWidth="1" opacity="0.25"/>
+  <path d="M 170 395 L 650 395" stroke="#A67B5B" strokeWidth="1.5" opacity="0.3"/>
+
+  {/* "THE BRANDING TRAP" TEXT */}
+  <text 
+    x="425"
+    y="430"
+    fontFamily="Arial, sans-serif"
+    fontSize="24"
+    fontWeight="900"
+    fill="#f5f5f5"
+    textAnchor="middle"
+    textShadow
+    style={{ letterSpacing: '2px' }}
+  >
+    THE BRANDING TRAP
+  </text>
+          {/* METAL PLATFORM */}
+          <path
+            d="M 220 350 L 480 350 L 510 370 L 250 370 Z"
+            fill="url(#platform)"
+            stroke="#999"
+            strokeWidth="2"
+          />
+          
+          <path
+            d="M 480 350 L 510 370 L 510 380 L 480 360 Z"
+            fill="#A8A8A8"
+            stroke="#999"
+            strokeWidth="2"
+          />
+
+          {/* THE CHEESE */}
+          <motion.g
+            style={{ cursor: trapActive || caught ? 'default' : 'pointer' }}
+            whileHover={!trapActive && !caught ? { scale: 1.12, y: -8 } : {}}
+            whileTap={!trapActive && !caught ? { scale: 0.95 } : {}}
+            animate={trapActive ? {
+              y: 40,
+              x: -10,
+              opacity: 0,
+              scale: 0.3,
+              rotate: -25,
+              transition: { duration: 0.25, ease: "easeIn" }
+            } : {
+              y: 0,
+              x: 0,
+              opacity: 1,
+              scale: 1,
+              rotate: 0
+            }}
+          >
+            {/* Cheese glow */}
+            {!trapActive && !caught && (
+              <motion.ellipse
+                cx="350" cy="330" rx="75" ry="28"
+                fill="rgba(255, 224, 130, 0.6)"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.6, 0.9, 0.6]
+                }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                filter="blur(12px)"
+              />
+            )}
+            
+            <path
+              d="M 300 340 L 400 340 L 380 300 L 320 310 Z"
+              fill="url(#cheeseGrad)"
+              stroke="#E8A428"
+              strokeWidth="3"
+            />
+            
+            <path
+              d="M 400 340 L 420 350 L 400 310 L 380 300 Z"
+              fill="#FFB84D"
+              stroke="#E8A428"
+              strokeWidth="3"
+            />
+
+            <ellipse cx="340" cy="325" rx="8" ry="5" fill="#F0C060" opacity="0.8"/>
+            <ellipse cx="365" cy="318" rx="6" ry="3.5" fill="#F0C060" opacity="0.8"/>
+            <ellipse cx="385" cy="330" rx="7" ry="4" fill="#F0C060" opacity="0.8"/>
+          </motion.g>
+
+          {/* "THE CHEESE" LABEL */}
+          <motion.g
+            animate={trapActive ? { opacity: 0 } : { opacity: 1 }}
+          >
+            <line x1="290" y1="310" x2="200" y2="260" stroke="#8B6F47" strokeWidth="2"/>
+            <text
+              x="190"
+              y="260"
+              fontFamily="Arial, sans-serif"
+              fontSize="24"
+              fontWeight="900"
+              fill="#8B6F47"
+              textAnchor="end"
+            >
+              THE CHEESE
+            </text>
+          </motion.g>
+
+          {/* SPRING MECHANISM */}
+          <motion.g
+            animate={trapActive ? {
+              scaleX: 0.4,
+              x: 70,
+              transition: { duration: 0.18 }
+            } : {
+              scaleX: 1,
+              x: 0
+            }}
+          >
+            <path 
+              d="M 520 360 
+                 C 530 355, 540 365, 550 360
+                 C 560 355, 570 365, 580 360
+                 C 590 355, 600 365, 610 360
+                 C 620 355, 630 365, 640 360"
+              stroke="#555"
+              strokeWidth="8"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path 
+              d="M 520 358 
+                 C 530 353, 540 363, 550 358
+                 C 560 353, 570 363, 580 358
+                 C 590 353, 600 363, 610 358
+                 C 620 353, 630 363, 640 358"
+              stroke="#777"
+              strokeWidth="5"
+              fill="none"
+              strokeLinecap="round"
+            />
+          </motion.g>
+
+          {/* Metal mounting post */}
+          <rect x="630" y="340" width="20" height="50" rx="3" fill="url(#metalDark)" stroke="#333" strokeWidth="2"/>
+
+          {/* THE KILLER BAR */}
+          <motion.g
+            style={{ transformOrigin: "640px 365px" }}
+            animate={trapActive ? {
+              rotate: [0, -12, 120],
+              transition: {
+                duration: 0.4,
+                times: [0, 0.18, 1],
+                ease: [0.68, -0.6, 0.32, 1.6]
+              }
+            } : {
+              rotate: 0
+            }}
+          >
+            <rect
+              x="220" y="362" width="425" height="16" rx="8"
+              fill="rgba(0,0,0,0.2)"
+              filter="blur(4px)"
+            />
+
+            <path
+              d="M 220 360 L 640 360 L 645 365 L 225 365 Z"
+              fill="url(#metalLight)"
+              stroke="#555"
+              strokeWidth="2.5"
+            />
+
+            <path
+              d="M 640 360 L 645 365 L 645 372 L 640 367 Z"
+              fill="#666"
+              stroke="#555"
+              strokeWidth="2.5"
+            />
+
+            <path
+              d="M 225 365 L 645 365 L 645 372 L 225 372 Z"
+              fill="url(#metalDark)"
+              stroke="#555"
+              strokeWidth="2.5"
+            />
+
+            {[260, 340, 420, 500, 580].map((x, i) => (
+              <g key={i}>
+                <circle cx={x} cy="363" r="6" fill="#444"/>
+                <circle cx={x} cy="363" r="4.5" fill="#666"/>
+              </g>
             ))}
-          </div>
-        </motion.div>
+          </motion.g>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto"
-        >
-          {/* The Cost */}
-          <div className={`${neuPressed} p-6 md:p-8 rounded-3xl`}>
-            <h3 className="text-lg md:text-xl font-bold text-red-500 mb-6">The Cost Of Assumption-Based Campaigns</h3>
-            <ul className="space-y-4 text-sm text-gray-600">
-              <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> $15K-$50K wasted testing messages that were never going to work</li>
-              <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> 3-6 months lost while competitors who "knew" their customers pulled ahead</li>
-              <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Creative team demoralized by constant "failing" tests</li>
-              <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Founder loses confidence in paid acquisition entirely</li>
-              <li className="flex gap-3"><X className="w-5 h-5 text-red-400 shrink-0" /> Agency blames "the algorithm" or "iOS 14" instead of their methodology</li>
-            </ul>
-          </div>
+          {/* "THE BAIT" LABEL */}
+          <line x1="520" y1="480" x2="580" y2="520" stroke="#8B6F47" strokeWidth="2"/>
+          <text
+            x="590"
+            y="530"
+            fontFamily="Arial, sans-serif"
+            fontSize="28"
+            fontWeight="900"
+            fill="#8B6F47"
+            textAnchor="start"
+          >
+            THE BAIT
+          </text>
+          <text
+            x="590"
+            y="555"
+            fontFamily="Arial, sans-serif"
+            fontSize="24"
+            fontWeight="700"
+            fill="#8B6F47"
+            textAnchor="start"
+          >
+            "Optimize Later!"
+          </text>
 
-          {/* The Cause */}
-          <div className={`${neuFlat} p-6 md:p-8 rounded-3xl`}>
-            <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-6">Why This Happens</h3>
-            <div className="mb-6">
-              <p className="font-bold text-sm mb-2">The standard agency intake:</p>
-              <ul className="space-y-2 text-sm text-gray-500 ml-4 border-l-2 border-gray-300 pl-4">
-                <li>1-hour kick-off call</li>
-                <li>"Tell us about your ideal customer"</li>
-                <li>You describe who you <em>hope</em> buys</li>
-                <li>Agency writes copy based on <em>your assumptions</em></li>
-                <li>Launch</li>
-              </ul>
+          {/* Impact effect */}
+          <AnimatePresence>
+            {trapActive && (
+              <>
+                {[...Array(16)].map((_, i) => {
+                  const angle = (i * Math.PI * 2) / 16;
+                  return (
+                    <motion.line
+                      key={i}
+                      x1="400" y1="365"
+                      x2={400 + Math.cos(angle) * 60}
+                      y2={365 + Math.sin(angle) * 60}
+                      stroke="#FF1a1a"
+                      strokeWidth="6"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0, opacity: 1 }}
+                      animate={{ 
+                        pathLength: 2.5, 
+                        opacity: 0,
+                        x2: 400 + Math.cos(angle) * 150,
+                        y2: 365 + Math.sin(angle) * 150
+                      }}
+                      transition={{ duration: 0.65, delay: 0.2 + i * 0.02 }}
+                    />
+                  );
+                })}
+                
+                <motion.circle
+                  cx="400" cy="365" r="35"
+                  stroke="#FF4444"
+                  strokeWidth="5"
+                  fill="none"
+                  initial={{ scale: 0, opacity: 1 }}
+                  animate={{ scale: 3.5, opacity: 0 }}
+                  transition={{ duration: 0.55, delay: 0.2 }}
+                />
+              </>
+            )}
+          </AnimatePresence>
+
+          {/* SNAP! effect */}
+          <AnimatePresence>
+            {trapActive && (
+              <motion.text
+                x="400" y="280"
+                textAnchor="middle"
+                fontSize="75"
+                fontWeight="900"
+                fill="#FF0000"
+                stroke="#8B0000"
+                strokeWidth="5"
+                initial={{ scale: 0, opacity: 0, rotate: -30 }}
+                animate={{ 
+                  scale: [0, 1.7, 1.3], 
+                  opacity: [0, 1, 1],
+                  rotate: [-30, 12, 0],
+                }}
+                exit={{ opacity: 0, scale: 0.4 }}
+                transition={{ duration: 0.5, delay: 0.22 }}
+                filter="drop-shadow(0 0 18px rgba(255,0,0,0.9))"
+              >
+                SNAP!
+              </motion.text>
+            )}
+          </AnimatePresence>
+        </svg>
+      </motion.div>
+
+      {/* RIGHT: NEUMORPHIC CARD */}
+      <AnimatePresence mode="wait">
+        {caught && selectedCard !== null && (
+          <motion.div
+            key={`card-${selectedCard}`}
+            initial={{ opacity: 0, x: 40, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 40, scale: 0.9 }}
+            transition={{ type: "spring", damping: 20, stiffness: 250 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-[450px] lg:max-w-[420px] rounded-3xl overflow-hidden relative"
+            style={{
+              background: '#e8edf3',
+              boxShadow: `
+                14px 14px 28px rgba(139, 28, 28, 0.4),
+                -14px -14px 28px rgba(255, 255, 255, 0.95),
+                inset 3px 3px 8px rgba(185, 28, 28, 0.18),
+                inset -3px -3px 8px rgba(255, 255, 255, 0.55),
+                0 0 35px rgba(239, 68, 68, 0.25)
+              `
+            }}
+          >
+            <div 
+              className="h-2.5 w-full"
+              style={{
+                background: 'linear-gradient(to right, #7F1D1D, #991B1B, #B91C1C, #DC2626)',
+                boxShadow: `0 4px 10px rgba(127, 29, 29, 0.7)`
+              }}
+            />
+            
+            <div className="p-7 md:p-8">
+              <motion.div
+                className="w-22 h-22 md:w-24 md:h-24 mx-auto mb-6 rounded-3xl flex items-center justify-center"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 350, damping: 18, delay: 0.15 }}
+                style={{
+                  background: '#e8edf3',
+                  boxShadow: `
+                    10px 10px 20px rgba(139, 28, 28, 0.35),
+                    -10px -10px 20px rgba(255, 255, 255, 0.85),
+                    inset 3px 3px 8px rgba(185, 28, 28, 0.15),
+                    inset -3px -3px 8px rgba(255, 255, 255, 0.45)
+                  `
+                }}
+              >
+                {(() => {
+                  const items = [User, FileText, Rocket, TrendingDown, Dices, Wallet];
+                  const Icon = items[selectedCard];
+                  return (
+                    <motion.div
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 350, delay: 0.25 }}
+                    >
+                      <Icon className="w-11 h-11 md:w-12 md:h-12 text-red-900" strokeWidth={2.8} />
+                    </motion.div>
+                  );
+                })()}
+              </motion.div>
+
+              <div className="text-center mb-5">
+                <div 
+                  className="inline-block px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider"
+                  style={{
+                    color: '#7F1D1D',
+                    background: '#e8edf3',
+                    boxShadow: `inset 5px 5px 10px rgba(139, 28, 28, 0.22), inset -5px -5px 10px rgba(255, 255, 255, 0.65)`
+                  }}
+                >
+                  {["WEEK 0", "WEEK 1", "WEEK 2", "MONTH 2", "MONTH 4", "MONTH 6"][selectedCard]}
+                </div>
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-bold text-center mb-4"
+                style={{ color: '#7F1D1D', textShadow: '2px 2px 4px rgba(255, 255, 255, 0.75)' }}
+              >
+                {["Persona Guesswork", "Generic Copy", "Campaign Launch", "Poor Performance", "Blind Testing", "Budget Exhausted"][selectedCard]}
+              </h3>
+
+              <p className="text-sm text-gray-700 text-center mb-6 leading-relaxed font-medium">
+                {[
+                  "ICA built from founder assumptions",
+                  "Industry jargon, not customer language",
+                  "$5K-$20K budget deployed",
+                  "1.2% CTR, $85 CPA vs $35 target",
+                  "40 variations, zero insight",
+                  '"Market isn\'t ready"'
+                ][selectedCard]}
+              </p>
+
+              {[
+                { severity: "CRITICAL", color: "#7F1D1D" },
+                null,
+                { severity: "RISK", color: "#92400E" },
+                null,
+                { severity: "WASTE", color: "#9A3412" },
+                { severity: "FAILURE", color: "#1F2937" }
+              ][selectedCard] && (
+                <div className="flex justify-center mb-6">
+                  <div 
+                    className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wide"
+                    style={{
+                      color: [
+                        "#7F1D1D", null, "#92400E", null, "#9A3412", "#1F2937"
+                      ][selectedCard],
+                      background: '#e8edf3',
+                      boxShadow: `inset 5px 5px 10px rgba(139, 28, 28, 0.25), inset -5px -5px 10px rgba(255, 255, 255, 0.7)`
+                    }}
+                  >
+                    <motion.div 
+                      className="w-2.5 h-2.5 rounded-full bg-current"
+                      animate={{
+                        scale: [1, 1.6, 1],
+                        boxShadow: ['0 0 0 0 currentColor', '0 0 12px 4px currentColor', '0 0 0 0 currentColor']
+                      }}
+                      transition={{ duration: 1.8, repeat: Infinity }}
+                    />
+                    {["CRITICAL", null, "RISK", null, "WASTE", "FAILURE"][selectedCard]}
+                  </div>
+                </div>
+              )}
+
+              <div 
+                className="p-6 rounded-3xl mb-6"
+                style={{
+                  background: '#e8edf3',
+                  boxShadow: `inset 8px 8px 16px rgba(139, 28, 28, 0.28), inset -8px -8px 16px rgba(255, 255, 255, 0.75)`
+                }}
+              >
+                <p className="text-xs font-bold text-red-900 mb-3 uppercase tracking-wide">Why This Traps Brands:</p>
+                <p className="text-sm text-gray-800 leading-relaxed">
+                  {[
+                    "Building personas from assumptions is like building a house on sand. Without actual customer interviews, you're designing for an imaginary person. 67% of failed campaigns trace back to this exact mistake.",
+                    "Your copy uses words like 'sustainable' and 'premium quality' - but your customers actually say 'clothes that don't fall apart' and 'stuff that's worth the price.' This language gap kills 40% of conversion potential.",
+                    "Launching with unvalidated messaging is like throwing a party and hoping the right people show up. You're spending $5K-$20K to test assumptions you could have validated in 5 customer conversations.",
+                    "Numbers don't lie. 1.2% CTR means 98.8% of people scroll past. $85 CPA means you're losing $50 per customer. But instead of fixing the foundation, most brands try to 'optimize' their way out of this hole.",
+                    "Testing 40 ad variations without knowing WHY people buy is like throwing darts blindfolded. You might hit something eventually, but you'll waste thousands of dollars and months of time learning what one customer call could teach you.",
+                    "After 6 months and $50K+, the agency says 'the market isn't ready' or 'paid ads don't work for your brand.' Reality? The market was always there. You just never learned how to speak to them."
+                  ][selectedCard]}
+                </p>
+              </div>
+
+              <div 
+                className="p-5 rounded-2xl relative overflow-hidden"
+                style={{
+                  background: '#e8edf3',
+                  boxShadow: `inset 4px 4px 8px rgba(139, 28, 28, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.8)`
+                }}
+              >
+                <div 
+                  className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl"
+                  style={{
+                    background: 'linear-gradient(to bottom, #991B1B, #DC2626)',
+                    boxShadow: '0 0 10px rgba(220, 38, 38, 0.6)'
+                  }}
+                />
+                <p className="text-xs font-bold text-red-900 mb-2 uppercase tracking-wide pl-4">THE REAL IMPACT:</p>
+                <p className="text-sm text-gray-800 font-medium italic pl-4">
+                  {[
+                    "Every decision downstream inherits this fatal flaw",
+                    "Speaking in your language, not theirs",
+                    "Testing in production with real money",
+                    "Metrics screaming what interviews would have revealed",
+                    "Expensive guessing disguised as data-driven marketing",
+                    "Blaming the market for a messaging problem"
+                  ][selectedCard]}
+                </p>
+              </div>
             </div>
-            <div className={`${neuPressed} p-4 rounded-xl border-l-4 border-red-400`}>
-              <p className="text-xs font-bold text-gray-700 mb-1">MISSING:</p>
-              <p className="text-sm text-gray-600 italic">"Talking to actual humans who already tried to solve this problem."</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+
+    {/* CARDS GRID */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 relative px-2 md:px-4 z-20">
+      {[
+        { icon: User, color: "#3B82F6", title: "Persona Guesswork", desc: "ICA built from founder assumptions", stage: "WEEK 0", severity: "CRITICAL" },
+        { icon: FileText, color: "#06B6D4", title: "Generic Copy", desc: "Industry jargon, not customer language", stage: "WEEK 1", severity: null },
+        { icon: Rocket, color: "#F59E0B", title: "Campaign Launch", desc: "$5K-$20K budget deployed", stage: "WEEK 2", severity: "RISK" },
+        { icon: TrendingDown, color: "#F97316", title: "Poor Performance", desc: "1.2% CTR, $85 CPA vs $35 target", stage: "MONTH 2", severity: null },
+        { icon: Dices, color: "#EF4444", title: "Blind Testing", desc: "40 variations, zero insight", stage: "MONTH 4", severity: "WASTE" },
+        { icon: Wallet, color: "#B91C1C", title: "Budget Exhausted", desc: '"Market isn\'t ready"', stage: "MONTH 6", severity: "FAILURE" },
+      ].map((item, idx) => {
+        const Icon = item.icon;
+        const isOtherCard = selectedCard !== null && selectedCard !== idx;
+        
+        return (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 280, damping: 22, delay: idx * 0.08 }}
+            animate={
+              isOtherCard && (trapActive || caught)
+                ? { opacity: 0.25, scale: 0.95, filter: "blur(2px) grayscale(0.9)" }
+                : { opacity: 1, scale: 1, filter: "blur(0px) grayscale(0)" }
+            }
+            whileHover={!trapActive && !caught ? { y: -5, scale: 1.02 } : {}}
+            onClick={() => { 
+              if (!trapActive && !caught) {
+                setSelectedCard(idx);
+                setTrapActive(true);
+                setTimeout(() => { setCaught(true); }, 700);
+              }
+            }}
+            className="relative overflow-hidden rounded-2xl md:rounded-3xl cursor-pointer"
+            style={{ 
+              background: '#e8edf3',
+              boxShadow: '9px 9px 18px #c5cdd6, -9px -9px 18px #ffffff'
+            }}
+          >
+            <div 
+              className="h-1.5 rounded-t-2xl md:rounded-t-3xl"
+              style={{
+                background: `linear-gradient(to right, ${item.color}, ${item.color}dd)`,
+                boxShadow: `0 2px 6px ${item.color}66`
+              }}
+            />
+            
+            <div className="p-4 md:p-5">
+              <div className="flex items-start justify-between mb-3 md:mb-4">
+                <div className="text-[8px] md:text-[9px] font-black text-gray-500 uppercase tracking-wider">{item.stage}</div>
+                <div 
+                  className="p-2 md:p-2.5 rounded-xl md:rounded-2xl"
+                  style={{
+                    background: `linear-gradient(145deg, ${item.color}dd, ${item.color})`,
+                    boxShadow: `3px 3px 6px ${item.color}44`
+                  }}
+                >
+                  <Icon className="w-4 h-4 md:w-5 md:h-5 text-white" strokeWidth={2.5} />
+                </div>
+              </div>
+
+              <h4 className="font-bold text-gray-800 text-xs md:text-sm mb-2 leading-tight min-h-[28px]">{item.title}</h4>
+              <p className="text-[10px] md:text-xs text-gray-600 leading-relaxed mb-3 min-h-[32px]">{item.desc}</p>
+
+              {item.severity && (
+                <div 
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[8px] md:text-[9px] font-bold uppercase tracking-wide"
+                  style={{
+                    background: '#e8edf3',
+                    boxShadow: 'inset 2.5px 2.5px 5px #c5cdd6, inset -2.5px -2.5px 5px #ffffff',
+                    color: item.severity === 'CRITICAL' ? '#DC2626' : item.severity === 'RISK' ? '#D97706' : item.severity === 'WASTE' ? '#EA580C' : '#1F2937'
+                  }}
+                >
+                  <motion.div 
+                    className="w-1.5 h-1.5 rounded-full bg-current"
+                    animate={{ scale: [1, 1.4, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                  {item.severity}
+                </div>
+              )}
             </div>
+          </motion.div>
+        );
+      })}
+    </div>
+
+  </div>
+
+  {/* Cost & Cause Analysis */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 max-w-6xl mx-auto relative z-10 mb-12 md:mb-16 px-2 md:px-0">
+    {/* The Real Cost */}
+    <div 
+      className="p-6 md:p-10 rounded-2xl md:rounded-3xl border-l-4 border-red-500 relative"
+      style={{
+        background: '#e8edf3',
+        boxShadow: '11px 11px 22px #c5cdd6, -11px -11px 22px #ffffff'
+      }}
+    >
+      <div className="absolute top-5 right-5 text-4xl md:text-5xl opacity-5">💰</div>
+      
+      <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-5 md:mb-6"
+        style={{ textShadow: '1px 1px 2px rgba(255,255,255,0.8)' }}
+      >
+        The Real Cost
+      </h3>
+      
+      <div className="space-y-4 md:space-y-5 text-xs md:text-sm text-gray-700">
+        {[
+          "$15K-$50K wasted testing messages that were never going to work",
+          "3-6 months lost while competitors who understood their customers pulled ahead",
+          "Creative team demoralized by constant 'failing' tests",
+          "Founder loses confidence in paid acquisition entirely",
+          "Agency blames 'the algorithm' or 'iOS 14' instead of their methodology"
+        ].map((text, i) => (
+          <div key={i} className="flex gap-2.5 items-start">
+            <div 
+              className="w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+              style={{
+                background: '#e8edf3',
+                boxShadow: 'inset 2.5px 2.5px 5px #c5cdd6, inset -2.5px -2.5px 5px #ffffff'
+              }}
+            >
+              <X className="w-2.5 h-2.5 md:w-3 md:h-3 text-red-600" strokeWidth={3} />
+            </div>
+            <span>{text}</span>
           </div>
-        </motion.div>
-        <div className="flex justify-center">
-          <div className={`${neuPressed} p-4 mt-8 md:mt-12 rounded-xl border-l-4 border-r-4 border-violet-400 max-w-xl mx-4 md:mx-0`}>
-            <p className="text-sm  text-violet-600 italic">
-              "You can't optimize your way out of a positioning problem. If you're talking
-              to the wrong segment with the wrong promise, no amount of A/B testing
-              will save you."
-            </p>
-          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* The Root Cause */}
+    <div 
+      className="p-6 md:p-10 rounded-2xl md:rounded-3xl border-l-4 border-gray-700 relative"
+      style={{
+        background: '#e8edf3',
+        boxShadow: '11px 11px 22px #c5cdd6, -11px -11px 22px #ffffff'
+      }}
+    >
+      <div className="absolute top-5 right-5 text-4xl md:text-5xl opacity-5">🔍</div>
+      
+      <h3 className="text-lg md:text-2xl font-bold text-gray-800 mb-5 md:mb-6"
+        style={{ textShadow: '1px 1px 2px rgba(255,255,255,0.8)' }}
+      >
+        The Root Cause
+      </h3>
+      
+      <div className="mb-6 md:mb-8">
+        <p className="font-semibold text-xs md:text-sm mb-3 md:mb-4 text-gray-800">The standard agency intake:</p>
+        <div className="space-y-2.5 text-xs md:text-sm text-gray-700">
+          {[
+            "1-hour kick-off call",
+            '"Tell us about your ideal customer"',
+            "You describe who you hope buys",
+            "Agency writes copy based on your assumptions",
+            "Launch"
+          ].map((step, i) => (
+            <div key={i} className="flex items-center gap-2.5 pl-3 md:pl-4">
+              <div 
+                className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full shrink-0"
+                style={{
+                  background: '#e8edf3',
+                  boxShadow: 'inset 1.5px 1.5px 3px #c5cdd6, inset -1.5px -1.5px 3px #ffffff'
+                }}
+              />
+              <span>{step}</span>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+      
+      <div 
+        className="p-4 md:p-5 rounded-xl md:rounded-2xl border-l-4 border-red-600"
+        style={{
+          background: '#e8edf3',
+          boxShadow: 'inset 4.5px 4.5px 9px #c5cdd6, inset -4.5px -4.5px 9px #ffffff'
+        }}
+      >
+        <p className="text-[10px] md:text-xs font-bold text-red-700 mb-2 uppercase tracking-wide">Missing Step:</p>
+        <p className="text-xs md:text-sm text-gray-800 font-medium">
+          "Talking to actual humans who already tried to solve this problem."
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* Final insight */}
+  <div className="flex justify-center relative z-10 px-2 md:px-4">
+    <div 
+      className="p-6 md:p-10 rounded-2xl md:rounded-3xl border-l-4 border-r-4 border-violet-600 max-w-3xl w-full relative overflow-hidden"
+      style={{
+        background: '#e8edf3',
+        boxShadow: '13px 13px 26px #c5cdd6, -13px -13px 26px #ffffff'
+      }}
+    >
+      <div className="absolute -right-7 -bottom-7 text-7xl md:text-9xl opacity-5">💡</div>
+      <p className="text-sm md:text-lg text-gray-800 leading-relaxed font-medium relative z-10"
+        style={{ textShadow: '1px 1px 2px rgba(255,255,255,0.5)' }}
+      >
+        <span className="text-2xl md:text-3xl text-violet-600">"</span>
+        You can't optimize your way out of a positioning problem. If you're talking to the wrong segment with the wrong promise, no amount of A/B testing will save you.
+        <span className="text-2xl md:text-3xl text-violet-600">"</span>
+      </p>
+    </div>
+  </div>
+
+</section>
+
 
       {/* SECTION 3: AI RECONCILIATION */}
       <section className="py-12 md:py-24 px-4 md:px-6" id="ai-reconciliation">
