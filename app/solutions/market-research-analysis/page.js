@@ -45,6 +45,121 @@ const staggerContainer = {
     }
   }
 };
+// --- FAQ Section Component ---
+const FAQSection = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  // Local Neumorphic styles for the FAQ toggle
+  const faqFlat = "bg-[#E0E5EC] shadow-[6px_6px_12px_#b8b9be,-6px_-6px_12px_#ffffff]";
+  const faqPressed = "bg-[#E0E5EC] shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff]";
+
+  // UPDATED: Your local image path
+  const authorAvatar = "/unnamed.jpg"; 
+
+  const faqs = [
+    { 
+      q: "How is this different from sending a survey to my list?", 
+      a: "Surveys reveal aspirations. Interviews reveal truth. Surveys say 80% will buy; reality is 8%. We focus on past behavior using The Mom Test." 
+    },
+    { 
+      q: "Can't I just have my agency do interviews?", 
+      a: "You can, but they usually ask 'What do you like about us?' (Compliments) vs 'What triggered your search?' (Intel). Plus, confirmation bias." 
+    },
+    { 
+      q: "Can't I just test my way to the answer?", 
+      a: "Option A (Test): 90 days, $45K spend. Option B (Know): $4.5K + 14 days. The cost is roughly the same, but we frontload the learning." 
+    },
+    { 
+      q: "What if research reveals my offer is wrong?", 
+      a: "Then you just saved $50K-$150K. Would you rather spend $4.5K to learn now, or $80K in ads to learn 6 months later?" 
+    },
+  ];
+
+  return (
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="faq">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">The Silent Objections</h2>
+        <p className="text-gray-600 text-center mb-12 text-sm md:text-base">We've done this 50+ times. These are the questions you're not asking out loud.</p>
+
+        <div className="space-y-6">
+          {faqs.map((faq, i) => {
+            const isOpen = activeIndex === i;
+
+            return (
+              <motion.div
+                key={i}
+                layout
+                onClick={() => toggleFAQ(i)}
+                className={`
+                   p-6 rounded-2xl cursor-pointer transition-all duration-300 relative overflow-hidden
+                   ${isOpen ? faqPressed : faqFlat}
+                `}
+              >
+                {/* Question Header */}
+                <div className="flex justify-between items-start gap-4">
+                    <h4 className={`font-bold transition-colors duration-300 mb-0 flex items-start gap-3 text-sm md:text-base ${isOpen ? 'text-indigo-600' : 'text-gray-800'}`}>
+                        <HelpCircle className={`w-5 h-5 mt-0.5 shrink-0 transition-colors ${isOpen ? 'text-indigo-500' : 'text-gray-400'}`} />
+                        {faq.q}
+                    </h4>
+                    
+                    <motion.div 
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        className="text-gray-400 shrink-0"
+                    >
+                        <ChevronDown className="w-5 h-5" />
+                    </motion.div>
+                </div>
+
+                {/* Answer Area with Avatar Reveal */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="pt-6 pl-0 md:pl-8 flex gap-4 items-start">
+                        {/* Avatar Image */}
+                        <motion.div 
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                            className="shrink-0 relative"
+                        >
+                           <img 
+                                src={authorAvatar} 
+                                alt="Author" 
+                                className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#E0E5EC] shadow-sm object-cover"
+                           />
+                           <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#E0E5EC] rounded-full"></div>
+                        </motion.div>
+
+                        {/* Answer Text Bubble */}
+                        <motion.div 
+                            initial={{ x: -10, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="text-sm text-gray-600 bg-white/40 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl leading-relaxed"
+                        >
+                            <p>{faq.a}</p>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const ArloxianLanding = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -54,6 +169,8 @@ const [trapActive, setTrapActive] = useState(false);
 const [caught, setCaught] = useState(false);
 const [selectedCard, setSelectedCard] = useState(null);
 const [hoveredCard, setHoveredCard] = useState(null);
+// faq
+
 
 return (
     <div className="font-sans text-[#2D3748] bg-[#E0E5EC] min-h-screen selection:bg-gray-300 overflow-x-hidden w-full">
@@ -1530,8 +1647,8 @@ return (
                     </span>
             
                     <span className="font-semibold text-gray-800 text-sm sm:text-base leading-tight">
-                      Phase 2: The Mom Test Interview Protocol
-                      <span className="block text-xs text-gray-500 mt-1">Why This Changes Everything</span>
+                      Phase 2: Decoding the Consumer
+                      <span className="block text-xs text-gray-500 mt-1">Getting past the polite 'yes' to find the profitable 'why'.</span>
                     </span>
                   </span>
             
@@ -1768,7 +1885,7 @@ return (
             <div  className={`${neuFlat} rounded-3xl p-6`}>
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-800">Arloxian Intelligence Protocol</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-blue-800">Arloxian Intelligence Protocol</h3>
                   <div className="mt-2 inline-flex items-baseline gap-3">
                     <div className="inline-flex items-center bg-white/95 px-3 py-1 rounded-full text-xs md:text-sm font-semibold text-blue-700 shadow-sm">
                       10-14 Days
@@ -1778,10 +1895,7 @@ return (
                 </div>
 
                 <div className="flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#E0E5EC] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.9)] text-blue-700 shrink-0">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M14 11a4 4 0 1 0-4 4" stroke="#1e3a8a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M6 21h12" stroke="#1e3a8a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                 <Microscope size={18} strokeWidth={2.2} className="text-[#1e3a8a] " aria-hidden />
                 </div>
               </div>
 
@@ -1863,7 +1977,7 @@ return (
               <div className="absolute bottom-8 left-6 md:left-8 right-8 h-px bg-gray-300"></div>
               
               {/* Axis Labels */}
-              <span className="absolute top-24 left-2 md:left-4 text-[9px] md:text-[10px] font-bold text-gray-400 uppercase -rotate-90 origin-bottom-left">Statistical Certainty</span>
+              <span className="absolute top-36 left-4 md:left-8 text-[9px] md:text-[10px] font-bold text-gray-400 uppercase -rotate-90 origin-bottom-left">Statistical Certainty</span>
               <span className="absolute bottom-4 right-4 text-[9px] md:text-[10px] font-bold text-gray-400 uppercase">Speed to Launch</span>
 
               {/* Quadrant Labels */}
@@ -1939,32 +2053,7 @@ return (
         </div>
       </section>
 
-      {/* SECTION 6: FAQ */}
-      <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="faq">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">The Silent Objections</h2>
-          <p className="text-gray-600 text-center mb-12 text-sm md:text-base">We've done this 50+ times. These are the questions you're not asking out loud.</p>
-
-          <div className="space-y-6">
-            {[
-                { q: "How is this different from sending a survey to my list?", a: "Surveys reveal aspirations. Interviews reveal truth. Surveys say 80% will buy; reality is 8%. We focus on past behavior using The Mom Test." },
-                { q: "Can't I just have my agency do interviews?", a: "You can, but they usually ask 'What do you like about us?' (Compliments) vs 'What triggered your search?' (Intel). Plus, confirmation bias." },
-                { q: "Can't I just test my way to the answer?", a: "Option A (Test): 90 days, $45K spend. Option B (Know): $4.5K + 14 days. The cost is roughly the same, but we frontload the learning." },
-                { q: "What if research reveals my offer is wrong?", a: "Then you just saved $50K-$150K. Would you rather spend $4.5K to learn now, or $80K in ads to learn 6 months later?" },
-            ].map((faq, i) => (
-                <div key={i} className={`${neuFlat} p-6 rounded-2xl`}>
-                    <h4 className="font-bold text-gray-800 mb-3 flex items-start gap-3 text-sm md:text-base">
-                        <HelpCircle className="w-5 h-5 text-gray-400 mt-1 shrink-0" />
-                        {faq.q}
-                    </h4>
-                    <div className="pl-8 text-sm text-gray-600 space-y-2">
-                        <p>{faq.a}</p>
-                    </div>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* SECTION 7: COST OF INACTION */}
       <section className="py-12 md:py-24 px-4 md:px-6" id="cost-inaction">
@@ -2349,7 +2438,8 @@ return (
           </div>
         </div>
       </section>
-
+{/* SECTION 6: FAQ */}
+      <FAQSection />
       {/* SECTION 9: CTA & FOOTER */}
       <section className="py-16 md:py-24 px-4 md:px-6 border-t border-gray-300/50" aria-labelledby="cta-heading">
         <div className="max-w-4xl mx-auto text-center">
