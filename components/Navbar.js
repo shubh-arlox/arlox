@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import WhatsAppCTA from "./WhatsAppCTA";
+import CalendlyCTA from "./CalendlyCTA";
 
 /* NAV DATA (same as before) */
 const NAV_ITEMS = [
@@ -64,7 +65,7 @@ const MEGA_CONTENT = {
   products: [
     {
       title: "For Agencies",
-      subtitle: "Get more clients, keep them longer",
+      
       items: [
         { label: "Scale Your Agency", href: "/products/scale-your-agency" },
         { label: "Scientific Mediabuying™", href: "/products/scientific-mediabuying" },
@@ -75,7 +76,7 @@ const MEGA_CONTENT = {
     },
     {
       title: "For Fashion Brands",
-      subtitle: "Independently scale to $500K+/month",
+      
       items: [
         { label: "Marketing Setup", href: "/products/fashion-marketing-dept" },
         { label: "1-on-1 Consulting", href: "/products/fashion-consulting" },
@@ -83,7 +84,7 @@ const MEGA_CONTENT = {
     },
     {
       title: "For Online Service Businesses",
-      subtitle: "Qualified leads on autopilot",
+     
       items: [
         { label: "LinkedIn Appointment Engine", href: "/products/linkedin-appointments" },
         { label: "1-on-1 Coaching", href: "/products/service-coaching" },
@@ -217,12 +218,9 @@ export default function Navbar() {
 
                 {/* Right side */}
                 <div className="flex items-center gap-8">
-                  <WhatsAppCTA 
-                    whatsappNumber="+919910220335" 
-                    calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
-                  >
-                    <Phone size={16} /> <span className="text-sm">Call</span>
-                  </WhatsAppCTA>
+                  <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+                    <Phone size={16} /> 
+                  </CalendlyCTA>
 
                   <button
                     className="md:hidden p-2 rounded-lg hover:bg-white/60"
@@ -287,92 +285,92 @@ export default function Navbar() {
           </div>
         )}
 
-       {/* Mobile menu */}
+      {/* Mobile menu */}
 {openMobile && (
   <div
-    className="md:hidden pb-4 mt-2 flex justify-center"
-    style={{ marginTop: NAV_HEIGHT }}
+    className="md:hidden fixed left-0 right-0"
+    style={{ top: NAV_HEIGHT, zIndex: 40 }}
+    aria-hidden={!openMobile}
   >
-    {/* Constrain width here: w-full with max-w-md and side padding from the parent */}
-    <div className="w-[calc(100%-2rem)] max-w-md rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80">
-      <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
-        {NAV_ITEMS.map((item) => {
-          const isOpen = mobileKey === item.key;
-          return (
-            <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
-              <button
-                onClick={() =>
-                  setMobileKey((prev) => (prev === item.key ? null : item.key))
-                }
-                className="w-full flex items-center justify-between text-left select-none"
-                aria-expanded={isOpen}
-              >
-                <span>{item.label}</span>
-                <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
-              </button>
+    {/* Outer padding so the inner panel doesn't touch screen edges */}
+    <div className="w-full px-4 pb-4">
+      {/* Constrain width but allow full-width on very small screens */}
+      <div className="mx-auto w-full max-w-md rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80">
+        <div className="max-h-[calc(100vh - 120px)] overflow-auto">
+          <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
+            {NAV_ITEMS.map((item) => {
+              const isOpen = mobileKey === item.key;
+              return (
+                <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
+                  <button
+                    onClick={() => setMobileKey((prev) => (prev === item.key ? null : item.key))}
+                    className="w-full flex items-center justify-between text-left select-none"
+                    aria-expanded={isOpen}
+                  >
+                    <span>{item.label}</span>
+                    <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
+                  </button>
 
-              <div
-                className={`mt-2 overflow-hidden transition-all duration-200 ${
-                  isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"
-                }`}
-              >
-                {MEGA_CONTENT[item.key].map((col) => (
-                  <div key={col.title} className="px-2 py-1">
-                    <div className="text-xs uppercase text-slate-400 mb-1">
-                      {col.title}
-                    </div>
-                    {col.subtitle && (
-                      <p className="text-[11px] text-slate-500 mb-1">
-                        {col.subtitle}
-                      </p>
-                    )}
-                    <div className="grid gap-1">
-                      {col.items.map((link) =>
-                        isExternal(link.href) ? (
-                          <a
-                            key={link.label}
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
-                          >
-                            {link.label}
-                          </a>
-                        ) : (
-                          <Link
-                            key={link.label}
-                            href={link.href}
-                            className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
-                            onClick={() => {
-                              setOpenMobile(false);
-                              setMobileKey(null);
-                            }}
-                          >
-                            {link.label}
-                          </Link>
-                        )
-                      )}
-                    </div>
+                  <div className={`mt-2 overflow-hidden transition-all duration-200 ${isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"}`}>
+                    {MEGA_CONTENT[item.key].map((col) => (
+                      <div key={col.title} className="px-2 py-1">
+                        <div className="text-xs uppercase text-slate-400 mb-1">{col.title}</div>
+                        {col.subtitle && <p className="text-[11px] text-slate-500 mb-1">{col.subtitle}</p>}
+                        <div className="grid gap-1">
+                          {col.items.map((link) =>
+                            isExternal(link.href) ? (
+                              <a
+                                key={link.label}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                              >
+                                {link.label}
+                              </a>
+                            ) : (
+                              <Link
+                                key={link.label}
+                                href={link.href}
+                                className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                                onClick={() => {
+                                  setOpenMobile(false);
+                                  setMobileKey(null);
+                                }}
+                              >
+                                {link.label}
+                              </Link>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+                </li>
+              );
+            })}
+          </ul>
 
-      <div className="px-4 py-3 border-t border-white/70 flex gap-2">
-        <Link
-          href="https://calendly.com/arlox-/strategy-call-1"
-          className="px-4 py-2 rounded-full border border-slate-300 text-sm font-medium ml-auto"
-          onClick={() => setOpenMobile(false)}
-        >
-          Book a Call
-        </Link>
+          {/* Mobile footer: Calendly trigger */}
+          <div className="px-4 py-3 border-t border-white/70">
+            <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+              <button
+                className="w-full px-4 py-2 rounded-full bg-[#eef2ff] text-[#203b80] font-semibold"
+                onClick={() => {
+                  setOpenMobile(false);
+                }}
+              >
+                Book a Call
+              </button>
+            </CalendlyCTA>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 )}
+
+
 
       </header>
 

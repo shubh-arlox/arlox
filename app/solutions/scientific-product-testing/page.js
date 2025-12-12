@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, PlayCircle, AlertCircle, TrendingDown, Zap, X } from 'lucide-react';
+import { ArrowRight, PlayCircle, AlertCircle, TrendingDown, Zap, X, ArrowBigUpDash } from 'lucide-react';
 
 export default function NeumorphicHeroSection() {
   const [collectionA, setCollectionA] = useState(0);
@@ -550,7 +550,8 @@ export default function NeumorphicHeroSection() {
                     <div className="burnout-label">Burnout</div>
                     <div className="burnout-percentage">{burnoutLevel}%</div>
                   </div>
-                  <div className="burnout-click-hint">👆 Click to see details</div>
+                  <div className="burnout-click-hint flex ">
+                      <ArrowBigUpDash className='text-red-400 '/><span className='text-red-400 mt-1 ml-1 font-semibold'> Click to see details</span> </div>
                 </div>
               </motion.div>
             </motion.div>
