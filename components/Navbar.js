@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import WhatsAppCTA from "./WhatsAppCTA";
 import CalendlyCTA from "./CalendlyCTA";
+import WhatsappCTA from "./WhatsAppCTA";
 
 /* NAV DATA (same as before) */
 const NAV_ITEMS = [
@@ -350,28 +351,11 @@ export default function Navbar() {
               );
             })}
           </ul>
-
-          {/* Mobile footer: Calendly trigger */}
-          <div className="px-4 py-3 border-t border-white/70">
-            <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-              <button
-                className="w-full px-4 py-2 rounded-full bg-[#eef2ff] text-[#203b80] font-semibold"
-                onClick={() => {
-                  setOpenMobile(false);
-                }}
-              >
-                Book a Call
-              </button>
-            </CalendlyCTA>
-          </div>
         </div>
       </div>
     </div>
   </div>
 )}
-
-
-
       </header>
 
       {/* NAV SPACER - prevents content jumping under fixed nav */}
