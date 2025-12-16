@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
 import CalendlyCTA from "./CalendlyCTA";
 
-/* NAV DATA */
 const NAV_ITEMS = [
   { label: "Solutions", key: "solutions" },
   { label: "Tools", key: "tools" },
@@ -49,7 +48,6 @@ const MEGA_CONTENT = {
       ],
     },
   ],
-
   tools: [
     {
       title: "Tools",
@@ -60,7 +58,6 @@ const MEGA_CONTENT = {
       ],
     },
   ],
-
   products: [
     {
       title: "For Agencies",
@@ -87,8 +84,6 @@ const MEGA_CONTENT = {
       ],
     },
   ],
-
-  // HORIZONTAL LAYOUTS FOR THESE THREE
   results: [
     {
       title: "Results",
@@ -100,7 +95,6 @@ const MEGA_CONTENT = {
       ],
     },
   ],
-
   free: [
     {
       title: "Free",
@@ -109,11 +103,9 @@ const MEGA_CONTENT = {
         { label: "Arlox Channel", href: "/free/arlox-channel" },
         { label: "Van Channel", href: "/free/van-channel" },
         { label: "Dennis Channel", href: "/free/dennis-channel" },
-        
       ],
     },
   ],
-
   company: [
     {
       title: "Company",
@@ -130,18 +122,20 @@ const MEGA_CONTENT = {
 };
 
 const isExternal = (url) => /^https?:\/\//.test(url);
-const NAV_HEIGHT = 64;
+const NAV_HEIGHT = 44;
 
 export default function Navbar() {
   const [openMega, setOpenMega] = useState(null);
+  const [isClosing, setIsClosing] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const [mobileKey, setMobileKey] = useState(null);
   const hoverTimeout = useRef(null);
+  const closeTimeout = useRef(null);
 
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
-        setOpenMega(null);
+        handleClose();
         setOpenMobile(false);
         setMobileKey(null);
       }
@@ -154,166 +148,197 @@ export default function Navbar() {
     document.body.style.overflow = openMobile ? "hidden" : "";
   }, [openMobile]);
 
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    clearTimeout(closeTimeout.current);
+    closeTimeout.current = setTimeout(() => {
+      setOpenMega(null);
+      setIsClosing(false);
+    }, 800);
+  }, []);
+
   const openHover = useCallback((key) => {
     clearTimeout(hoverTimeout.current);
+    clearTimeout(closeTimeout.current);
+    setIsClosing(false);
     setOpenMega(key);
   }, []);
 
   const closeHover = useCallback(() => {
     clearTimeout(hoverTimeout.current);
-    hoverTimeout.current = setTimeout(() => setOpenMega(null), 140);
-  }, []);
-
-  // Check if section should be horizontal
-  const isHorizontalSection = (key) => ['results', 'free', 'company','tools'].includes(key);
+    hoverTimeout.current = setTimeout(() => {
+      handleClose();
+    }, 140);
+  }, [handleClose]);
 
   return (
     <>
-      {/* Fixed nav with enhanced glassmorphism */}
-      <header
-        className="fixed top-0 left-0 right-0 z-40"
-        style={{ height: NAV_HEIGHT }}
-      >
-        <div className="h-full">
-          <div className="h-full bg-white/80 backdrop-blur-xl border-b border-white/40 shadow-[0_8px_32px_rgba(31,38,135,0.15)]">
-            <nav className="max-w-6xl mx-auto px-4 h-full" onMouseLeave={closeHover}>
-              <div className="flex items-center justify-between h-full">
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
-                  <Image
-                    src="/Arlox logo 6.png"
-                    width={130}
-                    height={42}
-                    alt="Arlox"
-                    className="h-9 w-auto md:h-10"
-                    priority
-                  />
-                </Link>
+      <style jsx global>{`
+        @keyframes appleBlurIn {
+          from {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+          }
+          to {
+            opacity: 1;
+            backdrop-filter: blur(12px);
+          }
+        }
+        @keyframes appleBlurOut {
+          from {
+            opacity: 1;
+            backdrop-filter: blur(12px);
+          }
+          to {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+          }
+        }
+        @keyframes appleSlideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes appleSlideUp {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+        }
+      `}</style>
 
-                {/* Desktop nav */}
-                <ul className="hidden md:flex items-center gap-6 text-sm">
-                  {NAV_ITEMS.map((item) => (
-                    <li
-                      key={item.key}
-                      className="relative"
-                      onMouseEnter={() => openHover(item.key)}
-                      onFocus={() => openHover(item.key)}
+      {/* Apple-style Blur Overlay */}
+      {(openMega || isClosing) && (
+        <div 
+          className="fixed inset-0 bg-black/20 z-30"
+          style={{ 
+            top: NAV_HEIGHT,
+            animation: isClosing 
+              ? 'appleBlurOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+              : 'appleBlurIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+          }}
+          onClick={handleClose}
+        />
+      )}
+
+      {/* Navbar */}
+      <header className="fixed top-0 left-0 right-0 z-50" style={{ height: NAV_HEIGHT }}>
+        <div className="h-full bg-[rgba(251,251,253,0.8)] backdrop-blur-[20px] backdrop-saturate-[180%] border-b border-[rgba(0,0,0,0.1)]">
+          <nav className="max-w-[980px] mx-auto px-6 h-full" onMouseLeave={closeHover}>
+            <div className="flex items-center justify-between md:justify-start h-full md:gap-12">
+              
+              {/* Logo - Better mobile positioning */}
+              <Link href="/" className="flex items-center flex-shrink-0 -ml-2 md:ml-0">
+                <Image
+                  src="/Arlox logo 6.png"
+                  width={110}
+                  height={36}
+                  alt="Arlox"
+                  className="h-7 md:h-8 w-auto"
+                  priority
+                />
+              </Link>
+
+              {/* Nav Items */}
+              <ul className="hidden md:flex items-center gap-8 text-xs font-normal flex-1">
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.key} onMouseEnter={() => openHover(item.key)}>
+                    <button
+                      type="button"
+                      className="text-[#1d1d1f] hover:text-[#06c] transition-colors duration-200"
                     >
-                      <button
-                        type="button"
-                        className="px-1 text-[#0f1724] font-medium hover:text-[#0b2540] select-none transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
 
-                {/* Right side */}
-                <div className="flex items-center gap-4">
-                 <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-  <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#f5f5f5] text-slate-700 hover:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.8)] shadow-[4px_4px_8px_rgba(163,177,198,0.4),-4px_-4px_8px_rgba(255,255,255,0.9)] transition-all text-sm font-medium">
-    <Phone size={16} />
-    <span className="hidden sm:inline">Book Call</span>
-  </button>
-</CalendlyCTA>
-
-
-                  <button
-                    className="md:hidden p-2 rounded-lg hover:bg-white/60 transition-colors"
-                    onClick={() => setOpenMobile((v) => !v)}
+              {/* Right Side */}
+              <div className="flex items-center gap-2 md:gap-3 flex-shrink-0 ml-auto">
+                <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+                  <button 
+                    className="flex items-center gap-2 px-2.5 md:px-3 py-1.5 rounded-full bg-[rgba(251,251,253,0.5)] text-[#1d1d1f] hover:bg-[rgba(251,251,253,0.8)] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.15),inset_-1px_-1px_2px_rgba(255,255,255,0.7)] transition-all duration-300 text-xs font-medium"
+                    aria-label="Book a call"
                   >
-                    {openMobile ? <X size={20} /> : <Menu size={20} />}
+                    <Phone size={14} className="opacity-70" />
                   </button>
-                </div>
+                </CalendlyCTA>
+
+                <button
+                  className="md:hidden p-1.5 rounded-lg hover:bg-black/5 transition-colors"
+                  onClick={() => setOpenMobile((v) => !v)}
+                >
+                  {openMobile ? <X size={18} /> : <Menu size={18} />}
+                </button>
               </div>
-            </nav>
-          </div>
+            </div>
+          </nav>
         </div>
 
-        {/* Desktop mega menu with ENHANCED GLASSMORPHISM */}
-        {openMega && (
+        {/* Mega Menu */}
+        {(openMega || isClosing) && (
           <div
-            className="absolute left-0 right-0 top-full translate-y-2 z-45"
+            className="absolute left-0 right-0 top-full z-40"
+            style={{ 
+              animation: isClosing
+                ? 'appleSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+                : 'appleSlideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
             onMouseEnter={() => openHover(openMega)}
             onMouseLeave={closeHover}
           >
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="bg-white/90 backdrop-blur-2xl border border-white/60 rounded-2xl p-6 md:p-8 shadow-[0_20px_70px_rgba(31,38,135,0.25)]">
-                
-                {/* HORIZONTAL LAYOUT for results, free, company */}
-                {isHorizontalSection(openMega) ? (
-                  <div className="flex flex-wrap gap-8 justify-center">
-                    {MEGA_CONTENT[openMega][0].items.map((link) => (
-                      <div key={link.label}>
-                        {isExternal(link.href) ? (
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#071126] text-sm md:text-base hover:text-[#0b2540] transition-colors font-medium whitespace-nowrap"
-                          >
-                            {link.label}
-                          </a>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            className="text-[#071126] text-sm md:text-base hover:text-[#0b2540] transition-colors font-medium whitespace-nowrap"
-                            onClick={() => setOpenMega(null)}
-                          >
-                            {link.label}
-                          </Link>
-                        )}
+            <div className="bg-[rgba(251,251,253,0.95)] backdrop-blur-[20px] backdrop-saturate-[180%] border-b border-[rgba(0,0,0,0.1)]">
+              <div className="max-w-[980px] mx-auto px-6 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  {openMega && MEGA_CONTENT[openMega].map((col) => (
+                    <div key={col.title}>
+                      <div className="text-xs text-[#86868b] uppercase tracking-wider font-bold mb-4">
+                        {col.title}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  // GRID LAYOUT for solutions, tools, products
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {MEGA_CONTENT[openMega].map((col) => (
-                      <div key={col.title}>
-                        <div className="text-xs text-slate-500 uppercase tracking-wider font-bold mb-3">
-                          {col.title}
-                        </div>
-                        <ul className="space-y-2">
-                          {col.items.map((link) => (
-                            <li key={link.label}>
-                              {isExternal(link.href) ? (
-                                <a
-                                  href={link.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-[#071126] text-sm md:text-base hover:text-[#0b2540] transition-colors block"
-                                >
-                                  {link.label}
-                                </a>
-                              ) : (
-                                <Link
-                                  href={link.href}
-                                  className="text-[#071126] text-sm md:text-base hover:text-[#0b2540] transition-colors block"
-                                  onClick={() => setOpenMega(null)}
-                                >
-                                  {link.label}
-                                </Link>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      <ul className="space-y-3">
+                        {col.items.map((link) => (
+                          <li key={link.label}>
+                            {isExternal(link.href) ? (
+                              <a
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#1d1d1f] text-sm hover:text-[#06c] transition-colors duration-200 block font-semibold"
+                              >
+                                {link.label}
+                              </a>
+                            ) : (
+                              <Link
+                                href={link.href}
+                                className="text-[#1d1d1f] text-sm hover:text-[#06c] transition-colors duration-200 block font-semibold"
+                                onClick={handleClose}
+                              >
+                                {link.label}
+                              </Link>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* Mobile menu - KEEPING YOUR VERSION */}
+        {/* Mobile Menu */}
         {openMobile && (
-          <div
-            className="md:hidden fixed left-0 right-0"
-            style={{ top: NAV_HEIGHT, zIndex: 40 }}
-          >
+          <div className="md:hidden fixed left-0 right-0" style={{ top: NAV_HEIGHT, zIndex: 40 }}>
             <div className="w-full px-4 pb-4">
               <div className="mx-auto w-full max-w-md rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80">
                 <div className="max-h-[calc(100vh-120px)] overflow-auto">
@@ -324,12 +349,11 @@ export default function Navbar() {
                         <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
                           <button
                             onClick={() => setMobileKey((prev) => (prev === item.key ? null : item.key))}
-                            className="w-full flex items-center justify-between text-left select-none"
+                            className="w-full flex items-center justify-between text-left"
                           >
                             <span>{item.label}</span>
                             <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
                           </button>
-
                           <div className={`mt-2 overflow-hidden transition-all duration-200 ${isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"}`}>
                             {MEGA_CONTENT[item.key].map((col) => (
                               <div key={col.title} className="px-2 py-1">
