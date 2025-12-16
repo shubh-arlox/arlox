@@ -38,9 +38,16 @@ module.exports = {
       },
 
       // Provide a subtle default font-family fallback if needed
-      fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto"],
-      },
+     fontFamily: {
+  sans: [
+    "NeueLeiden",
+    "ui-sans-serif",
+    "system-ui",
+    "-apple-system",
+    "Segoe UI",
+    "Roboto",
+  ],
+},
     },
   },
   

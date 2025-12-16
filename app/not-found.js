@@ -139,7 +139,7 @@ export default function SimpleCat404() {
               >
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.accent }} />
                 <span style={{ color: colors.textSub }} className="text-xs sm:text-sm font-bold">
-                  Guardian Protocol: BREACHED
+                  Oscar Protocol: BREACHED
                 </span>
               </div>
             </motion.div>
@@ -151,7 +151,7 @@ export default function SimpleCat404() {
               style={{ color: colors.textSub }}
               className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light mb-8 sm:mb-12 text-center leading-relaxed px-4"
             >
-              The guardian has left.<br/>
+              The Oscar has left.<br/>
               <span className="opacity-60 text-base sm:text-lg">And the page went with him.</span>
             </motion.p>
 
@@ -240,7 +240,7 @@ export default function SimpleCat404() {
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                Guardian Active
+                Oscar Active
               </motion.h2>
               <p style={{ color: colors.textSub }} className="text-sm sm:text-base md:text-lg lg:text-xl font-medium">
                 This page is under feline protection
@@ -366,7 +366,7 @@ export default function SimpleCat404() {
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <span className="hidden sm:inline">Interact with guardian to proceed</span>
+              <span className="hidden sm:inline">Interact with Oscar to proceed</span>
               <span className="sm:hidden">Tap to interact</span>
             </motion.div>
           </motion.div>
