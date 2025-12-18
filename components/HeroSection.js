@@ -36,7 +36,8 @@ export default function HeroSection() {
     calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
   >
    <GlassButton 
-  label="Start Scaling Today"  
+  label="Start Scaling Today" 
+  icon={ArrowRight} 
   className="h-4 sm:h-5 transition-all duration-200"
   buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
   onClick={() => console.log('Focus mode toggled')}

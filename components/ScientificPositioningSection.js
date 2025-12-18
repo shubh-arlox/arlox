@@ -22,6 +22,7 @@ import {
   Dot,
 } from "lucide-react";
 import WhatsappCTA from "./WhatsAppCTA";
+import GlassButton from "./but";
 
 /* ========================================================================== */
 /* 1. UI PRIMITIVES & SHARED COMPONENTS                                       */
@@ -159,10 +160,13 @@ const HeroSection = () => (
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
            <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-          <button
-      className="liquid-glass-btn bg-[#b9c0d3] w-full py-3 sm:py-4 px-8 sm:px-12 transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95">
-           <span className="text-slate-800 font-bold">Book Positioning Audit </span> <ArrowRight size={16} className="text-slate-800" />
-          </button>
+          <GlassButton 
+  label="Book Positioning Audit" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
           </WhatsappCTA>
         
         </div>
@@ -651,10 +655,13 @@ const FooterCTA = () => (
         </p>
         <div className="flex flex-col items-center gap-6">
          <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-           <button
-      className="liquid-glass-btn bg-[#b9c0d3] w-full py-3 sm:py-4 px-8 sm:px-12 transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95">
-           <span className="text-slate-800 font-bold">Book Positioning Audit </span> <ArrowRight size={16} className="text-slate-800" />
-          </button>
+           <GlassButton 
+  label="Book Positioning Audit" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
           </WhatsappCTA>
         </div>
       </motion.div>

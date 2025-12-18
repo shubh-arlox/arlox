@@ -108,6 +108,7 @@ export default function TrinitySection() {
       >
         <GlassButton 
           label="Start Scaling Today"  
+           icon={ArrowRight} 
           className="h-4 sm:h-5 transition-all duration-200"
           onClick={() => console.log('Focus mode toggled')}
         />

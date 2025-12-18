@@ -9,10 +9,12 @@ import {
   Zap, 
   Users, 
   ShieldAlert,
-  BarChart3
+  BarChart3,
+  ArrowRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CalendlyCTA from '@/components/CalendlyCTA';
+import GlassButton from '@/components/but';
 
 const HiddenCost = () => {
   const [activeCascade, setActiveCascade] = useState(null);
@@ -220,16 +222,17 @@ const HiddenCost = () => {
                     ))}
                   </ul>
                 </div>
-                       <div className=' flex flex-col items-center'>
+                       <div className=' flex flex-col items-center mt-4'>
               <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-  <button 
-    className={`w-full sm:w-auto mx-auto sm:mx-0 sm:ml-14 sm:mr-8 mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center rounded-xl liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 text-slate-700 font-bold group`}
-    aria-label="Book a strategy call to stop wasting ad spend"
-  >
-    <span className="group-hover:text-red-500 transition-colors">
-      Stop The Bleeding
-    </span>
-  </button>
+  <GlassButton 
+  label="Stop The Bleeding" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
+      
+   
 </CalendlyCTA>
 </div>
 

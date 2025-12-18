@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Check, Eye, ThumbsDown, ThumbsUp, Heart, ShoppingCart, Shirt } from 'lucide-react';
 import CalendlyCTA from '@/components/CalendlyCTA';
+import GlassButton from '@/components/but';
 
 const Hero = () => {
   const [time, setTime] = useState(0);
@@ -185,21 +186,26 @@ const Hero = () => {
   className="hidden lg:flex flex-col sm:flex-row gap-4 pt-4"
 >
   <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-    <button 
-      className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
-      aria-label="Start angle testing with a strategy call"
-    >
-      Start Angle Testing
-      <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-    </button>
+   <GlassButton 
+  label="Start Angle Testing" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
+      
+      
   </CalendlyCTA>
 
-  <button 
-    className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
-    aria-label="View our case studies and results"
-  >
-    View Case Studies
-  </button>
+  <GlassButton 
+  label="View Case Studies" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => window.location.href = '/results/case-studies'}
+/>
+    
+  
 </motion.div>
 
 
@@ -291,14 +297,21 @@ const Hero = () => {
           className="lg:hidden flex flex-col gap-3 pt-6 w-full"
         >
           <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-            <button className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto">
-              Start Angle Testing
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            <GlassButton 
+  label="Start Angle Testing" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
           </CalendlyCTA>
-          <button className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 px-6 py-3 text-base rounded-full text-[#6d5dfc] w-full">
-            View Case Studies
-          </button>
+          <GlassButton 
+  label="View Case Studies" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => window.location.href = '/results/case-studies'}
+/>
         </motion.div>
       </main>
     </div>

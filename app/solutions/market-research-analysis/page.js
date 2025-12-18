@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import WhatsappCTA from '@/components/WhatsAppCTA';
 import YourComponent from "./Failiurecard";
+import GlassButton from "@/components/but";
 
 // Neumorphic Style Utilities
 const neuFlat = "bg-[#E0E5EC] shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] rounded-3xl border border-white/20";
@@ -230,12 +231,16 @@ return (
                 whatsappNumber="+919910220335" 
                 calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
               >
-              <button className={`liquid-glass-btn bg-[#b9c0d3] px-6 md:px-8 py-3 md:py-4 text-slate-800 font-bold rounded-full hover:scale-95 flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95`}>
-                <span className="text-slate-800 font-bold">Get Your Market Intelligence Audit</span> 
-                <ArrowRight className="w-5 h-5" />
-              </button>
+              
+              <GlassButton 
+  label="Get Your Market Intelligence Audit" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
               </WhatsappCTA>
-              <p className="text-xs text-gray-500 text-center md:text-left md:ml-4">90-minute deep-dive. Zero obligation. See what we'd uncover.</p>
+              <p className="text-xs text-gray-500 mt-6 text-center md:text-left md:ml-4">90-minute deep-dive. Zero obligation. See what we'd uncover.</p>
             </div>
           </motion.div>
 
@@ -1581,10 +1586,13 @@ return (
               whatsappNumber="+919910220335" 
               calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
             >
-              <button className={`liquid-glass-btn bg-[#c9d0df]  duration-300 hover:bg-[#9ca6b4]  px-6 md:px-8 py-3 md:py-4 text-slate-800 font-bold rounded-full hover:scale-95 active:scale-95 transition-all flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto`}>
-                Get Your Market Intelligence Audit
-                <ArrowRight className="w-5 h-5" />
-              </button>
+              <GlassButton 
+  label="Get Your Market Intelligence Audit" 
+  icon={ArrowRight} 
+  className="h-4 sm:h-5 transition-all duration-200"
+  buttonClassName="w-full sm:w-auto px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-3.5 text-sm sm:text-base hover:scale-105 active:scale-100"
+  onClick={() => console.log('Focus mode toggled')}
+/>
             </WhatsappCTA>
 
             {/* Trust signals */}
