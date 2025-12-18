@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Phone } from "lucide-react";
@@ -149,6 +149,7 @@ export default function Navbar() {
     document.body.style.overflow = openMobile ? "hidden" : "";
   }, [openMobile]);
 
+  // --- REFINED HOVER LOGIC ---
   const handleMouseEnter = (key) => {
     clearTimeout(hoverTimeout.current);
     clearTimeout(closeTimeout.current);
@@ -156,15 +157,24 @@ export default function Navbar() {
     setOpenMega(key);
   };
 
-  const handleMouseLeave = () => {
+  const handleNavLeave = () => {
+    // Only close if we leave the ENTIRE nav container. 
+    // This allows moving between links (over empty space) without closing.
     clearTimeout(hoverTimeout.current);
     hoverTimeout.current = setTimeout(() => {
       setIsClosing(true);
       closeTimeout.current = setTimeout(() => {
         setOpenMega(null);
         setIsClosing(false);
-      }, 300);
+      }, 600); 
     }, 150);
+  };
+
+  const handleMegaEnter = () => {
+    // If we enter the mega menu content (downwards), stop the close timer.
+    clearTimeout(hoverTimeout.current);
+    clearTimeout(closeTimeout.current);
+    setIsClosing(false);
   };
 
   const closeImmediate = () => {
@@ -174,49 +184,51 @@ export default function Navbar() {
 
   return (
     <>
-      <style jsx global>{`
-        /* Apple-style Animations */
+      <style>{`
+        /* APPLE "PREMIUM SLOW" ANIMATION FOR MENU OPEN/CLOSE */
         .mega-enter {
-          animation: appleFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          animation: appleFadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .mega-exit {
-          animation: appleFadeOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        @keyframes appleFadeIn {
-          from { opacity: 0; transform: translateY(-8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes appleFadeOut {
-          from { opacity: 1; transform: translateY(0); }
-          to { opacity: 0; transform: translateY(-8px); }
+          animation: appleFadeOutUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Scrollbar Hiding Utility */
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
+        @keyframes appleFadeInDown {
+          0% { opacity: 0; transform: translateY(-14px) scale(0.98); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-        .no-scrollbar {
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
+        @keyframes appleFadeOutUp {
+          0% { opacity: 1; transform: translateY(0) scale(1); }
+          100% { opacity: 0; transform: translateY(-10px) scale(0.99); }
         }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
       {/* Main Navbar */}
       <header 
-        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{ height: NAV_HEIGHT }}
-        onMouseLeave={handleMouseLeave}
       >
-        {/* Apple Glass Background for Desktop */}
-        <div className={`absolute inset-0 backdrop-blur-xl backdrop-saturate-[180%] transition-colors duration-300 ${
+        {/* Background Blur */}
+        <div className={`absolute inset-0 backdrop-blur-xl backdrop-saturate-[180%] transition-colors duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           openMega ? "bg-white" : "bg-[#fbfbfd]/80"
         }`}>
-          <div className={`absolute bottom-0 left-0 right-0 h-[1px] bg-black/5 transition-opacity duration-200 ${
+          <div className={`absolute bottom-0 left-0 right-0 h-[1px] bg-black/5 transition-opacity duration-500 ${
             openMega ? "opacity-0" : "opacity-100"
           }`} />
         </div>
 
-        <nav className="relative h-full max-w-[1024px] mx-auto px-6 flex items-center justify-between">
+        {/* NAV CONTAINER 
+          onMouseLeave is placed HERE instead of individual links. 
+          This means you can hover the "empty space" between links without the menu closing 
+          (as long as you stay within the navbar height).
+        */}
+        <nav 
+          className="relative h-full max-w-[1024px] mx-auto px-6 flex items-center justify-between"
+          onMouseLeave={handleNavLeave}
+        >
           <Link href="/" className="flex-shrink-0 z-20" onClick={closeImmediate}>
             <Image
               src="/Arlox logo 6.png"
@@ -231,16 +243,18 @@ export default function Navbar() {
           {/* Desktop Links */}
           <ul className="hidden md:flex h-full items-center gap-10">
             {NAV_ITEMS.map((item) => (
-              <li 
-                key={item.key} 
-                className="h-full flex items-center"
-                onMouseEnter={() => handleMouseEnter(item.key)}
-              >
+              <li key={item.key} className="h-full flex items-center relative">
+                {/* NOTE: No onMouseLeave on the Link itself. 
+                  Leaving the Link to hit the gap will do nothing (Menu stays open).
+                */}
                 <Link
-                  href={item.key === "free" ? "#" : `/${item.key}`}
-                  className={`text-[12px] tracking-wide transition-colors duration-200 ${
-                    openMega === item.key ? "text-black" : "text-[#1d1d1f] hover:text-black/70"
-                  }`}
+                  href="#" 
+                  onClick={(e) => e.preventDefault()}
+                  className={`
+                    relative z-10 py-2 px-1 text-[12px] tracking-wide transition-colors duration-500 cursor-default
+                    ${openMega === item.key ? "text-black font-medium" : "text-[#1d1d1f] hover:text-black/80"}
+                  `}
+                  onMouseEnter={() => handleMouseEnter(item.key)}
                 >
                   {item.label}
                 </Link>
@@ -252,7 +266,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 z-20">
             <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
               <button 
-                className="flex items-center gap-1.5 px-3 py-1.5 md:py-1.5 rounded-full bg-[rgba(251,251,253,0.5)] text-[#1d1d1f] hover:bg-[rgba(251,251,253,0.9)] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.12),inset_-1px_-1px_2px_rgba(255,255,255,0.7)] transition-all duration-200 text-xs font-medium"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[rgba(251,251,253,0.5)] text-[#1d1d1f] hover:bg-[rgba(251,251,253,0.9)] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.12),inset_-1px_-1px_2px_rgba(255,255,255,0.7)] transition-all duration-300 text-xs font-medium"
                 aria-label="Book a call"
               >
                 <Phone size={14} className="opacity-70" />
@@ -269,17 +283,13 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Mega Menu (Apple Style) */}
+        {/* Mega Menu Dropdown */}
         {(openMega || isClosing) && (
           <div
             className={`absolute left-0 right-0 bg-white border-b border-black/5 overflow-hidden ${isClosing ? 'mega-exit' : 'mega-enter'}`}
             style={{ top: NAV_HEIGHT }}
-            onMouseEnter={() => {
-              clearTimeout(hoverTimeout.current);
-              clearTimeout(closeTimeout.current);
-              setIsClosing(false);
-            }}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={handleMegaEnter} // Keep open if we move down into content
+            onMouseLeave={handleNavLeave}  // Close if we leave the content area
           >
             <div className="max-w-[1024px] mx-auto px-6 py-10 pb-16">
               {openMega && MEGA_CONTENT[openMega] && (
@@ -322,41 +332,38 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* Backdrop for Desktop */}
+      {/* Backdrop (Closes on Hover) */}
       <div 
-        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-500 ease-in-out ${
+        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
           (openMega && !isClosing) ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
         style={{ top: NAV_HEIGHT }}
+        onMouseEnter={handleNavLeave}
       />
 
-      {/* MOBILE MENU (Original UI with hidden scrollbar) */}
+      {/* MOBILE MENU - Solid White Background */}
       {openMobile && (
         <div className="md:hidden fixed inset-0 z-40" style={{ top: NAV_HEIGHT }}>
-          {/* Transparent Backdrop (to click away) */}
           <div className="absolute inset-0 bg-transparent" onClick={() => setOpenMobile(false)} />
-          
           <div className="relative w-full px-4 pt-4">
-             {/* Original White Card Style + no-scrollbar class */}
-            <div className="mx-auto w-full max-w-md rounded-xl bg-white/98 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.18)] border border-white/80 overflow-hidden max-h-[80vh] overflow-y-auto no-scrollbar">
-              <ul className="flex flex-col text-sm font-medium text-[#0f1724]">
+            <div className="mx-auto w-full max-w-md rounded-xl bg-white shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-gray-100 overflow-hidden max-h-[80vh] overflow-y-auto no-scrollbar">
+              <ul className="flex flex-col text-sm font-medium text-[#1d1d1f]">
                 {NAV_ITEMS.map((item) => {
                   const isOpen = mobileKey === item.key;
                   return (
-                    <li key={item.key} className="px-4 py-2.5 border-b border-white/60">
+                    <li key={item.key} className="px-5 py-3 border-b border-gray-100 last:border-0">
                       <button
                         onClick={() => setMobileKey((prev) => (prev === item.key ? null : item.key))}
                         className="w-full flex items-center justify-between text-left"
                       >
-                        <span>{item.label}</span>
-                        <span className="text-slate-500">{isOpen ? "−" : "+"}</span>
+                        <span className="text-[15px]">{item.label}</span>
+                        <span className="text-gray-400 font-light text-lg">{isOpen ? "−" : "+"}</span>
                       </button>
-                      
-                      <div className={`mt-2 overflow-hidden transition-all duration-200 ${isOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0"}`}>
-                        {MEGA_CONTENT[item.key].map((col) => (
-                          <div key={col.title} className="px-2 py-1">
-                            <div className="text-xs uppercase text-slate-400 mb-1">{col.title}</div>
-                            <div className="grid gap-1">
+                      <div className={`mt-1 overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[900px] opacity-100 pt-2" : "max-h-0 opacity-0"}`}>
+                        {MEGA_CONTENT[item.key] && MEGA_CONTENT[item.key].map((col) => (
+                          <div key={col.title} className="py-2">
+                            <div className="text-[11px] uppercase text-gray-400 font-semibold tracking-wide mb-1.5">{col.title}</div>
+                            <div className="flex flex-col gap-1">
                               {col.items.map((link) =>
                                 isExternal(link.href) ? (
                                   <a
@@ -364,7 +371,7 @@ export default function Navbar() {
                                     href={link.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                                    className="py-1.5 px-2 -ml-2 rounded-lg hover:bg-gray-50 text-[14px] text-[#1d1d1f] block"
                                   >
                                     {link.label}
                                   </a>
@@ -372,7 +379,7 @@ export default function Navbar() {
                                   <Link
                                     key={link.label}
                                     href={link.href}
-                                    className="py-1 px-2 rounded hover:bg-slate-100 text-sm block"
+                                    className="py-1.5 px-2 -ml-2 rounded-lg hover:bg-gray-50 text-[14px] text-[#1d1d1f] block"
                                     onClick={() => {
                                       setOpenMobile(false);
                                       setMobileKey(null);

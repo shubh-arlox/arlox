@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import WhatsappCTA from "./WhatsAppCTA";
-import { ArrowRight, ClipboardClock, Moon } from "lucide-react";
+import { ArrowRight,} from "lucide-react";
 import GlassButton from "./but";
 
 export default function HeroSection() {
   return (
-    <section className="w-full pt-16 pb-10 flex flex-col items-center px-4 mt-8">
+    <section className="w-full pt-16 pb-10 flex flex-col items-center px-4 mt-4">
       {/* Heading */}
       <h1 className="text-center font-bold text-3xl md:text-5xl leading-tight mb-6">
         <span className="text-[#2f3f63] font-light block">
