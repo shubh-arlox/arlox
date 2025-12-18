@@ -153,91 +153,89 @@ const AngleEvidence = () => {
                     </div>
 
                     {/* WINNING CASE 1: HARRY'S */}
-                    <div 
-                        className="neu-card p-6 sm:p-8 relative overflow-hidden cursor-pointer border-l-4 border-blue-500"
-                        onMouseEnter={() => setActiveCard('harrys')}
-                        onMouseLeave={() => setActiveCard(null)}
-                    >
-                        <div className="flex justify-between items-start mb-4 gap-2">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-blue-500">
-                                  <Scissors size={18} className="sm:w-5 sm:h-5" />
-                                </div>
-                                <h4 className="font-bold text-slate-700 text-base sm:text-lg">Harry's Razors</h4>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                                <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Valuation</div>
-                                <div className="text-base sm:text-lg font-black text-green-600">$1.4B</div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
-                            <div className="text-xs sm:text-sm font-bold text-slate-600">"David vs. Goliath – Stop Overpaying Giants"</div>
-                        </div>
-                        <div className={`overflow-hidden transition-all duration-300 ${activeCard === 'harrys' ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
-                           <p className="text-[10px] sm:text-xs text-blue-600 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                               Key Insight: Positioned against the business model of incumbents, not just the product utility.
-                           </p>
-                        </div>
-                    </div>
+                   {/* WINNING CASE 1: HARRY'S RAZORS */}
+<div 
+    className="neu-card p-6 sm:p-8 relative overflow-hidden border-l-4 border-blue-500"
+>
+    <div className="flex justify-between items-start mb-4 gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+            <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-blue-500">
+                <Scissors size={18} className="sm:w-5 sm:h-5" />
+            </div>
+            <h4 className="font-bold text-slate-700 text-base sm:text-lg">Harry's Razors</h4>
+        </div>
+        <div className="text-right flex-shrink-0">
+            <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Valuation</div>
+            <div className="text-base sm:text-lg font-black text-green-600">$1.4B</div>
+        </div>
+    </div>
+    <div className="mb-4">
+        <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
+        <div className="text-xs sm:text-sm font-bold text-slate-600">"David vs. Goliath – Stop Overpaying Giants"</div>
+    </div>
+    <div className="mt-4">
+        <p className="text-[10px] sm:text-xs text-blue-600 bg-[#E0E5EC] p-3 rounded-lg shadow-[inset_4px_4px_8px_rgba(163,177,198,0.5),inset_-4px_-4px_8px_rgba(255,255,255,0.6)] border border-blue-100/30">
+            <span className="font-bold">Key Insight:</span> Positioned against the business model of incumbents, not just the product utility.
+        </p>
+    </div>
+</div>
 
-                    {/* WINNING CASE 2: LIQUID DEATH */}
-                    <div 
-                        className="neu-card p-6 sm:p-8 relative overflow-hidden cursor-pointer border-l-4 border-slate-800"
-                        onMouseEnter={() => setActiveCard('liquid')}
-                        onMouseLeave={() => setActiveCard(null)}
-                    >
-                        <div className="flex justify-between items-start mb-4 gap-2">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-slate-800">
-                                  <Droplets size={18} className="sm:w-5 sm:h-5" />
-                                </div>
-                                <h4 className="font-bold text-slate-700 text-base sm:text-lg">Liquid Death</h4>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                                <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Valuation</div>
-                                <div className="text-base sm:text-lg font-black text-green-600">$700M</div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
-                            <div className="text-xs sm:text-sm font-bold text-slate-600">"Murder Your Thirst – Water for Rockstars"</div>
-                        </div>
-                        <div className={`overflow-hidden transition-all duration-300 ${activeCard === 'liquid' ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
-                           <p className="text-[10px] sm:text-xs text-slate-600 bg-slate-100 p-3 rounded-lg border border-slate-200">
-                               Key Insight: Refused generic "pure quality" messaging. Created a pattern interrupt in a boring category.
-                           </p>
-                        </div>
-                    </div>
 
-                     {/* WINNING CASE 3: BOMBAS */}
-                     <div 
-                        className="neu-card p-6 sm:p-8 relative overflow-hidden cursor-pointer border-l-4 border-purple-500"
-                        onMouseEnter={() => setActiveCard('bombas')}
-                        onMouseLeave={() => setActiveCard(null)}
-                    >
-                        <div className="flex justify-between items-start mb-4 gap-2">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-purple-500">
-                                  <Shirt size={18} className="sm:w-5 sm:h-5" />
-                                </div>
-                                <h4 className="font-bold text-slate-700 text-base sm:text-lg">Bombas</h4>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                                <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Revenue</div>
-                                <div className="text-base sm:text-lg font-black text-green-600">$300M+</div>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
-                            <div className="text-xs sm:text-sm font-bold text-slate-600">"Buy One, Give One – Comfort = Necessity"</div>
-                        </div>
-                        <div className={`overflow-hidden transition-all duration-300 ${activeCard === 'bombas' ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
-                           <p className="text-[10px] sm:text-xs text-purple-600 bg-purple-50 p-3 rounded-lg border border-purple-100">
-                               Key Insight: Transformed a commodity product into a mission-driven identity purchase.
-                           </p>
-                        </div>
-                    </div>
+{/* WINNING CASE 2: LIQUID DEATH */}
+<div 
+    className="neu-card p-6 sm:p-8 relative overflow-hidden border-l-4 border-slate-800"
+>
+    <div className="flex justify-between items-start mb-4 gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+            <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-slate-800">
+                <Droplets size={18} className="sm:w-5 sm:h-5" />
+            </div>
+            <h4 className="font-bold text-slate-700 text-base sm:text-lg">Liquid Death</h4>
+        </div>
+        <div className="text-right flex-shrink-0">
+            <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Valuation</div>
+            <div className="text-base sm:text-lg font-black text-green-600">$700M</div>
+        </div>
+    </div>
+    <div className="mb-4">
+        <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
+        <div className="text-xs sm:text-sm font-bold text-slate-600">"Murder Your Thirst – Water for Rockstars"</div>
+    </div>
+    <div className="mt-4">
+        <p className="text-[10px] sm:text-xs text-slate-700 bg-[#E0E5EC] p-3 rounded-lg shadow-[inset_4px_4px_8px_rgba(163,177,198,0.5),inset_-4px_-4px_8px_rgba(255,255,255,0.6)] border border-slate-200/30">
+            <span className="font-bold">Key Insight:</span> Refused generic "pure quality" messaging. Created a pattern interrupt in a boring category.
+        </p>
+    </div>
+</div>
+
+
+{/* WINNING CASE 3: BOMBAS */}
+<div 
+    className="neu-card p-6 sm:p-8 relative overflow-hidden border-l-4 border-purple-500"
+>
+    <div className="flex justify-between items-start mb-4 gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+            <div className="neu-pressed p-1.5 sm:p-2 rounded-lg text-purple-500">
+                <Shirt size={18} className="sm:w-5 sm:h-5" />
+            </div>
+            <h4 className="font-bold text-slate-700 text-base sm:text-lg">Bombas</h4>
+        </div>
+        <div className="text-right flex-shrink-0">
+            <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase font-bold">Revenue</div>
+            <div className="text-base sm:text-lg font-black text-green-600">$300M+</div>
+        </div>
+    </div>
+    <div className="mb-4">
+        <div className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">The Angle</div>
+        <div className="text-xs sm:text-sm font-bold text-slate-600">"Buy One, Give One – Comfort = Necessity"</div>
+    </div>
+    <div className="mt-4">
+        <p className="text-[10px] sm:text-xs text-purple-700 bg-[#E0E5EC] p-3 rounded-lg shadow-[inset_4px_4px_8px_rgba(163,177,198,0.5),inset_-4px_-4px_8px_rgba(255,255,255,0.6)] border border-purple-100/30">
+            <span className="font-bold">Key Insight:</span> Transformed a commodity product into a mission-driven identity purchase.
+        </p>
+    </div>
+</div>
+
 
                 </div>
             </div>

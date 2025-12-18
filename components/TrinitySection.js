@@ -3,6 +3,7 @@
 
 import { Zap, Shield, Lock, ArrowRight } from "lucide-react";
 import WhatsappCTA from "./WhatsAppCTA";
+import GlassButton from "./but";
 
 const items = [
   {
@@ -38,7 +39,7 @@ export default function TrinitySection() {
   return (
     <section className="w-full max-w-6xl mx-auto px-4 py-16 space-y-8">
       {/* Top container */}
-      <div className="bg-[#f7f7f7] rounded-[32px] shadow-[18px_18px_40px_rgba(90,90,90,0.20),-14px_-14px_32px_rgba(255,255,255,0.98)] px-6 md:px-12 py-10 border border-white/70">
+      <div className="bg-[#E0E5EC] rounded-[32px] shadow-[8px_8px_16px_rgba(90,90,90,0.20),-8px_-8px_16px_rgba(233,238,246,0.96)] px-6 md:px-12 py-10 border border-white/20">
         {/* Heading */}
         <div className="text-center mb-10 max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#404040] mb-3">
@@ -55,7 +56,7 @@ export default function TrinitySection() {
           {items.map((item) => (
             <div
               key={item.key}
-              className="bg-[#f2f2f2] rounded-[28px] px-4 py-6 md:px-5 md:py-7 shadow-[10px_10px_26px_rgba(104,104,104,0.35),-10px_-10px_24px_rgba(255,255,255,0.98)] flex flex-col border border-white/70"
+              className="bg-[#f2f2f2] rounded-[28px] px-4 py-6 md:px-5 md:py-7 shadow-[8px_8px_16px_rgba(90,90,90,0.20),-8px_-8px_16px_rgba(233,238,246,0.96)] flex flex-col border border-white/70"
             >
               {/* Icon block */}
               <div className="mb-5">
@@ -85,38 +86,37 @@ export default function TrinitySection() {
       </div>
 
      {/* Bottom pill CTA */} 
-<div className="flex justify-center">
-  <div className="w-full max-w-3xl bg-[#f0f0f0] rounded-full shadow-[14px_14px_32px_rgba(96,96,96,0.35),-10px_-10px_26px_rgba(255,255,255,0.98)] px-5 md:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3 border border-white/70">
-    <div>
-      <p className="text-xs md:text-sm font-semibold text-[#404040]">
-        Plus Your Own Experienced Personal CMO to lead them for you
+<div className="flex justify-center px-4 sm:px-6">
+  <div className="w-full max-w-6xl bg-[#E0E5EC] rounded-3xl sm:rounded-full shadow-[8px_8px_16px_rgba(90,90,90,0.20),-8px_-8px_16px_rgba(233,238,246,0.96)] px-4 sm:px-6 md:px-8 py-4 md:py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 border border-white/70">
+    
+    {/* Text Content */}
+    <div className="flex-1 space-y-1.5 md:space-y-2">
+      <p className="text-xs sm:text-sm md:text-base font-semibold text-[#404040] text-center md:text-left leading-snug">
+        Plus Your Experienced Personal CMO to lead them for you
       </p>
-      <p className="text-[11px] md:text-xs text-[#787878] mt-1">
+      <p className="text-[10px] sm:text-[11px] md:text-xs text-center md:text-left text-[#787878] leading-relaxed">
         Your personal success strategist who orchestrates the trinity,
         ensuring you go from anxious to unstoppable.
       </p>
     </div>
-<WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-    <button
-      className="
-        self-start md:self-auto
-        inline-flex items-center justify-center
-        gap-2
-        rounded-full
-        bg-white
-        px-8 py-2.5
-        min-w-[220px]
-        text-sm md:text-base font-semibold
-        text-[#2550b0]
-        shadow-[8px_8px_18px_rgba(120,120,120,0.35),-6px_-6px_16px_rgba(255,255,255,0.98)]
-      "
-    >
-      Start Scaling Today
-      <ArrowRight className="w-4 h-4" />
-    </button>
-    </WhatsappCTA>
+    
+    {/* Button Container */}
+    <div className="flex items-center justify-center md:flex-shrink-0 mb-4">
+      <WhatsappCTA 
+        whatsappNumber="+919910220335" 
+        calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+      >
+        <GlassButton 
+          label="Start Scaling Today"  
+          className="h-4 sm:h-5 transition-all duration-200"
+          onClick={() => console.log('Focus mode toggled')}
+        />
+      </WhatsappCTA>
+    </div>
+
   </div>
 </div>
+
 
     </section>
   );

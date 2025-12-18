@@ -116,8 +116,7 @@ const SolutionSection = () => {
   
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-700 leading-tight mb-4 sm:mb-6 px-4">
             Scientific Angle Testing.
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">Stop Guessing. Start Scaling.</span>
+           
           </h2>
           <p className="text-sm sm:text-base md:text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto px-4">
             There's a better way. A systematic architecture designed to engineer high-performing creative assets through rigorous experimentation.
@@ -184,9 +183,9 @@ const SolutionSection = () => {
     <button
       key={tab.id}
       onClick={() => setActiveWeek(tab.id)}
-      className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-lg text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap ${
+      className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all whitespace-nowrap ${
         activeWeek === tab.id 
-          ? 'bg-white shadow-sm text-blue-600' 
+          ? "bg-[#e0e5ec] shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.7)] text-blue-600" 
           : 'text-slate-400 hover:text-slate-600'
       }`}
     >

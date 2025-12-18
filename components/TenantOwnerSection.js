@@ -26,17 +26,7 @@ export default function TenantOwnerSection() {
       </div>
 
      {/* CTA button */}
-<div className="mt-10 flex justify-center">
- <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-    {/* CTA Button UI passed as children */}
-    <button className="relative inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#f5f6fa] shadow-[10px_10px_26px_rgba(143,155,179,0.35),-10px_-10px_26px_rgba(255,255,255,0.96)]">
-      <span className="px-4 py-2 rounded-full bg-white text-sm md:text-base font-semibold text-[#2550b0] shadow-[6px_6px_12px_rgba(143,155,179,0.3),-6px_-6px_12px_rgba(255,255,255,0.98)]">
-        Start Scaling Today
-      </span>
-      <ArrowRight className="w-4 h-4 text-[#2550b0]" />
-    </button>
-  </WhatsappCTA>
-</div>
+
 
     </section>
   );
@@ -62,8 +52,8 @@ function HamsterWheelCard() {
     });
 
   return (
-    <div className="bg-[#f3f4f8] rounded-3xl shadow-[12px_12px_30px_rgba(143,155,179,0.35),-10px_-10px_26px_rgba(255,255,255,0.95)] p-5 md:p-7 flex">
-      <div className="bg-[#f7f8fc] rounded-3xl shadow-[8px_8px_18px_rgba(150,162,186,0.25),-8px_-8px_16px_rgba(255,255,255,0.96)] p-5 flex flex-col w-full">
+    <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(143,155,179,0.35),-5px_-5px_32px_rgba(255,255,255,0.95)] p-5 md:p-7 flex">
+      <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(150,162,186,0.25),-5px_-5px_32px_rgba(255,255,255,0.96)] p-5 flex flex-col w-full">
         <h3 className="text-lg md:text-xl font-bold text-[#222630] text-center mb-4">
           The Hamster Wheel
           <br />
@@ -76,9 +66,9 @@ function HamsterWheelCard() {
           onHoverStart={handleHoverStart}
           onHoverEnd={handleHoverEnd}
         >
-          <div className="relative w-full max-w-[260px] h-full bg-[#f4f5f8] rounded-3xl shadow-[16px_16px_32px_rgba(120,128,146,0.4),-12px_-12px_28px_rgba(255,255,255,0.96)] flex items-center justify-center">
+          <div className="relative w-full max-w-[260px] h-full bg-[#f4f5f8] rounded-3xl shadow-[inset_8px_8px_16px_rgba(120,128,146,0.4),inset_-8px_-8px_32px_rgba(255,255,255,0.96)] flex items-center justify-center">
             {/* Wheel frame */}
-            <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full bg-[#e3e4ea] shadow-[9px_9px_20px_rgba(90,96,112,0.45),-8px_-8px_18px_rgba(255,255,255,0.98)] border-[3px] border-[#d0d3dd] flex items-center justify-center">
+            <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full bg-[#E0E5EC]  border-[3px] border-[#E0E5EC] flex items-center justify-center">
               {/* rotating cage */}
               <motion.div
                 animate={controls}
@@ -139,8 +129,8 @@ function HamsterWheelCard() {
 
 function FlywheelCard() {
   return (
-    <div className="bg-[#f3f4f8] rounded-3xl shadow-[12px_12px_30px_rgba(143,155,179,0.35),-10px_-10px_26px_rgba(255,255,255,0.95)] p-5 md:p-7 flex">
-      <div className="bg-[#f7f8fc] rounded-3xl shadow-[8px_8px_18px_rgba(150,162,186,0.25),-8px_-8px_16px_rgba(255,255,255,0.96)] p-5 flex flex-col w-full">
+    <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(143,155,179,0.35),-5px_-5px_32px_rgba(255,255,255,0.95)] p-5 md:p-7 flex">
+      <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(150,162,186,0.25),-5px_-5px_32px_rgba(255,255,255,0.96)] p-5 flex flex-col w-full">
         {/* Header */}
         <div className="mb-4 text-center">
           <div className="h-1 w-full rounded-full bg-gradient-to-r from-[#37c56a] via-[#22c55e] to-[#37c56a] opacity-90 mb-3" />
@@ -154,10 +144,10 @@ function FlywheelCard() {
 
         {/* Flywheel visual */}
         <div className="relative flex items-center justify-center h-40 md:h-44 mb-5">
-          <div className="relative w-full max-w-[260px] h-full bg-[#f5f6fb] rounded-3xl shadow-[16px_16px_32px_rgba(143,155,179,0.38),-12px_-12px_30px_rgba(255,255,255,0.98)] flex items-center justify-center overflow-hidden">
+          <div className="relative w-full max-w-[260px] h-full bg-[#E0E5EC] rounded-3xl shadow-[inset_8px_8px_16px_rgba(120,128,146,0.4),inset_-8px_-8px_32px_rgba(255,255,255,0.96)] flex items-center justify-center overflow-hidden">
             <div className="absolute inset-3 rounded-2xl bg-gradient-to-br from-white via-[#f5f7ff] to-[#e3ebff]" />
 
-            <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full bg-[#f4f6ff] shadow-[8px_8px_22px_rgba(132,144,176,0.4),-8px_-8px_22px_rgba(255,255,255,0.98)] border border-white/80 flex items-center justify-center">
+            <div className="relative w-32 h-32 md:w-36 md:h-36 rounded-full bg-[#E0E5EC] shadow-[8px_8px_22px_rgba(132,144,176,0.4),-8px_-8px_22px_rgba(255,255,255,0.98)] border border-white/80 flex items-center justify-center">
               {/* 1) Rotating outer ring */}
               <motion.div
                 className="relative w-[82%] h-[82%] rounded-full border-[6px] border-[#22c55e] bg-gradient-to-br from-[#ecfff5] to-[#e2fbe9]"

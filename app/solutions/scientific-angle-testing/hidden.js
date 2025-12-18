@@ -34,12 +34,12 @@ const HiddenCost = () => {
 
   // Data for the Cascade Visualization
   const cascadeSteps = [
-    {
+   {
       id: 1,
       title: "Generic Angle",
       metric: "CPM Spike",
       cost: "$3,000",
-      description: "If your angle doesn't stand out, you pay premium rates to blend in. CPM jumps from $12 to $18+.",
+      description: "If your angle doesn't stand out, you're competing on price. You pay premium rates just to blend into the background. CPM jumps from $12 to $18+.",
       icon: <TrendingDown size={20} className="text-red-500" />,
       highlight: "Wasted Ad Spend"
     },
@@ -48,7 +48,7 @@ const HiddenCost = () => {
       title: "Algorithm Confusion",
       metric: "Targeting Miss",
       cost: "$2,500",
-      description: "Meta's AI gets confused by generic messaging. You pay to reach the wrong people who will never convert.",
+      description: "Meta's AI learns from audience engagement. Feeding it generic messages results in Meta showing your ads to people who doesn't even care about your domain. You pay to reach the wrong people who will never convert.",
       icon: <Target size={20} className="text-red-500" />,
       highlight: "Wrong Audience"
     },
@@ -57,7 +57,7 @@ const HiddenCost = () => {
       title: "Opportunity Cost",
       metric: "Lost Revenue",
       cost: "$15,000",
-      description: "While you test 'Premium Quality', competitors find the 'Sustainability Hero' angle and scale to 5x ROAS.",
+      description: "Every week testing the wrong angle is a week you could be scaling the right one. It cost While you test 'Premium Quality', competitors find the 'Sustainability Hero' angle and scale to 5x ROAS.",
       icon: <BarChart3 size={20} className="text-red-500" />,
       highlight: "Missed Scale"
     },
@@ -66,16 +66,16 @@ const HiddenCost = () => {
       title: "Brand Damage",
       metric: "Equity Loss",
       cost: "Priceless",
-      description: "Contradictory angles confuse customers. Are you luxury? Affordable? Fun? Confusion kills conversion.",
+      description: "Test too many conflicting angles publicly, and your brand stands for nothing. Are you luxury? Affordable? Sustainable? Fun? If customers can't tell, they won't buy.",
       icon: <ShieldAlert size={20} className="text-red-500" />,
       highlight: "Positioning"
     },
     {
       id: 5,
-      title: "Team Velocity",
+      title: "Team Burnout",
       metric: "Burnout",
       cost: "$5,000",
-      description: "Churning out endless variations without a framework destroys morale. Talent leaves. Velocity tanks.",
+      description: "Your creative team churns out endless variations with no strategic framework. Morale tanks. Talent leaves. The real cost isn't just dollars—it's organizational velocity.",
       icon: <Users size={20} className="text-red-500" />,
       highlight: "Staff Churn"
     }
@@ -223,7 +223,7 @@ const HiddenCost = () => {
                        <div className=' flex flex-col items-center'>
               <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
   <button 
-    className={`w-full sm:w-auto mx-auto sm:mx-0 sm:ml-14 sm:mr-8 mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center rounded-xl ${neuBtn} text-slate-700 font-bold group`}
+    className={`w-full sm:w-auto mx-auto sm:mx-0 sm:ml-14 sm:mr-8 mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 flex items-center justify-center rounded-xl liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 text-slate-700 font-bold group`}
     aria-label="Book a strategy call to stop wasting ad spend"
   >
     <span className="group-hover:text-red-500 transition-colors">

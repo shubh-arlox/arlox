@@ -63,7 +63,7 @@ const Hero = () => {
   if (time > 3 && rSharp > 60) projectedRoasSharp = 5.4;
 
   return (
-    <div className="mt-16 min-h-screen flex flex-col font-sans text-[#4a4a4a] bg-[#e0e5ec]">
+    <div className="mt-12 min-h-screen flex flex-col font-sans text-[#4a4a4a] bg-[#e0e5ec]">
       <style>{`
         body { background-color: #e0e5ec; }
         .neu-flat {
@@ -186,7 +186,7 @@ const Hero = () => {
 >
   <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
     <button 
-      className="neu-btn group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
+      className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
       aria-label="Start angle testing with a strategy call"
     >
       Start Angle Testing
@@ -195,7 +195,7 @@ const Hero = () => {
   </CalendlyCTA>
 
   <button 
-    className="neu-btn flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
+    className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 flex items-center justify-center px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto"
     aria-label="View our case studies and results"
   >
     View Case Studies
@@ -291,12 +291,12 @@ const Hero = () => {
           className="lg:hidden flex flex-col gap-3 pt-6 w-full"
         >
           <CalendlyCTA calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-            <button className="neu-btn group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto">
+            <button className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 group flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg rounded-full text-blue-800 w-full sm:w-auto">
               Start Angle Testing
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </CalendlyCTA>
-          <button className="neu-btn px-6 py-3 text-base rounded-full text-[#6d5dfc] w-full">
+          <button className="liquid-glass-btn bg-[#ccd0da] transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95 px-6 py-3 text-base rounded-full text-[#6d5dfc] w-full">
             View Case Studies
           </button>
         </motion.div>
@@ -350,7 +350,7 @@ function VideoSimulator({ title, subtitle, retention, time, type, projectedRoas,
                 animate={{ y: '-20%', opacity: [0, 1, 1, 0] }}
                 exit={{ y: '-30%', opacity: 0 }}
                 transition={{ duration: 2, ease: "easeInOut" }}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 z-30 pointer-events-none"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 z-10 pointer-events-none"
               >
                 <img
                   src="https://img.icons8.com/?size=100&id=WQiX8VTC7LIa&format=png&color=ffffff"

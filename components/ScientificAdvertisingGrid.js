@@ -54,7 +54,7 @@ export default function ScientificAdsGrid() {
           />
 
           {/* 6 – CTA card */}
-          <CTACard />
+          {/* <CTACard /> */}
         </div>
       </div>
     </section>
@@ -77,23 +77,40 @@ function FeatureCard({ icon, title, body }) {
   );
 }
 
-function CTACard() {
-  return (
-    <div className="bg-[#eef1f7] rounded-[26px] px-5 py-6 shadow-[10px_10px_26px_rgba(165,175,195,0.45),-10px_-10px_24px_rgba(255,255,255,0.98)] flex flex-col justify-between border-l-4 border-[#2563eb]">
-      <div>
-        <h3 className="text-sm md:text-base font-extrabold text-[#111827] mb-2">
-          Ready to deploy?
-        </h3>
-        <p className="text-xs md:text-sm text-[#6b7280] leading-relaxed">
-          Stop guessing. Start engineering your growth.
-        </p>
-      </div>
-<WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-  <button className="mt-5 inline-flex items-center justify-center rounded-[999px] bg-white px-4 py-2 text-xs md:text-sm font-semibold text-[#2563eb] shadow-[6px_6px_14px_rgba(185,194,211,0.5),-6px_-6px_14px_rgba(255,255,255,1)]">
-    Audit Your Brand
-  </button>
-</WhatsappCTA>
+// function CTACard() {
+//   return (
+//     <div className="bg-[#E0E5EC] rounded-[26px] px-5 py-6 shadow-[10px_10px_26px_rgba(165,175,195,0.45),-10px_-10px_24px_rgba(255,255,255,0.98)] flex flex-col justify-between border-l-4 border-[#2563eb]">
+//       <div>
+//         <h3 className="text-sm md:text-base font-extrabold text-[#111827] mb-2">
+//           Ready to deploy?
+//         </h3>
+//         <p className="text-xs md:text-sm text-[#6b7280] leading-relaxed">
+//           Stop guessing. Start engineering your growth.
+//         </p>
+//       </div>
+//       <div className="mt-1 flex justify-center items-center">
+//         <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
+//  <button
+//   className="
+//     liquid-glass-btn
+//     bg-[#dddddd]
+//     px-4 py-1.5 text-xs
+//     sm:px-5 sm:py-2 sm:text-sm
+//     md:px-6 md:py-2.5 md:text-base
+//     lg:px-8 lg:py-3 lg:text-base
+//   "
+// >
+//   <span className="text-slate-600 font-bold">
+//     Scrutinize
+//   </span>
+// </button>
 
-    </div>
-  );
-}
+
+
+// </WhatsappCTA>
+//       </div>
+
+
+//     </div>
+//   );
+// }

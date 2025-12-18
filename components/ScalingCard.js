@@ -6,14 +6,16 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  SkipBack,
   SkipForward,
   Maximize2,
+  Minimize2,
+  Gauge,
 } from "lucide-react";
 
 export default function ScalingCard() {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
+  const progressRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
@@ -21,6 +23,12 @@ export default function ScalingCard() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [seeking, setSeeking] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showSettings, setShowSettings] = useState(false);
+  const [quality, setQuality] = useState("Auto");
+  const [showControls, setShowControls] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const togglePlay = useCallback(() => {
     const v = videoRef.current;
@@ -74,10 +82,74 @@ export default function ScalingCard() {
     setMuted(val === 0);
   };
 
-  const seek = (p) => {
+  const handleProgressClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     const v = videoRef.current;
-    if (!v || !isFinite(duration) || duration === 0) return;
-    v.currentTime = Math.max(0, Math.min(duration, p * duration));
+    const progressBar = progressRef.current;
+    if (!v || !progressBar || !isFinite(duration) || duration === 0) return;
+
+    const rect = progressBar.getBoundingClientRect();
+    let clientX;
+
+    if (e.type === 'touchstart' || e.type === 'touchmove') {
+      clientX = e.touches[0].clientX;
+    } else {
+      clientX = e.clientX;
+    }
+
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, x / rect.width));
+    v.currentTime = percentage * duration;
+  };
+
+  const handleProgressMouseDown = (e) => {
+    setSeeking(true);
+    handleProgressClick(e);
+  };
+
+  const handleProgressTouchStart = (e) => {
+    setSeeking(true);
+    handleProgressClick(e);
+  };
+
+  const handleProgressMove = (e) => {
+    if (!seeking) return;
+    e.preventDefault();
+    handleProgressClick(e);
+  };
+
+  const handleProgressEnd = () => {
+    setSeeking(false);
+  };
+
+  useEffect(() => {
+    if (seeking) {
+      const handleMouseMove = (e) => handleProgressMove(e);
+      const handleTouchMove = (e) => handleProgressMove(e);
+
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('mouseup', handleProgressEnd);
+      document.addEventListener('touchend', handleProgressEnd);
+
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('mouseup', handleProgressEnd);
+        document.removeEventListener('touchend', handleProgressEnd);
+      };
+    }
+  }, [seeking, duration]);
+
+  const changePlaybackRate = (rate) => {
+    const v = videoRef.current;
+    if (v) {
+      v.playbackRate = rate;
+      setPlaybackRate(rate);
+    }
+    setShowSettings(false);
   };
 
   const formatTime = (t = 0) => {
@@ -89,10 +161,105 @@ export default function ScalingCard() {
   };
 
   const toggleFullscreen = async () => {
-    const el = containerRef.current;
-    if (!el) return;
-    if (document.fullscreenElement) await document.exitFullscreen();
-    else await el.requestFullscreen?.();
+    try {
+      const container = containerRef.current;
+      const video = videoRef.current;
+      
+      if (!container || !video) return;
+
+      if (!document.fullscreenElement && 
+          !document.webkitFullscreenElement && 
+          !document.mozFullScreenElement &&
+          !document.msFullscreenElement) {
+        
+        // Enter fullscreen
+        if (container.requestFullscreen) {
+          await container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+          await container.webkitRequestFullscreen();
+        } else if (container.mozRequestFullScreen) {
+          await container.mozRequestFullScreen();
+        } else if (container.msRequestFullscreen) {
+          await container.msRequestFullscreen();
+        } else if (video.webkitEnterFullscreen) {
+          video.webkitEnterFullscreen();
+        }
+        
+        // Lock to landscape orientation
+        if (screen.orientation && screen.orientation.lock) {
+          try {
+            await screen.orientation.lock('landscape');
+          } catch (err) {
+            console.log('Orientation lock not supported or failed:', err);
+          }
+        }
+        
+        setIsFullscreen(true);
+      } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          await document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          await document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          await document.msExitFullscreen();
+        }
+        
+        // Unlock orientation when exiting fullscreen
+        if (screen.orientation && screen.orientation.unlock) {
+          try {
+            screen.orientation.unlock();
+          } catch (err) {
+            console.log('Orientation unlock failed:', err);
+          }
+        }
+        
+        setIsFullscreen(false);
+      }
+    } catch (error) {
+      console.log('Fullscreen error:', error);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!(
+        document.fullscreenElement || 
+        document.webkitFullscreenElement || 
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      );
+      
+      setIsFullscreen(isCurrentlyFullscreen);
+      
+      // If exiting fullscreen, unlock orientation
+      if (!isCurrentlyFullscreen && screen.orientation && screen.orientation.unlock) {
+        try {
+          screen.orientation.unlock();
+        } catch (err) {
+          console.log('Orientation unlock failed:', err);
+        }
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
+  const handleVideoClick = (e) => {
+    e.stopPropagation();
+    setShowControls(!showControls);
   };
 
   useEffect(() => {
@@ -105,11 +272,22 @@ export default function ScalingCard() {
         step(-5);
       } else if (e.key === "ArrowRight") {
         step(5);
+      } else if (e.key === "f" || e.key === "F") {
+        toggleFullscreen();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [togglePlay]);
+
+  useEffect(() => {
+    if (showControls && isPlaying) {
+      const timer = setTimeout(() => setShowControls(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showControls, isPlaying]);
+
+  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <section className="w-full flex flex-col items-center mb-8 px-4">
@@ -118,15 +296,14 @@ export default function ScalingCard() {
         <span className="underline">Scientific</span>, and Predictable.
       </h2>
 
-      <div className="glass shadow-neumorphic rounded-2xl bg-white/70 max-w-xl w-full mt-4 p-4 md:p-5">
-        {/* Terminal frame */}
-        <div className="bg-[#f3f4f6] border border-gray-200 rounded-2xl overflow-hidden">
+      <div className="rounded-2xl bg-[#E0E5EC] shadow-[inset_6px_6px_12px_rgba(163,177,198,0.5),inset_-6px_-6px_12px_rgba(255,255,255,0.4)] max-w-xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl w-full mt-4 p-3 md:p-5 lg:p-6">
+        <div className="bg-[#D1D9E6] border border-[#A3B1C6]/20 rounded-2xl overflow-hidden">
           {/* Terminal header */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-[#e5e7eb] border-b border-gray-200">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#f87171]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#facc15]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#4ade80]" />
-            <span className="ml-3 text-xs font-medium text-gray-500">
+          <div className="flex items-center gap-2 px-3 md:px-4 py-2 md:py-3 bg-[#C8D0DD] border-b border-[#A3B1C6]/20">
+            <span className="w-2 h-2 md:w-2.5 md:h-2.5 lg:w-3 lg:h-3 rounded-full bg-[#f87171]" />
+            <span className="w-2 h-2 md:w-2.5 md:h-2.5 lg:w-3 lg:h-3 rounded-full bg-[#facc15]" />
+            <span className="w-2 h-2 md:w-2.5 md:h-2.5 lg:w-3 lg:h-3 rounded-full bg-[#4ade80]" />
+            <span className="ml-2 md:ml-3 text-[10px] md:text-xs lg:text-sm font-medium text-[#556d92] truncate">
               scaling-demo.mp4
             </span>
           </div>
@@ -134,133 +311,117 @@ export default function ScalingCard() {
           {/* Video container */}
           <div
             ref={containerRef}
-            className="bg-[#f5f5f5] rounded-b-2xl overflow-hidden aspect-video relative flex items-center justify-center"
+            className="bg-black rounded-b-2xl overflow-hidden aspect-video relative"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            style={{
+              width: isFullscreen ? '100vw' : '100%',
+              height: isFullscreen ? '100vh' : 'auto',
+            }}
           >
             <video
               ref={videoRef}
               src="/demo.mp4"
-              className="w-full h-full object-cover transition-all duration-150"
-              onClick={togglePlay}
+              className="w-full h-full"
+              onClick={handleVideoClick}
               controls={false}
               tabIndex={0}
+              playsInline
+              preload="metadata"
               style={{
-                filter: hovered ? "brightness(0.93)" : "brightness(1)",
-                backgroundColor: "#e5e7eb",
+                objectFit: isFullscreen ? "contain" : "contain",
+                backgroundColor: "#000000",
               }}
             />
 
-            {/* Center Play/Pause button - softer glow */}
+            {/* Center Play button */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 togglePlay();
               }}
               aria-label={isPlaying ? "Pause" : "Play"}
-              className={`w-14 h-14 rounded-full flex items-center justify-center absolute transition-opacity duration-200
-                ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              className={`w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center absolute transition-all duration-200 bg-white/10 backdrop-blur-sm z-10
+                ${hovered || showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
               style={{
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                background:
-                  "radial-gradient(circle at 30% 30%, #ffffff, #e5e7eb)",
-                boxShadow:
-                  "0 6px 12px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.6)",
               }}
             >
               {isPlaying ? (
-                <Pause className="w-6 h-6 text-[#385179]" />
+                <Pause className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white" />
               ) : (
-                <Play className="w-6 h-6 text-[#385179]" />
+                <Play className="w-6 h-6 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white ml-1" />
               )}
             </button>
 
-            {/* Controls: Visible on hover */}
+            {/* Controls */}
             <div
-              className={`absolute left-0 right-0 bottom-0 pb-2 px-3 transition-opacity duration-200
-                ${hovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              className={`absolute inset-x-0 bottom-0 transition-opacity duration-200 bg-gradient-to-t from-black/80 to-transparent pt-12 pb-1.5 md:pb-3 px-2 md:px-4 lg:px-6 z-20
+                ${hovered || showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
             >
               {/* Progress Bar */}
-              <div
-                className="w-full h-2 bg-gray-200/80 rounded-full cursor-pointer mb-2"
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const p = Math.max(0, Math.min(1, x / rect.width));
-                  seek(p);
-                }}
+              <div 
+                ref={progressRef}
+                className="w-full h-0.5 md:h-1 bg-white/30 rounded-full cursor-pointer mb-1.5 md:mb-2 relative group"
+                onMouseDown={handleProgressMouseDown}
+                onTouchStart={handleProgressTouchStart}
+                onClick={handleProgressClick}
               >
                 <div
-                  className="h-2 rounded-full"
-                  style={{
-                    width: `${(currentTime / (duration || 1)) * 100}%`,
-                    background: "linear-gradient(90deg,#9ca3af,#385179)",
-                  }}
-                />
+                  className="h-full bg-white rounded-full relative transition-all pointer-events-none"
+                  style={{ width: `${progressPercentage}%` }}
+                >
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 md:w-3 md:h-3 bg-white rounded-full shadow-lg pointer-events-none" />
+                </div>
               </div>
 
               {/* Main Controls */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {/* Rewind */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      step(-10);
-                    }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
-                    title="Rewind 10s"
-                  >
-                    <SkipBack className="w-4 h-4 text-[#385179]" />
-                  </button>
-
+              <div className="flex items-center justify-between gap-0.5 md:gap-1">
+                <div className="flex items-center gap-0.5 md:gap-1.5 flex-1 min-w-0">
                   {/* Play/Pause */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       togglePlay();
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
-                    title={isPlaying ? "Pause" : "Play"}
+                    className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-white hover:text-white/80 transition flex-shrink-0"
                   >
                     {isPlaying ? (
-                      <Pause className="w-4 h-4 text-[#385179]" />
+                      <Pause className="w-4 h-4 md:w-5 md:h-5" />
                     ) : (
-                      <Play className="w-4 h-4 text-[#385179]" />
+                      <Play className="w-4 h-4 md:w-5 md:h-5" />
                     )}
                   </button>
 
-                  {/* Forward */}
+                  {/* Skip Forward */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       step(10);
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
-                    title="Forward 10s"
+                    className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-white hover:text-white/80 transition flex-shrink-0"
                   >
-                    <SkipForward className="w-4 h-4 text-[#385179]" />
+                    <SkipForward className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
 
-                  {/* Mute/Unmute */}
+                  {/* Volume */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleMute();
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
-                    title={muted ? "Unmute" : "Mute"}
+                    className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-white hover:text-white/80 transition flex-shrink-0"
                   >
                     {muted || volume === 0 ? (
-                      <VolumeX className="w-4 h-4 text-[#385179]" />
+                      <VolumeX className="w-4 h-4 md:w-5 md:h-5" />
                     ) : (
-                      <Volume2 className="w-4 h-4 text-[#385179]" />
+                      <Volume2 className="w-4 h-4 md:w-5 md:h-5" />
                     )}
                   </button>
 
-                  {/* Volume Slider */}
+                  {/* Volume Slider - Desktop only */}
                   <input
                     type="range"
                     min={0}
@@ -269,27 +430,80 @@ export default function ScalingCard() {
                     value={volume}
                     onClick={(e) => e.stopPropagation()}
                     onChange={(e) => onVolumeChange(Number(e.target.value))}
-                    className="h-1.5 w-24 rounded bg-gray-200 accent-[#385179] ml-2"
-                    aria-label="Volume"
+                    className="hidden md:block h-1 w-16 lg:w-20 rounded accent-white cursor-pointer"
+                    style={{
+                      background: `linear-gradient(to right, white ${volume * 100}%, rgba(255,255,255,0.3) ${volume * 100}%)`
+                    }}
                   />
 
-                  {/* Time Display */}
-                  <div className="text-[11px] ml-2 text-[#4b5563] font-mono opacity-80 min-w-[72px] text-center">
+                  {/* Time */}
+                  <div className="text-[9px] md:text-xs text-white/90 font-medium whitespace-nowrap ml-0.5">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </div>
                 </div>
 
-                {/* Fullscreen */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-0.5 md:gap-1.5">
+                  {/* Settings */}
+                  <div className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowSettings(!showSettings);
+                      }}
+                      className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-white hover:text-white/80 transition flex-shrink-0"
+                    >
+                      <Gauge className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+
+                    {showSettings && (
+                      <div className="absolute bottom-full right-0 mb-2 bg-[#1e293b] rounded-lg shadow-xl p-1.5 min-w-[110px] border border-white/10 z-40 max-h-[60vh] overflow-y-auto">
+                        <div className="text-[9px] font-bold text-white/60 mb-1 px-1.5">Speed</div>
+                        {[0.5, 0.75, 1, 1.25, 1.5, 2].map((rate) => (
+                          <button
+                            key={rate}
+                            onClick={() => changePlaybackRate(rate)}
+                            className={`w-full text-left px-1.5 py-1 rounded text-[10px] transition ${
+                              playbackRate === rate
+                                ? "bg-white/20 text-white"
+                                : "text-white/80 hover:bg-white/10"
+                            }`}
+                          >
+                            {rate === 1 ? "Normal" : `${rate}x`}
+                          </button>
+                        ))}
+                        <div className="border-t border-white/10 my-1" />
+                        <div className="text-[9px] font-bold text-white/60 mb-1 px-1.5">Quality</div>
+                        {["Auto", "1080p", "720p", "480p"].map((q) => (
+                          <button
+                            key={q}
+                            onClick={() => setQuality(q)}
+                            className={`w-full text-left px-1.5 py-1 rounded text-[10px] transition ${
+                              quality === q
+                                ? "bg-white/20 text-white"
+                                : "text-white/80 hover:bg-white/10"
+                            }`}
+                          >
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Fullscreen */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFullscreen();
                     }}
-                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#f3f4f6] border border-gray-200 hover:bg-gray-100 transition"
-                    title="Fullscreen"
+                    className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-white hover:text-white/80 transition flex-shrink-0"
+                    title={isFullscreen ? "Exit Fullscreen (F)" : "Fullscreen (F)"}
                   >
-                    <Maximize2 className="w-4 h-4 text-[#385179]" />
+                    {isFullscreen ? (
+                      <Minimize2 className="w-4 h-4 md:w-5 md:h-5" />
+                    ) : (
+                      <Maximize2 className="w-4 h-4 md:w-5 md:h-5" />
+                    )}
                   </button>
                 </div>
               </div>

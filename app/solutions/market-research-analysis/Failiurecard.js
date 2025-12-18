@@ -124,7 +124,7 @@ function FailureCard({ item, idx, neuFlat, fadeInUp }) {
                   borderRadius: '0.75rem',
                   boxShadow: isCardHovered 
                     ? 'inset 6px 6px 10px 0 rgba(163,177,198,0.7), inset -6px -6px 10px 0 rgba(255,255,255,0.8)'
-                    : '6px 6px 10px 0 rgba(163,177,198,0.7), -6px -6px 10px 0 rgba(255,255,255,0.8)'
+                    : ''
                 }}
               >
                 <svg 
@@ -141,12 +141,13 @@ function FailureCard({ item, idx, neuFlat, fadeInUp }) {
                       <stop offset="100%" stopColor="#B5BFD0" />
                     </linearGradient>
                     
-                    {/* Neumorphic Cheese Gradient */}
-                    <radialGradient id={`cheeseNeu-${uniqueId}`} cx="40%" cy="35%">
-                      <stop offset="0%" stopColor="#F0F4F8" />
-                      <stop offset="50%" stopColor="#E0E5EC" />
-                      <stop offset="100%" stopColor="#D1D9E6" />
-                    </radialGradient>
+                    {/* Neumorphic Cheese Gradient - Yellowish */}
+<radialGradient id={`cheeseNeu-${uniqueId}`} cx="40%" cy="35%">
+  <stop offset="0%" stopColor="#FFF9E6" />
+  <stop offset="50%" stopColor="#FFE89C" />
+  <stop offset="100%" stopColor="#F5D76E" />
+</radialGradient>
+
                     
                     {/* Neumorphic Metal Gradient */}
                     <linearGradient id={`metalNeu-${uniqueId}`} x1="0" y1="0" x2="0" y2="1">
@@ -300,7 +301,7 @@ export default function YourComponent() {
             borderColor: "border-blue-600", 
             title: "Persona Guesswork", 
             desc: "Agency builds ICA from founder's assumptions", 
-            alert: "No actual interviews" 
+            alert: null
           },
           { 
             icon: FileText, 
@@ -316,7 +317,7 @@ export default function YourComponent() {
             borderColor: "border-yellow-500", 
             title: "Campaign Launch", 
             desc: (<><span className="font-bold">$5K-$20K</span> initial budget deployed</>),
-            alert: "Wrong audience + wrong message" 
+            alert: null 
           },
           { 
             icon: TrendingDown, 
@@ -332,7 +333,7 @@ export default function YourComponent() {
             borderColor: "border-red-500", 
             title: "Optimization", 
             desc: (<><span className="font-bold">Test 40</span> variations hoping one works</>), 
-            alert: "Optimizing guesses" 
+            alert: null
           },
           { 
             icon: Wallet, 

@@ -82,6 +82,11 @@ const FAQSection = () => {
 
   return (
     <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="faq">
+      <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Faq</span>
+          </div>
+        </div>
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">The Silent Objections</h2>
         <p className="text-gray-600 text-center mb-12 text-sm md:text-base">We've done this 50+ times. These are the questions you're not asking out loud.</p>
@@ -189,9 +194,11 @@ return (
             className="z-10 order-1 lg:order-1"
           >
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${neuPressed} mb-6 md:mb-8`}>
-              <span className="text-[10px] md:text-xs font-semibold tracking-wider uppercase text-blue-700 ">
+              <Brain size={12} color="#5239dd" />
+              <span className="text-[10px] md:text-xs font-semibold tracking-wider uppercase text-[#5239dd] ">
                 THE ARLOXIAN INTELLIGENCE PROTOCOL
               </span>
+              
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 md:mb-8 text-gray-900 leading-[1.1]">
@@ -223,8 +230,8 @@ return (
                 whatsappNumber="+919910220335" 
                 calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
               >
-              <button className={`${neuFlat} px-6 md:px-8 py-3 md:py-4 text-blue-600 font-bold rounded-full hover:scale-95 active:scale-90 transition-all flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto`}>
-                Get Your Market Intelligence Audit
+              <button className={`liquid-glass-btn bg-[#b9c0d3] px-6 md:px-8 py-3 md:py-4 text-slate-800 font-bold rounded-full hover:scale-95 flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95`}>
+                <span className="text-slate-800 font-bold">Get Your Market Intelligence Audit</span> 
                 <ArrowRight className="w-5 h-5" />
               </button>
               </WhatsappCTA>
@@ -249,7 +256,7 @@ return (
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className={`absolute top-0 md:top-5 right-0 md:right-4 ${neuFlat} p-4 md:p-5 rounded-xl z-30 max-w-[180px] md:max-w-[220px]`}
+              className={`absolute top-0 md:top-5 right-0 md:right-4 ${neuFlat} p-4 md:p-5 rounded-xl z-10 max-w-[180px] md:max-w-[220px]`}
             >
               <div className="flex items-start gap-3">
                 <Quote className="w-5 h-5 text-blue-500 shrink-0 mt-1" />
@@ -260,7 +267,7 @@ return (
             <motion.div 
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-              className={`absolute bottom-8 md:bottom-32 left-0 ${neuFlat} p-4 md:p-5 rounded-xl z-30`}
+              className={`absolute bottom-8 md:bottom-32 left-0 ${neuFlat} p-4 md:p-5 rounded-xl z-10`}
             >
               <div className="flex items-center gap-3">
                 <PieChart className="w-5 h-5 md:w-6 md:h-6 text-purple-500" />
@@ -286,7 +293,6 @@ return (
         </div>
       </section>
 
-    {/* SECTION 2: THE MOUSETRAP REVELATION */}
  {/* SECTION 2: SYSTEMIC DIAGNOSIS */}
       <section className="py-12 md:py-20 px-4 md:px-6" id="diagnosis">
         <motion.div 
@@ -359,6 +365,11 @@ return (
 
       {/* SECTION 3: AI RECONCILIATION */}
       <section className="py-12 md:py-24 px-4 md:px-6" id="ai-reconciliation">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-[#b57404] uppercase tracking-widest">AI RECONCILIATION</span>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Why AI-Assisted Research Isn't 'Cheating'</h2>
@@ -473,7 +484,7 @@ return (
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
-              <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">THE SOLUTION ARCHITECTURE</span>
+              <span className="text-[10px] font-bold text-green-700 uppercase tracking-widest">THE SOLUTION ARCHITECTURE</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">The Arloxian Intelligence Protocol™</h2>
             <p className="text-sm md:text-base text-gray-600 mt-4">Seven-Phase Forensic Research System That Extracts Mathematical Certainty From Market Chaos</p>
@@ -887,6 +898,11 @@ return (
 
       {/* ---------- COMPARISON SECTION — NEUMORPHIC + TAILWIND (INLINE) ---------- */}
       <section id="comparison" className="py-12 md:py-20 px-4 md:px-6">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Know The Difference</span>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-8">The Delta: Guesswork vs. The Protocol</h2>
 
@@ -1043,6 +1059,11 @@ return (
 
       {/* SECTION 5: POSITIONING */}
       <section className="py-12 md:py-20 px-4 md:px-6" id="positioning">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-slate-800 uppercase tracking-widest">The Metrics</span>
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">This Isn't A 'Better Agency'—It's A Different Category</h2>
           <p className="text-gray-600 mb-12 text-center max-w-3xl mx-auto text-sm md:text-base">
@@ -1136,7 +1157,12 @@ return (
       
 
       {/* SECTION 7: COST OF INACTION */}
-      <section className="py-12 md:py-24 px-4 md:px-6" id="cost-inaction">
+      <section className="py-12 md:py-10 px-4 md:px-6" id="cost-inaction">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-[#9f43c4] uppercase tracking-widest">cost-inaction</span>
+          </div>
+        </div>
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
             Every Month You Run Ads Without This Costs You <span className="text-red-600">$8,000–$25,000</span>
@@ -1321,6 +1347,12 @@ return (
 
       {/* SECTION 8: CASE STUDY */}
       <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="case-studies">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">case-study</span>
+          </div>
+        </div>
+        
         <div className="max-w-5xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-10 md:mb-12 text-center">
             What Happens When You Know Before You Spend
@@ -1425,6 +1457,11 @@ return (
 
       {/* methodology section */}
       <section id="methodology" className="py-12 md:py-20 px-4 md:px-6">
+        <div className="justify-center flex items-center">
+          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Methodology</span>
+          </div>
+        </div>
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-10 md:mb-12 text-center">
             The Methodology Behind The Protocol
@@ -1519,7 +1556,11 @@ return (
         </div>
       </section>
 {/* SECTION 6: FAQ */}
-      <FAQSection />
+
+  
+         <FAQSection />
+
+     
       {/* SECTION 9: CTA & FOOTER */}
       <section className="py-16 md:py-24 px-4 md:px-6 border-t border-gray-300/50" aria-labelledby="cta-heading">
         <div className="max-w-4xl mx-auto text-center">
@@ -1540,7 +1581,7 @@ return (
               whatsappNumber="+919910220335" 
               calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
             >
-              <button className={`${neuFlat} px-6 md:px-8 py-3 md:py-4 text-blue-600 font-bold rounded-full hover:scale-95 active:scale-90 transition-all flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto`}>
+              <button className={`liquid-glass-btn bg-[#c9d0df]  duration-300 hover:bg-[#9ca6b4]  px-6 md:px-8 py-3 md:py-4 text-slate-800 font-bold rounded-full hover:scale-95 active:scale-95 transition-all flex items-center justify-center gap-2 text-base md:text-lg w-full md:w-auto`}>
                 Get Your Market Intelligence Audit
                 <ArrowRight className="w-5 h-5" />
               </button>

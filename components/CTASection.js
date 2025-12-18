@@ -3,6 +3,7 @@
 
 import { ArrowRight } from "lucide-react";
 import WhatsappCTA from "./WhatsAppCTA";
+import GlassButton from "./but";
 
 export default function FinalCtaSection() {
   return (
@@ -23,22 +24,35 @@ export default function FinalCtaSection() {
         </div>
 
         {/* Buttons row */}
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          {/* Primary CTA – neumorphic pill */}
-          <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-          <button className="inline-flex items-center justify-center rounded-full bg-[#f5f6fa] px-9 py-3 shadow-[12px_12px_30px_rgba(163,175,195,0.5),-10px_-10px_26px_rgba(255,255,255,0.98)]">
-            <span className="text-sm md:text-base font-semibold text-[#111827]">
-              Start Scaling Today
-            </span>
-          </button>
-          </WhatsappCTA>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 w-full sm:w-auto px-4 sm:px-0">
+  
+  {/* Primary CTA */}
+  <div className="w-full sm:w-auto ">
+    <WhatsappCTA 
+      whatsappNumber="+919910220335" 
+      calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+    >
+      <GlassButton 
+        label="Start Scaling Today" 
+        icon={ArrowRight} 
+        className="h-4 sm:h-5 transition-all duration-200"
+        onClick={() => console.log('Start Scaling clicked')}
+      />
+    </WhatsappCTA>
+  </div>
 
-          {/* Secondary link */}
-          <button className="inline-flex items-center justify-center gap-2 text-sm md:text-base font-semibold text-[#4b5563]">
-            <span>View Case Studies</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+  {/* Secondary CTA */}
+  <div className="w-full sm:w-auto lg:px-0 lg:mt-0 px-20 mt-4">
+    <GlassButton 
+      label="View Case Studies"  
+       icon={ArrowRight}
+      className="h-4 sm:h-5 w-5 transition-all duration-200"
+      onClick={() => window.location.href = '/results/case-studies'}
+    />
+  </div>
+  
+</div>
+
       </div>
     </section>
   );

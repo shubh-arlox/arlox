@@ -17,6 +17,9 @@ import {
   Diamond,
   Leaf,
   Percent,
+  Shirt,
+  SplinePointer,
+  Dot,
 } from "lucide-react";
 import WhatsappCTA from "./WhatsAppCTA";
 
@@ -56,11 +59,11 @@ const NeumorphicCard = ({ children, className = "", onClick, inset = false }) =>
       transition={{ duration: 0.4 }}
       className={`
       relative rounded-[1.5rem] p-8 transition-all duration-300
-      bg-[#f5f5f5] text-slate-600 border border-white/40
+      bg-[#E0E5EC] text-slate-600 border border-white/40
       ${
         inset
-          ? "shadow-[inset_6px_6px_12px_#d1d9e6,inset_-6px_-6px_12px_#ffffff]"
-          : "shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff]"
+          ? "shadow-[inset_6px_6px_12px_rgba(163,177,198,0.6),inset_-6px_-6px_12px_rgba(255,255,255,0.5)]"
+          : "shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]"
       }
       ${className}
     `}
@@ -72,7 +75,7 @@ const NeumorphicCard = ({ children, className = "", onClick, inset = false }) =>
 
 const NeumorphicButton = ({ children, variant = "primary", className = "", onClick }) => {
   const baseClass =
-    "px-8 py-4 rounded-xl font-bold tracking-wider uppercase text-xs flex items-center justify-center gap-3 outline-none transition-all duration-200 active:scale-95 shadow-[6px_6px_12px_#d1d9e6,-6px_-6px_12px_#ffffff] active:shadow-[inset_4px_4px_8px_#d1d9e6,inset_-4px_-4px_8px_#ffffff]";
+    "px-8 py-4 rounded-xl font-bold tracking-wider uppercase text-xs flex items-center justify-center gap-3 outline-none transition-all duration-200 active:scale-95 shadow-[6px_6px_12px_rgba(163,177,198,0.6),-6px_-6px_12px_rgba(255,255,255,0.5)] active:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] bg-[#E0E5EC]";
 
   const variants = {
     primary: "text-[#667eea] hover:text-[#5a67d8]",
@@ -100,11 +103,19 @@ const SectionTitle = ({ subtitle, title, centered = true }) => (
     variants={fadeInUp}
     className={`mb-16 ${centered ? "text-center" : "text-left"}`}
   >
-    <span className={`text-[#667eea] font-bold text-xs uppercase tracking-[0.2em] mb-4 flex items-center ${centered ? "justify-center" : "justify-start"} gap-2`}>
-      <span className="w-2 h-2 rounded-full bg-[#667eea]" />
-      {subtitle}
-      <span className="w-2 h-2 rounded-full bg-[#667eea]" />
-    </span>
+    <div className="flex justify-center">
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 px-3 py-1 md:px-4 rounded-full bg-[#E0E5EC] shadow-[inset_6px_6px_12px_rgba(163,177,198,0.6),inset_-6px_-6px_12px_rgba(255,255,255,0.5)] text-[10px] md:text-xs mt-4 mb-6 font-bold uppercase tracking-wide text-blue-800"
+          >
+           <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+
+            <span>{subtitle}</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+          </motion.div>
+        </div>
     <h2 className="text-3xl md:text-5xl font-extrabold leading-tight text-slate-800">
       {title}
     </h2>
@@ -125,11 +136,16 @@ const HeroSection = () => (
         variants={fadeInUp}
         className="text-center mb-16"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 bg-[#E0E5EC] shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.7),inset_-6px_-6px_10px_0_rgba(255,255,255,0.8)] rounded-3xl border border-white/10">
-          <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-500">
-            Market Dominance
-          </span>
+         <div className="flex justify-center">
+          <motion.div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 px-3 py-1 md:px-4 rounded-full bg-[#E0E5EC] shadow-[inset_6px_6px_12px_rgba(163,177,198,0.6),inset_-6px_-6px_12px_rgba(255,255,255,0.5)] text-[10px] md:text-xs mt-4 mb-6 font-bold uppercase tracking-wide text-blue-800"
+          >
+            <SplinePointer size={16} strokeWidth={2} className="text-blue-600" />
+            <span>Scientific Positioning </span>
+          </motion.div>
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-800 leading-[1.1] sm:leading-[0.95] tracking-tight mb-6">
           Become The <br />
@@ -143,19 +159,12 @@ const HeroSection = () => (
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
            <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-          <NeumorphicButton variant="primary">
-            Book Positioning Audit <ArrowRight size={16} />
-          </NeumorphicButton>
+          <button
+      className="liquid-glass-btn bg-[#b9c0d3] w-full py-3 sm:py-4 px-8 sm:px-12 transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95">
+           <span className="text-slate-800 font-bold">Book Positioning Audit </span> <ArrowRight size={16} className="text-slate-800" />
+          </button>
           </WhatsappCTA>
-         <NeumorphicButton 
-  variant="secondary"
-  onClick={() => {
-    // This finds the section with id="method" and scrolls to it
-    document.getElementById("method")?.scrollIntoView({ behavior: "smooth" });
-  }}
->
-  The Science <ArrowDown size={16} />
-</NeumorphicButton>
+        
         </div>
       </motion.div>
 
@@ -175,7 +184,7 @@ const HeroChaosCard = () => (
     transition={{ delay: 0.3, duration: 0.6 }}
     className="relative group h-full"
   >
-    <NeumorphicCard className="h-full border-t-4 border-red-400 !bg-[#f5f5f5]/50 backdrop-blur-sm">
+    <NeumorphicCard className="h-full border-t-4 border-red-400 !bg-[#E0E5EC]/50 backdrop-blur-sm">
       <h3 className="text-red-500 font-bold mb-8 flex items-center gap-3 tracking-widest uppercase text-sm">
         <AlertTriangle size={16} /> The Chaotic Reality
       </h3>
@@ -201,7 +210,7 @@ const FloatingBadge = ({ text, top, left, right, bottom, rotate }) => (
   <motion.span
     animate={{ y: [0, -10, 0] }}
     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-    className="absolute text-xs bg-[#f5f5f5] shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] px-3 py-2 rounded"
+    className="absolute text-xs bg-[#E0E5EC] shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] px-3 py-2 rounded"
     style={{ top, left, right, bottom, rotate }}
   >
     "{text}"
@@ -215,12 +224,12 @@ const HeroPrecisionCard = () => (
     transition={{ delay: 0.5, duration: 0.6 }}
     className="relative group h-full"
   >
-    <NeumorphicCard className="h-full border-t-4 border-[#667eea] !bg-[#f5f5f5]/80">
+    <NeumorphicCard className="h-full border-t-4 border-[#667eea] !bg-[#E0E5EC]/80">
       <h3 className="text-[#667eea] font-bold mb-8 flex items-center gap-3 tracking-widest uppercase text-sm">
         <Target size={16} /> Scientific Precision
       </h3>
       <div className="h-64 flex flex-col justify-center items-center relative">
-        <div className="w-full max-w-xs bg-[#f5f5f5] p-4 rounded-xl shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff] mb-6 text-center">
+        <div className="w-full max-w-xs bg-[#E0E5EC] p-4 rounded-xl shadow-[inset_5px_5px_10px_rgba(163,177,198,0.6),inset_-5px_-5px_10px_rgba(255,255,255,0.5)] mb-6 text-center">
           <p className="text-[10px] text-[#667eea] uppercase tracking-widest mb-1">Unique Angle</p>
           <p className="font-bold text-slate-700 text-sm">"The Only Jeans Guaranteed Comfortable by Month 2"</p>
         </div>
@@ -257,7 +266,7 @@ const ProblemSection = () => {
   ];
 
   return (
-    <section id="problem" className="max-w-6xl mx-auto px-4 pb-20">
+    <section id="problem" className="max-w-6xl mx-auto px-4 pb-20 overflow-hidden">
       <SectionTitle 
         subtitle="The Problem" 
         title={
@@ -272,7 +281,7 @@ const ProblemSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-40 relative z-10"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-20 sm:mb-40 relative z-10"
       >
         {tombstones.map((item, i) => (
           <Tombstone key={i} item={item} i={i} />
@@ -285,35 +294,31 @@ const ProblemSection = () => {
 };
 
 const Tombstone = ({ item, i }) => {
-  // Styles for chaotic layout
   let chaosClass = "";
   if (i === 0) chaosClass = "lg:translate-y-0 lg:-rotate-6 lg:z-10";
   if (i === 1) chaosClass = "lg:translate-y-32 lg:rotate-12 lg:z-0 lg:translate-x-6";
   if (i === 2) chaosClass = "lg:translate-y-12 lg:-rotate-3 lg:z-10 lg:-translate-x-8";
   if (i === 3) chaosClass = "lg:translate-y-48 lg:rotate-6 lg:z-0";
-  const mobileClass = i % 2 !== 0 ? "translate-y-16 rotate-3" : "translate-y-0 -rotate-3";
-  const NEU_TOMBSTONE = "rounded-t-[100px] rounded-b-[10px] bg-[#E0E5EC] border border-white/40 shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff]";
+  const mobileClass = i % 2 !== 0 ? "translate-y-8 sm:translate-y-16 rotate-2" : "translate-y-0 -rotate-2";
+  const NEU_TOMBSTONE = "rounded-t-[100px] rounded-b-[10px] bg-[#E0E5EC] border border-white/40 shadow-[9px_9px_16px_rgba(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]";
 
   return (
     <motion.div variants={fadeInUp} className={`${chaosClass} ${mobileClass}`}>
       <div className={`${NEU_TOMBSTONE} group relative h-56 sm:h-64 flex flex-col items-center justify-center p-4 sm:p-6 text-center hover:shadow-[inset_5px_5px_10px_rgba(163,177,198,0.4)] hover:scale-105 transition-all duration-500 ease-out`}>
         
         {/* Icon */}
-        <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center mb-4 text-slate-400 group-hover:text-red-500 transition-colors rounded-full bg-[#f5f5f5] shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff]">
+        <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center mb-4 text-slate-400 group-hover:text-red-500 transition-colors rounded-full bg-[#E0E5EC] shadow-[inset_5px_5px_10px_rgba(163,177,198,0.6),inset_-5px_-5px_10px_rgba(255,255,255,0.5)]">
           <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
         </div>
 
-        {/* Title: Black text, cuts with straight red line on hover */}
         <h3 className="text-xs sm:text-base font-bold text-slate-700 mb-2 transition-all duration-300 group-hover:line-through group-hover:decoration-red-500 group-hover:decoration-2">
           {item.title}
         </h3>
 
-        {/* Subtitle: Hidden initially, appears red on hover */}
         <p className="text-[9px] sm:text-xs text-red-500 font-bold uppercase tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           {item.sub}
         </p>
 
-        {/* Visual crack/line at bottom */}
         <div className="absolute bottom-6 w-12 h-1 bg-slate-300/50 rounded-full group-hover:bg-red-400/30 transition-colors" />
       </div>
     </motion.div>
@@ -343,7 +348,7 @@ const DeathSpiral = () => (
             transition={{ delay: 0.1 * i, duration: 0.5 }}
             className="flex items-center gap-4 relative z-10"
           >
-            <div className="w-10 h-10 rounded-full bg-[#f5f5f5] shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] flex items-center justify-center text-red-500 font-bold text-sm shrink-0">
+            <div className="w-10 h-10 rounded-full bg-[#E0E5EC] shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] flex items-center justify-center text-red-500 font-bold text-sm shrink-0">
               {i + 1}
             </div>
             <span className="text-slate-600 text-sm font-medium">{step}</span>
@@ -353,15 +358,16 @@ const DeathSpiral = () => (
     </NeumorphicCard>
   </div>
 );
+
 /* --- Solution Section --- */
 const SolutionSection = () => (
-  <section id="solution" className="py-20 px-6">
+  <section id="solution" className="py-20 px-6 overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <SectionTitle subtitle="The Solution" title="From Guessing to Engineering" />
       
       <div className="mb-20 grid md:grid-cols-2 gap-8">
         <NeumorphicCard className="text-center opacity-70 scale-95 origin-right" inset>
-          <div className="h-12 w-12 mx-auto bg-[#f5f5f5] rounded-full shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] flex items-center justify-center mb-4 text-gray-400">
+          <div className="h-12 w-12 mx-auto bg-[#E0E5EC] rounded-full shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] flex items-center justify-center mb-4 text-gray-400">
             <HelpCircle />
           </div>
           <h3 className="text-xl font-bold mb-2 text-slate-600">Traditional Agency</h3>
@@ -370,7 +376,7 @@ const SolutionSection = () => (
         </NeumorphicCard>
 
         <NeumorphicCard className="text-center relative overflow-hidden border-t-4 border-[#667eea]">
-          <div className="h-12 w-12 mx-auto bg-[#f5f5f5] rounded-full shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] flex items-center justify-center mb-4 text-[#667eea]">
+          <div className="h-12 w-12 mx-auto bg-[#E0E5EC] rounded-full shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] flex items-center justify-center mb-4 text-[#667eea]">
             <Microscope size={24} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-[#667eea]">Scientific Positioning</h3>
@@ -388,22 +394,22 @@ const FunnelVisual = () => (
   <div className="text-center max-w-4xl mx-auto">
     <h3 className="text-2xl font-bold mb-8 text-slate-800">Discovery of Your "Blue Swan"</h3>
     <div className="relative max-w-2xl mx-auto font-mono text-xs">
-      <motion.div initial={{ width: "120%" }} whileInView={{ width: "100%" }} transition={{duration: 1}} className="w-full bg-[#f5f5f5] shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] p-4 mb-2 rounded-t-lg text-center text-gray-400">
+      <motion.div initial={{ width: "120%" }} whileInView={{ width: "100%" }} transition={{duration: 1}} className="w-full bg-[#E0E5EC] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.6),inset_-2px_-2px_5px_rgba(255,255,255,0.5)] p-4 mb-2 rounded-t-lg text-center text-gray-400">
         60,000 Combinations
       </motion.div>
-      <motion.div initial={{ width: "100%" }} whileInView={{ width: "80%" }} transition={{duration: 1, delay: 0.2}} className="mx-auto bg-[#f5f5f5] shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] p-4 mb-2 text-center text-gray-500">
+      <motion.div initial={{ width: "100%" }} whileInView={{ width: "80%" }} transition={{duration: 1, delay: 0.2}} className="mx-auto bg-[#E0E5EC] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.6),inset_-2px_-2px_5px_rgba(255,255,255,0.5)] p-4 mb-2 text-center text-gray-500">
         Research: 500 Options
       </motion.div>
-      <motion.div initial={{ width: "80%" }} whileInView={{ width: "60%" }} transition={{duration: 1, delay: 0.4}} className="mx-auto bg-[#f5f5f5] shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] p-4 mb-2 text-center text-slate-500">
+      <motion.div initial={{ width: "80%" }} whileInView={{ width: "60%" }} transition={{duration: 1, delay: 0.4}} className="mx-auto bg-[#E0E5EC] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.6),inset_-2px_-2px_5px_rgba(255,255,255,0.5)] p-4 mb-2 text-center text-slate-500">
         Hypothesis: 20 Angles
       </motion.div>
-      <motion.div initial={{ width: "60%" }} whileInView={{ width: "40%" }} transition={{duration: 1, delay: 0.6}} className="mx-auto bg-[#f5f5f5] shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] p-4 mb-2 rounded-b-lg text-center text-slate-800">
+      <motion.div initial={{ width: "60%" }} whileInView={{ width: "40%" }} transition={{duration: 1, delay: 0.6}} className="mx-auto bg-[#E0E5EC] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.6),inset_-2px_-2px_5px_rgba(255,255,255,0.5)] p-4 mb-2 rounded-b-lg text-center text-slate-800">
         Testing: 3 Winners
       </motion.div>
       <div className="w-[2px] mx-auto h-12 bg-[#667eea]" />
       
       <NeumorphicCard className="!p-6 flex flex-col md:flex-row items-center justify-center gap-6 border-l-4 border-[#667eea]">
-        <div className="p-3 bg-[#f5f5f5] rounded-full shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff]">
+        <div className="p-3 bg-[#E0E5EC] rounded-full shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)]">
           <Feather size={24} className="text-[#667eea]" />
         </div>
         <div className="text-center md:text-left">
@@ -417,7 +423,7 @@ const FunnelVisual = () => (
 
 /* --- Evidence Section --- */
 const EvidenceSection = () => (
-  <section className="py-20 px-6">
+  <section className="py-20 px-6 overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <SectionTitle subtitle="The Evidence" title="Real Brands. Real Results." />
       <div className="grid lg:grid-cols-2 gap-8">
@@ -465,11 +471,11 @@ const CaseStudyCard = ({ title, industry, oldPos, newPos, metrics }) => (
       <h3 className="text-2xl font-bold text-slate-800">{title}</h3>
     </div>
     <div className="grid md:grid-cols-2 gap-4 mb-8 flex-grow">
-      <div className="p-4 bg-[#f5f5f5] shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff] rounded-lg">
+      <div className="p-4 bg-[#E0E5EC] shadow-[inset_5px_5px_10px_rgba(163,177,198,0.6),inset_-5px_-5px_10px_rgba(255,255,255,0.5)] rounded-lg">
         <div className="text-[10px] text-gray-400 uppercase font-bold mb-2 tracking-wider">Old Positioning</div>
         <p className="text-slate-500 text-xs italic leading-relaxed">"{oldPos}"</p>
       </div>
-      <div className="p-4 bg-[#f5f5f5] border border-[#667eea]/20 rounded-lg relative overflow-hidden">
+      <div className="p-4 bg-[#E0E5EC] border border-[#667eea]/20 rounded-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 p-1 bg-[#667eea] rounded-bl-lg">
           <Feather size={10} className="text-white" />
         </div>
@@ -500,7 +506,7 @@ const CaseStudyCard = ({ title, industry, oldPos, newPos, metrics }) => (
 
 /* --- Method Section --- */
 const MethodSection = () => (
-  <section id="method" className="py-20 px-6">
+  <section id="method" className="py-20 px-6 overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <SectionTitle subtitle="The Method" title="How We Engineer Your Blue Swan" />
       <div className="relative">
@@ -541,7 +547,7 @@ const TimelineStage = ({ number, title, weeks, desc, items, color }) => {
     >
       <div className="absolute left-3 top-0 bottom-0 w-[2px] bg-slate-200 md:hidden" />
       <div className={`
-        w-12 h-12 rounded-full border-4 border-[#f5f5f5] shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] flex items-center justify-center font-bold text-lg relative z-10 mb-6 transition-all duration-500 group-hover:scale-110 md:mx-auto
+        w-12 h-12 rounded-full border-4 border-[#E0E5EC] shadow-[5px_5px_10px_rgba(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] flex items-center justify-center font-bold text-lg relative z-10 mb-6 transition-all duration-500 group-hover:scale-110 md:mx-auto
         ${colorClasses[color]}
       `}>
         {number}
@@ -550,7 +556,7 @@ const TimelineStage = ({ number, title, weeks, desc, items, color }) => {
         <div className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2 text-gray-400">{weeks}</div>
         <h4 className="text-lg font-bold text-slate-800 mb-3">{title}</h4>
         <p className="text-xs text-slate-500 mb-4 leading-relaxed">{desc}</p>
-        <ul className="text-left space-y-2 text-[10px] text-slate-500 bg-[#f5f5f5] shadow-[inset_2px_2px_5px_#d1d9e6,inset_-2px_-2px_5px_#ffffff] p-4 rounded-lg">
+        <ul className="text-left space-y-2 text-[10px] text-slate-500 bg-[#E0E5EC] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.6),inset_-2px_-2px_5px_rgba(255,255,255,0.5)] p-4 rounded-lg">
           {items.map((item, i) => (
             <li key={i} className="flex items-start gap-2">
               <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 ${dotClasses[color]}`} />
@@ -565,7 +571,7 @@ const TimelineStage = ({ number, title, weeks, desc, items, color }) => {
 
 /* --- Comparison Section --- */
 const ComparisonTable = () => (
-  <section id="comparison" className="py-20 px-6">
+  <section id="comparison" className="py-20 px-6 overflow-hidden">
     <div className="max-w-7xl mx-auto">
       <SectionTitle subtitle="The Uniqueness" title="Why We Are Different" />
       <div className="overflow-x-auto pb-8">
@@ -599,7 +605,7 @@ const ComparisonTable = () => (
 
 /* --- Objection Section --- */
 const ObjectionSection = () => (
-  <section className="py-20 px-6">
+  <section className="py-20 px-6 overflow-hidden">
     <div className="max-w-4xl mx-auto">
       <SectionTitle subtitle="FAQ" title="But What If...?" />
       <NeumorphicCard className="p-4 md:p-8">
@@ -634,7 +640,7 @@ const ObjectionItem = ({ question, answer }) => {
 
 /* --- Footer --- */
 const FooterCTA = () => (
-  <section className="py-32 px-6 relative overflow-hidden bg-[#f5f5f5]">
+  <section className="py-32 px-6 relative overflow-hidden bg-[#E0E5EC]">
     <div className="max-w-4xl mx-auto text-center relative z-10">
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
         <h2 className="text-5xl md:text-7xl font-extrabold text-slate-800 mb-8 leading-tight">
@@ -645,9 +651,10 @@ const FooterCTA = () => (
         </p>
         <div className="flex flex-col items-center gap-6">
          <WhatsappCTA whatsappNumber="+919910220335" calendlyUrl="https://calendly.com/arlox-/strategy-call-1">
-          <NeumorphicButton variant="primary" className="text-xl px-12 py-6 w-full md:w-auto">
-            Book Positioning Audit <ArrowRight className="ml-2" />
-          </NeumorphicButton>
+           <button
+      className="liquid-glass-btn bg-[#b9c0d3] w-full py-3 sm:py-4 px-8 sm:px-12 transition-all duration-300 hover:bg-[#9ca6b4] active:scale-95">
+           <span className="text-slate-800 font-bold">Book Positioning Audit </span> <ArrowRight size={16} className="text-slate-800" />
+          </button>
           </WhatsappCTA>
         </div>
       </motion.div>
@@ -661,7 +668,7 @@ const FooterCTA = () => (
 
 export default function App() {
   return (
-    <div className="w-full flex-1 text-slate-700 selection:bg-[#667eea] selection:text-white pb-10 font-sans">
+    <div className="w-full flex-1 text-slate-700 selection:bg-[#667eea] selection:text-white pb-10 font-sans bg-[#E0E5EC]">
       <HeroSection />
       <ProblemSection />
       <SolutionSection />
