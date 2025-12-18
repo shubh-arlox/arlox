@@ -24,7 +24,7 @@ const AttentionTrap = () => {
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen bg-[#e0e5ec] text-[#4a4a4a] font-sans flex flex-col justify-center py-12 sm:py-16 md:py-24 overflow-hidden">
+    <section className="relative w-full mb-0 bg-[#e0e5ec] text-[#4a4a4a] font-sans flex flex-col justify-center py-12 sm:py-16 md:py-24 overflow-hidden">
       
       <style jsx>{`
         .neu-outer {

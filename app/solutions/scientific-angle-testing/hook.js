@@ -8,7 +8,9 @@ import {
   Ghost, 
   Rocket, 
   Zap, 
-  ArrowDown
+  ArrowDown,
+  Shirt,
+  Shapes
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 const HookVsAngle = () => {
@@ -74,6 +76,17 @@ const HookVsAngle = () => {
         {/* HEADER */}
          
         <div className="text-center mb-12">
+          <div className="flex justify-center">
+          <div 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2, ease: "easeOut" }}
+            className="inline-flex items-center gap-2 px-3 py-1 md:px-4 rounded-full neu-pressed text-[10px] md:text-xs mt-4 mb-6 font-bold uppercase tracking-wide text-purple-500"
+          >
+            <Shapes size={14} className="text-blue-600" />
+            <span>Purchase Trigger</span>
+          </div>
+        </div>
            
         
           <h2 className="text-3xl md:text-5xl font-bold text-slate-700 leading-tight mb-4">

@@ -64,7 +64,7 @@ const Hero = () => {
   if (time > 3 && rSharp > 60) projectedRoasSharp = 5.4;
 
   return (
-    <div className="mt-12 min-h-screen flex flex-col font-sans text-[#4a4a4a] bg-[#e0e5ec]">
+    <div className="mt-8 mb-0 flex flex-col font-sans text-[#4a4a4a] bg-[#e0e5ec]">
       <style>{`
         body { background-color: #e0e5ec; }
         .neu-flat {
