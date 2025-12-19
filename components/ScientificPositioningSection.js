@@ -20,6 +20,7 @@ import {
   Shirt,
   SplinePointer,
   Dot,
+  ChevronDown,
 } from "lucide-react";
 import WhatsappCTA from "./WhatsAppCTA";
 import GlassButton from "./but";
@@ -27,6 +28,188 @@ import GlassButton from "./but";
 /* ========================================================================== */
 /* 1. UI PRIMITIVES & SHARED COMPONENTS                                       */
 /* ========================================================================== */
+// --- Objection Section Component ---
+const ObjectionSection = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  // Local Neumorphic styles for the FAQ toggle
+  const faqFlat = "bg-[#E0E5EC] shadow-[6px_6px_12px_#b8b9be,-6px_-6px_12px_#ffffff]";
+  const faqPressed = "bg-[#E0E5EC] shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff]";
+  const neuPressed = "bg-[#E0E5EC] shadow-[inset_4px_4px_8px_#bec3ca,inset_-4px_-4px_8px_#ffffff] border border-slate-200";
+
+  // UPDATED: Your local image path
+  const authorAvatar = [
+    "/unnamed.jpg",
+    "/avatar2.jpg",
+    "/avatar3.jpg",
+    "/avatar4.jpg",
+    "/avatar5.jpg"
+  ];
+
+  const faqs = [
+    { 
+      q: "We already tried repositioning. It didn't work.", 
+      a: "Most 'repositioning' is just rebranding (changing logo, colors). We focus on the psychological 'why' customers buy, backed by data. Real repositioning means testing angles that shift perception—not just aesthetics." 
+    },
+    { 
+      q: "This sounds expensive...", 
+      a: "Staying at 1.5x ROAS costs you $200k/year in wasted ad spend. Our clients typically see a 10x ROI in year one. The question isn't cost—it's whether you can afford NOT to fix this." 
+    },
+    { 
+      q: "Can't we do this ourselves?", 
+      a: "Maybe, if you have 200 hours and statistical analysis skills. We provide the objectivity you can't have for your own brand. Founders are too close to see what's actually broken." 
+    },
+    { 
+      q: "What if our product is the problem, not positioning?", 
+      a: "If your repeat purchase rate is >25%, the product works. The issue is getting people to try it. That's a positioning problem, not a product problem." 
+    },
+    { 
+      q: "How long until we see results?", 
+      a: "Research: 2-3 weeks. Angle testing: 3-4 weeks. Winning angles scaling: Week 6-8. Most brands see breakeven or better by month 2, then 3-5x ROAS by month 4." 
+    },
+    { 
+      q: "We're already working with a creative agency.", 
+      a: "Perfect. We tell them what to create. They're good at execution—we're good at strategy. Most agencies welcome data-backed direction instead of subjective feedback." 
+    },
+    { 
+      q: "What if none of the angles work?", 
+      a: "With 27-45 hooks tested across 3-5 angles, statistical probability of zero winners is <5%. But even if it happens, you learn what NOT to do—saving you $50K+ in failed campaigns." 
+    },
+    { 
+      q: "Our brand is too niche for this to work.", 
+      a: "Niche is perfect. The more specific your customer, the easier it is to position precisely. We've worked with everything from postpartum supplements to $800 chef knives." 
+    },
+    { 
+      q: "We don't have budget for big ad spend.", 
+      a: "Testing phase is $2K-$5K total. You don't need $50K/month budgets. Once we find winners, you scale at YOUR pace with YOUR budget." 
+    },
+    { 
+      q: "What if our competitors copy our positioning?", 
+      a: "Let them try. Positioning isn't a tagline—it's the entire customer perception system. By the time they copy, you're already 6 months ahead with iteration." 
+    },
+    { 
+      q: "We're launching in 3 months. Is that enough time?", 
+      a: "Yes. Research + angle testing takes 6-8 weeks. You'll launch with proven positioning instead of guessing. That's the smartest pre-launch investment you can make." 
+    },
+    { 
+      q: "How do I know you'll understand our industry?", 
+      a: "We don't need to be industry experts—we need to understand your customer. We've worked across 20+ verticals. Human psychology doesn't change by industry." 
+    },
+    { 
+      q: "Can you guarantee specific ROAS numbers?", 
+      a: "No one can ethically guarantee ROAS—too many variables (product, pricing, fulfillment). What we guarantee: A systematic process, clear data, and strategic recommendations. Our average client sees 3-5x improvement." 
+    },
+    { 
+      q: "What happens after we find winning angles?", 
+      a: "You scale them. We provide hooks, data, and playbooks. You can run them yourself, hire a media buyer, or continue with us for ongoing creative iteration." 
+    },
+    { 
+      q: "We're bootstrapped. Can we afford this?", 
+      a: "If you're spending $5K+/month on ads with mediocre ROAS, you can't afford NOT to fix positioning. One winning angle pays for the entire engagement in 30 days." 
+    },
+    { 
+      q: "What if I'm not ready to commit yet?", 
+      a: "Book a free strategy call. We'll audit your current positioning, show you the gaps, and give you a roadmap—whether you work with us or not. Zero pressure." 
+    },
+  ];
+
+  return (
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="objections">
+      <div className="justify-center flex items-center">
+        <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+          <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">FAQ</span>
+        </div>
+      </div>
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">But What If...?</h2>
+        <p className="text-gray-600 text-center mb-12 text-sm md:text-base">Every objection you're thinking. Answered with data, not fluff.</p>
+
+        <div className="space-y-6">
+          {faqs.map((faq, i) => {
+            const isOpen = activeIndex === i;
+            const avatarIndex = i % authorAvatar.length;
+
+            return (
+              <motion.div
+                key={i}
+                layout
+                onClick={() => toggleFAQ(i)}
+                className={`
+                  p-6 rounded-2xl cursor-pointer transition-all duration-300 relative overflow-hidden
+                  ${isOpen ? faqPressed : faqFlat}
+                `}
+              >
+                {/* Question Header */}
+                <div className="flex justify-between items-start gap-4">
+                  <h4 className={`font-bold transition-colors duration-300 mb-0 flex items-start gap-3 text-sm md:text-base ${isOpen ? 'text-indigo-600' : 'text-gray-800'}`}>
+                    <HelpCircle className={`w-5 h-5 mt-0.5 shrink-0 transition-colors ${isOpen ? 'text-indigo-500' : 'text-gray-400'}`} />
+                    {faq.q}
+                  </h4>
+                  
+                  <motion.div 
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    className="text-gray-400 shrink-0"
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </motion.div>
+                </div>
+
+                {/* Answer Area with Avatar Reveal */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="pt-6 pl-0 md:pl-8 flex gap-3 md:gap-4 items-start">
+                        {/* Avatar Image - Changes per FAQ */}
+                        <motion.div 
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ 
+                            type: "spring", 
+                            stiffness: 260, 
+                            damping: 20,
+                            delay: 0.05
+                          }}
+                          className="shrink-0 relative"
+                        >
+                          <img
+                            src={authorAvatar[avatarIndex]}
+                            alt="Team Expert"
+                            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#E0E5EC] shadow-md object-cover"
+                          />
+                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#E0E5EC] rounded-full"></div>
+                        </motion.div>
+
+                        {/* Answer Text Bubble */}
+                        <motion.div 
+                          initial={{ x: -10, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                          className="text-sm text-gray-600 bg-white/40 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl leading-relaxed"
+                        >
+                          <p>{faq.a}</p>
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 
 // Animation Configuration
 const fadeInUp = {
@@ -528,10 +711,10 @@ const MethodSection = () => (
 
 const TimelineStage = ({ number, title, weeks, desc, items, color }) => {
   const colorClasses = {
-    purple: "bg-purple-100 text-purple-600",
-    blue: "bg-blue-100 text-blue-600",
-    green: "bg-green-100 text-green-600",
-    gray: "bg-gray-100 text-gray-600"
+    purple: " text-purple-600",
+    blue: " text-blue-600",
+    green: " text-green-600",
+    gray: "text-gray-600"
   };
   
   const dotClasses = {
@@ -608,18 +791,7 @@ const ComparisonTable = () => (
 );
 
 /* --- Objection Section --- */
-const ObjectionSection = () => (
-  <section className="py-20 px-6 overflow-hidden">
-    <div className="max-w-4xl mx-auto">
-      <SectionTitle subtitle="FAQ" title="But What If...?" />
-      <NeumorphicCard className="p-4 md:p-8">
-        <ObjectionItem question="We already tried repositioning. It didn't work." answer="Most 'repositioning' is just rebranding (changing logo, colors). We focus on the psychological 'why' customers buy, backed by data." />
-        <ObjectionItem question="This sounds expensive..." answer="Staying at 1.5x ROAS costs you $200k/year in wasted ad spend. Our clients typically see a 10x ROI in year one." />
-        <ObjectionItem question="Can't we do this ourselves?" answer="Maybe, if you have 200 hours and statistical analysis skills. We provide the objectivity you can't have for your own brand." />
-      </NeumorphicCard>
-    </div>
-  </section>
-);
+<ObjectionSection />
 
 const ObjectionItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);

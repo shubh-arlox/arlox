@@ -2,13 +2,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, PlayCircle, AlertCircle, TrendingDown, Zap, X, ArrowBigUpDash } from 'lucide-react';
+import { ArrowRight, PlayCircle, AlertCircle, TrendingDown, Zap, X, ArrowBigUpDash, HelpCircle } from 'lucide-react';
+import SimpleFAQ from '@/components/FAQ';
+import SimpleFAQSection from '@/components/FAQ';
 
 export default function NeumorphicHeroSection() {
   const [collectionA, setCollectionA] = useState(0);
   const [collectionB, setCollectionB] = useState(0);
   const [collectionC, setCollectionC] = useState(0);
   const [showBurnoutModal, setShowBurnoutModal] = useState(false);
+  const myFAQs = [
+  { 
+    q: "Question 1?", 
+    a: "Answer 1",
+    avatar: 0  // Use first avatar
+  },
+  { 
+    q: "Question 2?", 
+    a: "Answer 2",
+    avatar: 2  // Use third avatar
+  },
+];
+
+
 
   // Simulation Effects
   useEffect(() => {
@@ -670,6 +686,14 @@ export default function NeumorphicHeroSection() {
           </motion.div>
         )}
       </AnimatePresence>
+      <SimpleFAQSection
+  faqs={myFAQs}
+  title="Got Questions?"
+  subtitle="We've got answers backed by 50+ successful projects."
+  badgeText="Help Center"
+  badgeIcon={HelpCircle}
+  showAvatars={true}
+/>
     </>
   );
 }

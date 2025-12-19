@@ -12,7 +12,9 @@ import {
   Zap,
   Droplets,
   Shirt,
-  Scissors
+  Scissors,
+  Telescope,
+  Spotlight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 const AngleEvidence = () => {
@@ -250,8 +252,8 @@ const AngleEvidence = () => {
                     
                     {/* LEFT: CONTEXT */}
                     <div className="lg:w-1/3 w-full">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-200 rounded  text-blue-600 text-[10px] font-bold uppercase mb-4">
-                            <Zap size={12} /> Arlox Client Spotlight
+                        <div className="inline-flex items-center gap-2 px-3 py-1 neu-pressed rounded  text-blue-600 text-[10px] font-bold uppercase mb-4">
+                            <Spotlight  size={12} /> Arlox Client Spotlight
                         </div>
                         <h3 className="text-2xl sm:text-3xl font-bold text-slate-700 mb-4">Streetwear Brand Case Study</h3>
                         <p className="text-sm sm:text-base text-slate-500 mb-6 leading-relaxed">
@@ -260,12 +262,12 @@ const AngleEvidence = () => {
                         <div className="flex items-center gap-4">
                              <div className="text-center">
                                  <div className="text-[10px] text-slate-400 uppercase">Before</div>
-                                 <div className="text-lg sm:text-xl font-bold text-slate-500">2.1x</div>
+                                 <div className="text-lg sm:text-xl font-bold text-slate-500">2.1x ROAS</div>
                              </div>
                              <ArrowRight className="text-slate-300 w-5 h-5" />
                              <div className="text-center">
                                  <div className="text-[10px] text-slate-400 uppercase">After</div>
-                                 <div className="text-2xl sm:text-3xl font-black text-green-600">5.2x</div>
+                                 <div className="text-2xl sm:text-3xl font-black text-green-600">5.2x ROAS</div>
                              </div>
                         </div>
                     </div>

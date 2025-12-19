@@ -7,6 +7,10 @@ import AttentionTrap from "./proble";
 import SolutionSection from "./solu";
 import ExecutionMethod from './execution';
 import HookVsAngle from './hook';
+import ArloxUniqueness from './unique';
+import TestingComparison from './compro';
+import TheClose from './cta';
+import FAQSection from './faq';
 
 
 
@@ -20,6 +24,9 @@ const AngleTesting =()=> {
         <AngleEvidence/>
        <ExecutionMethod/>
        <HookVsAngle/>
+       <ArloxUniqueness/>
+       <TestingComparison/>
+       <FAQSection/>
         </>
       
     );

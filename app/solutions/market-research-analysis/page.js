@@ -58,9 +58,16 @@ const FAQSection = () => {
   // Local Neumorphic styles for the FAQ toggle
   const faqFlat = "bg-[#E0E5EC] shadow-[6px_6px_12px_#b8b9be,-6px_-6px_12px_#ffffff]";
   const faqPressed = "bg-[#E0E5EC] shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff]";
+  const neuPressed = "bg-[#E0E5EC] shadow-[inset_4px_4px_8px_#bec3ca,inset_-4px_-4px_8px_#ffffff] border border-slate-200";
 
   // UPDATED: Your local image path
-  const authorAvatar = "/unnamed.jpg"; 
+  const authorAvatar = [
+    "/unnamed.jpg",
+    "/avatar2.jpg",
+    "/avatar3.jpg",
+    "/avatar4.jpg",
+    "/avatar5.jpg"
+  ];
 
   const faqs = [
     { 
@@ -79,15 +86,63 @@ const FAQSection = () => {
       q: "What if research reveals my offer is wrong?", 
       a: "Then you just saved $50K-$150K. Would you rather spend $4.5K to learn now, or $80K in ads to learn 6 months later?" 
     },
+    { 
+      q: "How many interviews do you typically conduct?", 
+      a: "We conduct 10-15 in-depth interviews. After 8-10, patterns emerge clearly. More than 15 yields diminishing returns. Quality over quantity." 
+    },
+    { 
+      q: "What if my customers won't do interviews?", 
+      a: "They will. We offer $50-100 gift cards and frame it as 'product feedback.' Response rate is typically 40-60%. People love being heard." 
+    },
+    { 
+      q: "How long does the entire research process take?", 
+      a: "14-21 days total. Week 1: Recruit and schedule. Week 2: Conduct interviews. Week 3: Analysis and deliverable. Fast, focused, actionable." 
+    },
+    { 
+      q: "Do I need to be on the calls?", 
+      a: "No. You're busy. We handle everything. You get recordings, transcripts, and the strategic brief. But you're welcome to observe if you want." 
+    },
+    { 
+      q: "What if I'm launching a completely new product?", 
+      a: "Even better. We interview your target market about their current solutions and pain points. You'll learn what to build before you build it." 
+    },
+    { 
+      q: "Can you help with positioning after research?", 
+      a: "Yes. Our Strategic Positioning service takes the research insights and translates them into messaging frameworks, angle testing, and creative briefs." 
+    },
+    { 
+      q: "What's included in the final deliverable?", 
+      a: "Full interview recordings, transcripts, thematic analysis report, customer journey map, messaging recommendations, and a 60-min strategy session." 
+    },
+    { 
+      q: "How is this different from hiring a market research firm?", 
+      a: "Traditional firms take 3-6 months and charge $50K+. We focus on actionable DTC insights in 2-3 weeks for $4.5K. Speed + specificity." 
+    },
+    { 
+      q: "What if I already know my customer well?", 
+      a: "Founder intuition is powerful but biased. We've seen brands be 80% right and 20% catastrophically wrong. That 20% costs millions in wasted ad spend." 
+    },
+    { 
+      q: "Can you interview prospects who haven't bought yet?", 
+      a: "Yes. We can interview people who considered but didn't buy, or those in your target demo. Both perspectives are valuable for different reasons." 
+    },
+    { 
+      q: "Do you work with B2B or just DTC?", 
+      a: "Primarily DTC, but the methodology works for B2B with longer sales cycles. If your product is visual and targetable, we can help." 
+    },
+    { 
+      q: "What if I'm not ready to invest in research yet?", 
+      a: "Book a free audit call. We'll review your current positioning and ads, identify gaps, and show you what research would unlock. Zero pressure." 
+    },
   ];
 
   return (
     <section className="py-12 md:py-24 px-4 md:px-6 bg-[#E0E5EC]" id="faq">
       <div className="justify-center flex items-center">
-          <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
-            <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Faq</span>
-          </div>
+        <div className={`${neuPressed} inline-block px-4 py-1 rounded-full mb-4`}>
+          <span className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Faq</span>
         </div>
+      </div>
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">The Silent Objections</h2>
         <p className="text-gray-600 text-center mb-12 text-sm md:text-base">We've done this 50+ times. These are the questions you're not asking out loud.</p>
@@ -95,6 +150,7 @@ const FAQSection = () => {
         <div className="space-y-6">
           {faqs.map((faq, i) => {
             const isOpen = activeIndex === i;
+            const avatarIndex = i % authorAvatar.length;
 
             return (
               <motion.div
@@ -102,23 +158,23 @@ const FAQSection = () => {
                 layout
                 onClick={() => toggleFAQ(i)}
                 className={`
-                   p-6 rounded-2xl cursor-pointer transition-all duration-300 relative overflow-hidden
-                   ${isOpen ? faqPressed : faqFlat}
+                  p-6 rounded-2xl cursor-pointer transition-all duration-300 relative overflow-hidden
+                  ${isOpen ? faqPressed : faqFlat}
                 `}
               >
                 {/* Question Header */}
                 <div className="flex justify-between items-start gap-4">
-                    <h4 className={`font-bold transition-colors duration-300 mb-0 flex items-start gap-3 text-sm md:text-base ${isOpen ? 'text-indigo-600' : 'text-gray-800'}`}>
-                        <HelpCircle className={`w-5 h-5 mt-0.5 shrink-0 transition-colors ${isOpen ? 'text-indigo-500' : 'text-gray-400'}`} />
-                        {faq.q}
-                    </h4>
-                    
-                    <motion.div 
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        className="text-gray-400 shrink-0"
-                    >
-                        <ChevronDown className="w-5 h-5" />
-                    </motion.div>
+                  <h4 className={`font-bold transition-colors duration-300 mb-0 flex items-start gap-3 text-sm md:text-base ${isOpen ? 'text-indigo-600' : 'text-gray-800'}`}>
+                    <HelpCircle className={`w-5 h-5 mt-0.5 shrink-0 transition-colors ${isOpen ? 'text-indigo-500' : 'text-gray-400'}`} />
+                    {faq.q}
+                  </h4>
+                  
+                  <motion.div 
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    className="text-gray-400 shrink-0"
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </motion.div>
                 </div>
 
                 {/* Answer Area with Avatar Reveal */}
@@ -130,30 +186,35 @@ const FAQSection = () => {
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="pt-6 pl-0 md:pl-8 flex gap-4 items-start">
-                        {/* Avatar Image */}
+                      <div className="pt-6 pl-0 md:pl-8 flex gap-3 md:gap-4 items-start">
+                        {/* Avatar Image - Changes per FAQ */}
                         <motion.div 
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                            className="shrink-0 relative"
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ 
+                            type: "spring", 
+                            stiffness: 260, 
+                            damping: 20,
+                            delay: 0.05
+                          }}
+                          className="shrink-0 relative"
                         >
-                           <img 
-                                src={authorAvatar} 
-                                alt="Author" 
-                                className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#E0E5EC] shadow-sm object-cover"
-                           />
-                           <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#E0E5EC] rounded-full"></div>
+                          <img
+                            src={authorAvatar[avatarIndex]}
+                            alt="Team Expert"
+                            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#E0E5EC] shadow-md object-cover"
+                          />
+                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#E0E5EC] rounded-full"></div>
                         </motion.div>
 
                         {/* Answer Text Bubble */}
                         <motion.div 
-                            initial={{ x: -10, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-sm text-gray-600 bg-white/40 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl leading-relaxed"
+                          initial={{ x: -10, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                          className="text-sm text-gray-600 bg-white/40 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl leading-relaxed"
                         >
-                            <p>{faq.a}</p>
+                          <p>{faq.a}</p>
                         </motion.div>
                       </div>
                     </motion.div>
@@ -167,6 +228,8 @@ const FAQSection = () => {
     </section>
   );
 };
+
+
 
 const ArloxianLanding = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -411,7 +474,6 @@ return (
 
             {/* New Constraint */}
             <motion.div 
-              whileHover={{ scale: 1.02 }}
               className={`${neuFlat} p-6 md:p-8 rounded-3xl border-2 border-blue-500/20 shadow-xl`}
             >
               <h3 className="text-lg md:text-xl font-bold text-blue-600 mb-6">New Constraint (AI-Augmented Protocol)</h3>

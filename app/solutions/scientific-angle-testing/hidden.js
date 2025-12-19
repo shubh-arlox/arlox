@@ -10,7 +10,8 @@ import {
   Users, 
   ShieldAlert,
   BarChart3,
-  ArrowRight
+  ArrowRight,
+  Trash2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CalendlyCTA from '@/components/CalendlyCTA';
@@ -95,10 +96,11 @@ const HiddenCost = () => {
   initial={{ scale: 0.8, opacity: 0 }}
   animate={{ scale: 1, opacity: 1 }}
   transition={{ delay: 0.2, ease: "easeOut" }}
-  className="mb-6 inline-flex items-center gap-2 px-3 py-1 md:px-4 rounded-full neu-pressed text-[10px] md:text-xs font-bold text-[#ff6b6b] uppercase tracking-wide"
+  className="mb-6 inline-flex items-center gap-2 px-3 py-1 md:px-4 rounded-full neu-pressed text-[10px] md:text-xs font-bold text-[#7b5b50] uppercase tracking-wide"
 >
-  <Zap size={14} className="shrink-0" />
-  <span>System Overload</span>
+ 
+  <Trash2 size={14} className="shrink-0" />
+  <span>Cascade Of Waste</span>
 </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-700 leading-tight mb-6">
               The Hidden Cost: <br />
