@@ -1,17 +1,12 @@
+// next.config.js
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // other config options if you add them later
 
-  // This ensures sitemap.xml is served as static file
-  async rewrites() {
-    return [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap',
-      },
-    ];
+  images: {
+    domains: ['ai.arlox.io'],
   },
 };
 
- 
-export default nextConfig;
+module.exports = nextConfig;
