@@ -8,6 +8,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         {/* Canonical domain */}
+        
         <link rel="canonical" href="https://ai.arlox.io" />
 
         {/* Not required, but okay to add */}
