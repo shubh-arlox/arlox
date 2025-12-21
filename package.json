@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "generate-sitemap": "node scripts/generate-sitemap.js",
-    "build": "npm run generate-sitemap && next build"
+    "lint": "eslint"
+    
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.17.10",
