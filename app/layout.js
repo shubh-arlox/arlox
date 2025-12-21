@@ -6,19 +6,17 @@ import Footer from "@/components/Footer";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Canonical domain */}
+        <link rel="canonical" href="https://ai.arlox.io" />
+
+        {/* Not required, but okay to add */}
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+      </head>
       <body className="min-h-screen flex flex-col font-sans">
-        
-        {/* Navbar */}
         <Navbar />
-
-        {/* Main content must ALWAYS be flex-1 */}
-        <main className="flex-1 w-full">
-          {children}
-        </main>
-
-        {/* Footer always LAST */}
+        <main className="flex-1 w-full">{children}</main>
         <Footer />
-
       </body>
     </html>
   );
