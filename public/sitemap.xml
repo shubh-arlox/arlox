@@ -7,7 +7,7 @@
     <priority>1.0</priority>
   </url>
   
-  <!-- Solutions - Strategy -->
+
   <url>
     <loc>https://ai.arlox.io/solutions/scientific-positioning</loc>
     <lastmod>2025-12-20</lastmod>
@@ -39,7 +39,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Solutions - Scaling -->
+
   <url>
     <loc>https://ai.arlox.io/solutions/meta-ads-scaling</loc>
     <lastmod>2025-12-20</lastmod>
@@ -71,7 +71,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Solutions - Efficiency -->
   <url>
     <loc>https://ai.arlox.io/solutions/ai-cro</loc>
     <lastmod>2025-12-20</lastmod>
@@ -103,7 +102,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Tools -->
   <url>
     <loc>https://ai.arlox.io/tools/ai-bot</loc>
     <lastmod>2025-12-20</lastmod>
@@ -117,7 +115,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Products - Agencies -->
+
   <url>
     <loc>https://ai.arlox.io/products/scale-your-agency</loc>
     <lastmod>2025-12-20</lastmod>
@@ -149,7 +147,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Products - Fashion -->
   <url>
     <loc>https://ai.arlox.io/products/fashion-marketing-dept</loc>
     <lastmod>2025-12-20</lastmod>
@@ -163,7 +160,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Products - Service Businesses -->
+
   <url>
     <loc>https://ai.arlox.io/products/linkedin-appointments</loc>
     <lastmod>2025-12-20</lastmod>
@@ -177,7 +174,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Results -->
+
   <url>
     <loc>https://ai.arlox.io/results/success-stories</loc>
     <lastmod>2025-12-20</lastmod>
@@ -203,7 +200,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Free -->
+
   <url>
     <loc>https://ai.arlox.io/free/scaling-insights</loc>
     <lastmod>2025-12-20</lastmod>
@@ -211,7 +208,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Company -->
+
   <url>
     <loc>https://ai.arlox.io/company/mission</loc>
     <lastmod>2025-12-20</lastmod>
