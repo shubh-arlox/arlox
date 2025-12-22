@@ -9,6 +9,9 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx,mdx}",
     "./public/**/*.html",
   ],
+  plugins: [
+    require('@tailwindcss/typography'), // <--- Add this line
+  ],
   theme: {
     extend: {
       // Map design tokens (CSS variables) into Tailwind theme

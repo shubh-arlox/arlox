@@ -233,7 +233,7 @@ export default function Navbar() {
             {NAV_ITEMS.map((item) => (
               <li key={item.key} className="h-full flex items-center">
                 <Link
-                  href="#"
+                  href={`/${item.key}`} 
                   role="button"
                   aria-expanded={openMega === item.key}
                   onClick={(e) => e.preventDefault()}
