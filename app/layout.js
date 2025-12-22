@@ -16,10 +16,12 @@ export default function RootLayout({ children }) {
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
       <body className="min-h-screen flex flex-col font-sans">
-        <SpeedInsights/>
-        <Analytics/>
+       
         <Navbar />
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full">{children}
+          {/* Speed Insights */}
+          <SpeedInsights/>
+        <Analytics/> </main>
         <Footer />
       </body>
     </html>
