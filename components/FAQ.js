@@ -26,8 +26,8 @@ const SimpleFAQSection = ({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  // Neumorphic styles
-  const neuPressed = "bg-[#E0E5EC] shadow-[inset_4px_4px_8px_#bec3ca,inset_-4px_-4px_8px_#ffffff] border border-slate-200";
+  // Neumorphic styles - removed border from neuPressed
+  const neuPressed = "bg-[#E0E5EC] shadow-[inset_6px_6px_12px_#bec3ca,inset_-6px_-6px_12px_#ffffff]";
   const faqFlat = "bg-[#E0E5EC] shadow-[6px_6px_12px_#bec3ca,-6px_-6px_12px_#ffffff]";
 
   const BadgeIcon = badgeIcon;
@@ -64,6 +64,7 @@ const SimpleFAQSection = ({
 
         {/* FAQ LIST */}
         <div className="space-y-4">
+          
           {faqs.map((faq, i) => {
             const isOpen = activeIndex === i;
             const avatarIndex = (faq.avatar !== undefined ? faq.avatar : i) % avatars.length;
@@ -76,7 +77,7 @@ const SimpleFAQSection = ({
                 className={`
                   p-6 md:p-8 rounded-2xl cursor-pointer transition-all duration-300
                   ${isOpen ? neuPressed : faqFlat}
-                  hover:shadow-[8px_8px_16px_#bec3ca,-8px_-8px_16px_#ffffff]
+                 
                 `}
               >
                 {/* Question Header */}
