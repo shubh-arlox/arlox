@@ -115,25 +115,47 @@ const Button = ({ children, onClick, className = "", primary = false }) => (
 
 const Badge = ({ children, color = "cyan" }) => {
   const styles = {
+    /* PRIMARY / BRAND */
     cyan: `${theme.primary} border-teal-400/30 bg-teal-400/5`,
     pink: `${theme.accent} border-rose-400/30 bg-rose-400/5`,
     gold: `${theme.gold} border-amber-300/20 bg-amber-300/5`,
+
+    /* STATUS */
+    success: `text-emerald-400 border-emerald-400/30 bg-emerald-400/5`,
+    warning: `text-amber-400 border-amber-400/30 bg-amber-400/5`,
+    danger: `text-rose-400 border-rose-400/30 bg-rose-400/5`,
+    info: `text-sky-400 border-sky-400/30 bg-sky-400/5`,
+
+    /* NEUTRAL / SYSTEM */
+    neutral: `text-zinc-400 border-zinc-600/30 bg-zinc-600/5`,
+    muted: `text-zinc-500 border-zinc-700/30 bg-zinc-700/5`,
+
+    /* PREMIUM / SPECIAL */
+    violet: `text-violet-400 border-violet-400/30 bg-violet-400/5`,
+    indigo: `text-indigo-400 border-indigo-400/30 bg-indigo-400/5`,
+    lime: `text-lime-400 border-lime-400/30 bg-lime-400/5`,
   };
 
   return (
     <span
       className={`
-        px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide
+        inline-flex items-center
+        px-4 py-1.5
+        rounded-full
+        text-xs font-bold uppercase tracking-wide
         border
         ${styles[color] || styles.cyan}
-        ${neuInset}        /*  inset shadow */
-        bg-[#2b2b30]       /* me surface as page */
+        ${neuInset}
+        bg-[#2b2b30]
       `}
     >
       {children}
     </span>
   );
 };
+
+
+
 
 const AccordionItem = ({ question, answer, isOpen, onClick }) => (
   <div className={`rounded-2xl border border-[#333339] overflow-hidden transition-all duration-500 ${isOpen ? neuInset : neuShadow} mb-6`}>
@@ -226,8 +248,6 @@ const ScalingFork = () => {
 // --- Section 4: The Trinity ---
 
 const TrinitySystem = () => {
-  const [activePillar, setActivePillar] = useState('mythos');
-
   const pillars = {
     mythos: {
       title: "MYTHOS",
@@ -274,59 +294,54 @@ const TrinitySystem = () => {
   };
 
   return (
-    <div className="grid md:grid-cols-12 gap-8">
-      <div className="md:col-span-4 space-y-6">
-        {Object.entries(pillars).map(([key, data]) => (
-          <div 
-            key={key}
-            onClick={() => setActivePillar(key)}
-            className={`cursor-pointer p-6 rounded-3xl transition-all duration-300 flex items-center gap-5 border border-transparent ${activePillar === key ? `${neuInset} border-[#333339]` : `${neuShadow} hover:translate-x-1`}`}
-          >
-            {/* Small Inset Icon for list items */}
-            <div className={`w-12 h-12 rounded-full ${neuInset} flex items-center justify-center bg-[#2b2b30] flex-shrink-0`}>
-              {data.icon}
-            </div>
-            <div>
-              <h3 className={`font-bold text-lg ${activePillar === key ? 'text-zinc-200' : 'text-zinc-500'}`}>{data.title}</h3>
-              <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium">{data.subtitle}</p>
-            </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {Object.entries(pillars).map(([key, data]) => (
+        <Card key={key} className="p-8 flex flex-col items-center text-center">
+          {/* Icon */}
+          <div className={`mb-6 w-20 h-20 rounded-full ${neuInset} flex items-center justify-center bg-[#2b2b30] border border-[#333339]`}>
+            {React.cloneElement(data.icon, { size: 36 })}
           </div>
-        ))}
-      </div>
 
-      <div className="md:col-span-8">
-        <Card className="h-full flex flex-col justify-center items-center text-center p-12 relative overflow-hidden">
-           {/* Large Inset Icon for active display */}
-           <div className={`mb-10 w-24 h-24 rounded-full ${neuInset} flex items-center justify-center bg-[#2b2b30] border border-[#333339]`}>
-             {React.cloneElement(pillars[activePillar].icon, { size: 40 })}
-           </div>
-           
-           <h2 className={`text-5xl font-black mb-2 tracking-tight ${pillars[activePillar].color}`}>{pillars[activePillar].title}</h2>
-           <h4 className="text-xl text-zinc-400 mb-10 font-medium">{pillars[activePillar].subtitle}</h4>
-           <p className="text-lg text-zinc-400 mb-12 max-w-lg leading-relaxed font-light">
-             {pillars[activePillar].desc}
-           </p>
-           
-           <div className={`mb-10 w-full max-w-md text-left p-8 rounded-2xl ${neuInset} bg-[#2b2b30]`}>
-             <h5 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-6">Core Protocols</h5>
-             <ul className="space-y-4">
-               {pillars[activePillar].details.map((detail, i) => (
-                 <li key={i} className="flex items-start gap-4 text-sm text-zinc-300">
-                   <CheckCircle size={18} className={`${pillars[activePillar].color} flex-shrink-0`} />
-                   {detail}
-                 </li>
-               ))}
-             </ul>
-           </div>
+          {/* Title & Subtitle */}
+          <h2 className={`text-3xl font-black mb-2 tracking-tight ${data.color}`}>
+            {data.title}
+          </h2>
+          <h4 className="text-sm text-zinc-400 mb-6 font-medium uppercase tracking-wider">
+            {data.subtitle}
+          </h4>
 
-           <div className={`text-xl font-bold px-10 py-5 rounded-2xl ${neuShadow} border ${pillars[activePillar].borderColor} border-opacity-20 ${pillars[activePillar].color} bg-[#2b2b30]`}>
-             {pillars[activePillar].stat}
-           </div>
+          {/* Description */}
+          <p className="text-sm text-zinc-400 mb-8 leading-relaxed font-light">
+            {data.desc}
+          </p>
+
+          {/* Core Protocols */}
+          <div className={`mb-6 w-full p-6 rounded-2xl ${neuInset} bg-[#2b2b30]`}>
+            <h5 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">
+              Core Protocols
+            </h5>
+            <ul className="space-y-3 text-left">
+              {data.details.map((detail, i) => (
+                <li key={i} className="flex items-start gap-3 text-xs text-zinc-300">
+                  <div>
+                    <CheckCircle size={14} className={`${data.color} flex-shrink-0 mt-0.5`} />
+                  </div>
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Stat Badge */}
+          <div className={`text-base font-bold px-6 py-3 rounded-2xl ${neuShadow} border ${data.borderColor} border-opacity-20 ${data.color} bg-[#2b2b30]`}>
+            {data.stat}
+          </div>
         </Card>
-      </div>
+      ))}
     </div>
   );
 };
+
 // --- Section: Case Studies & Timeline ---
 
 // --- Section: Case Studies & Timeline (Interactive Rail) ---
@@ -719,22 +734,52 @@ const App = () => {
   </p>
 
   {/* CTA */}
-  <div className="mt-10 sm:mt-12 lg:mt-16 flex flex-col sm:flex-row justify-center gap-5 sm:gap-6">
-    <WhatsappCTA
-      whatsappNumber="+919910220335"
-      calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
-    >
-      <GlassButton
-        label="Get The Solution"
-        icon={Play}
-        className="text-zinc-200 w-full sm:w-auto"
+  <div className="mt-10 sm:mt-12 lg:mt-16 flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-6">
+  <WhatsappCTA
+    whatsappNumber="+919910220335"
+    calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+  >
+    <button className="
+      group relative inline-flex items-center justify-center gap-3
+      px-8 py-4 rounded-full
+      overflow-hidden
+      transition-all duration-300 ease-out
+      hover:scale-[1.02] active:scale-[0.98]
+      w-full sm:w-auto
+    "
+    style={{
+      backdropFilter: "blur(20px) saturate(180%)",
+      WebkitBackdropFilter: "blur(20px) saturate(180%)",
+      background: "linear-gradient(135deg, rgba(251,113,133,0.12) 0%, rgba(45,212,191,0.12) 100%)",
+      border: "1px solid rgba(255,255,255,0.18)",
+      boxShadow: `
+        0 8px 32px 0 rgba(251,113,133,0.15),
+        inset 0 1px 0 0 rgba(255,255,255,0.5),
+        inset 0 -1px 0 0 rgba(255,255,255,0.1)
+      `,
+    }}>
+      
+      {/* Top glass shine */}
+      <div 
+        className="absolute inset-x-0 top-0 h-1/2 rounded-t-full pointer-events-none"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(251,113,133,0.1) 0%, rgba(45,212,191,0.1) 100%)",
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%)',
         }}
       />
-    </WhatsappCTA>
-  </div>
+      
+      {/* Liquid ripple on hover */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-rose-400/20 via-purple-400/10 to-teal-400/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
+      
+      {/* Icon */}
+      <Play className="w-5 h-5 text-white relative z-10 flex-shrink-0" strokeWidth={2.5} />
+      
+      {/* Text */}
+      <span className="text-white font-bold text-sm sm:text-base relative z-10 whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+        Get The Solution
+      </span>
+    </button>
+  </WhatsappCTA>
+</div>
 
 </header>
 
@@ -973,7 +1018,7 @@ const App = () => {
 
         {/* 2. HIDDEN CONSEQUENCES */}
         <section>
-             <div className="flex justify-center mb-4"> <Badge color="cyan">HIDDEN CONSEQUENCES </Badge></div>
+             <div className="flex justify-center mb-4"> <Badge color="danger">HIDDEN CONSEQUENCES </Badge></div>
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-zinc-300 mb-4">The Compounding Cost</h2>
             <p className="text-zinc-500 text-lg">This isn't just one failed ad. It's an existential business threat.</p>
@@ -1023,7 +1068,7 @@ const App = () => {
         
         {/* 3. THE SOLUTION (Trinity) */}
         <section>
-                <div className="flex justify-center mb-4"> <Badge color="cyan">THE SOLUTION</Badge></div>
+                <div className="flex justify-center mb-4"> <Badge color="success">THE SOLUTION</Badge></div>
           <div className="text-center mb-20">
             <h2 className="text-5xl font-bold text-zinc-300 mb-8">The Arlox TikTok Scaling System</h2>
             <p className="text-xl text-zinc-500">You don't have an "ad" problem. You have a system problem.</p>
@@ -1032,125 +1077,753 @@ const App = () => {
         </section>
 
         {/* 4. EVIDENCE (Case Studies) */}
-        <section>
-            <p >case study</p>
-        </section>
+        {/* <section>
+          
+        </section> */}
 
         {/* 6. ROADMAP */}
-        <section className="py-20">
-             <div className="flex justify-center mb-4"> <Badge color="cyan">ROADMAP</Badge></div>
-          <div className="mb-16">
-            <h2 className="text-4xl font-bold text-zinc-300">90-Day Implementation</h2>
-            <p className="text-zinc-500 mt-4 text-lg">
-              Each phase builds irreversible leverage.
-            </p>
-          </div>
+     
+<section className="py-20 space-y-20">
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              { phase: "Phase 1", title: "Foundation", time: "Wk 1–2", color: "border-teal-400", text: "text-teal-400", desc: "Clarity, positioning, and structural setup." },
-              { phase: "Phase 2", title: "Mythos Activation", time: "Wk 3–6", color: "border-purple-400", text: "text-purple-400", desc: "Narrative deployment and authority signals." },
-              { phase: "Phase 3", title: "Sentinel Deployment", time: "Wk 7–10", color: "border-rose-400", text: "text-rose-400", desc: "Automation and performance enforcement." },
-              { phase: "Phase 4", title: "Vault Construction", time: "Wk 11–16", color: "border-amber-300", text: "text-amber-300", desc: "Long-term moat and IP consolidation." }
-            ].map((item, i) => (
-              <div
-                key={i}
-                className={`p-10 rounded-[2rem] ${neuBase} ${neuShadow} border-t-4 ${item.color}`}
-              >
-                <span className={`text-xs font-bold uppercase tracking-widest ${item.text}`}>
-                  {item.phase}
-                </span>
-                <h4 className="text-2xl font-bold text-zinc-200 mt-4">{item.title}</h4>
-                <p className="text-zinc-500 text-sm mt-4 leading-relaxed">{item.desc}</p>
+  {/* ================= HEADER ================= */}
+  <div className="text-center space-y-6 max-w-4xl mx-auto px-4">
+    <div className="flex justify-center">
+      <Badge color="violet">THE METHOD</Badge>
+    </div>
 
-                <div className={`mt-8 inline-block font-mono text-xs px-4 py-2 rounded-xl bg-[#26262a] ${item.text} ${neuInset}`}>
-                  {item.time}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+    <h2 className="text-4xl md:text-5xl font-black text-zinc-300">
+      The Arlox 5-Phase Implementation Framework
+    </h2>
+
+    <p className="text-zinc-500 text-lg md:text-xl leading-relaxed">
+      Most agencies say <em>“We’ll run your TikTok ads.”</em>
+      <br />
+      We say:{" "}
+      <strong className="text-zinc-300">
+        “We’ll engineer a self-sustaining growth system.”
+      </strong>
+    </p>
+  </div>
+
+  {/* ================= PHASE GRID ================= */}
+  <div className="max-w-6xl mx-auto px-4 grid gap-8 md:grid-cols-2 text-left">
+
+    {/* ===== ROW 1 ===== */}
+    <Card inset className="p-6 sm:p-8 md:p-10 space-y-6 border-teal-400/20">
+      <h3 className="text-xl sm:text-2xl font-bold text-teal-400">
+        Phase 1: Scientific Foundation{" "}
+        <span className="text-sm text-zinc-500">(Week 1–2)</span>
+      </h3>
+
+      <ul className="space-y-3 text-zinc-400 text-sm sm:text-base ">
+        <li>• ICE Grid market research → identify <strong>8–12 highest-probability angles</strong></li>
+        <li>• Competitor creative reverse-engineering (hooks, formats, sounds)</li>
+        <li>• USP mapping (why you vs 50 look-alike brands)</li>
+        <li>• TikTok Pixel + CAPI + attribution accuracy checks</li>
+        <li>• Baseline metrics locked (ROAS, CPM, CTR, AOV)</li>
+      </ul>
+
+      <div className="bg-[#26262a] p-4 rounded-xl text-sm text-teal-300 font-bold">
+        Deliverable: 12-page Strategic Blueprint
+      </div>
+    </Card>
+
+    <Card inset className="p-6 sm:p-8 md:p-10 space-y-6 border-purple-400/20">
+      <h3 className="text-xl sm:text-2xl font-bold text-purple-400">
+        Phase 2: Mythos Activation{"  "} <br/>   
+        <span className="text-sm text-zinc-500">(Week 3–6)</span>
+      </h3>
+
+      <ul className="space-y-3 text-zinc-400 text-sm sm:text-base">
+        <li>• 15–20 TikTok-native ads/week (vertical, trend-integrated)</li>
+          <li>• 3 psychological hooks per angle (curiosity, shock, FOMO)</li>
+          <li>• Dual-Trigger Rule: scroll-stopper + strategic angle</li>
+          <li>• Month-1 testing: 40–50 ads @ $500–800 each</li>
+          <li>• Rapid Kill Protocol: bottom 50% paused by Day 4</li>
+      </ul>
+
+      <div className="bg-[#26262a] p-4 rounded-xl text-sm text-purple-300 font-bold">
+        Deliverable: 60–80 ads tested & ranked
+      </div>
+    </Card>
+
+    {/* ===== ROW 2 ===== */}
+    <Card inset className="p-6 sm:p-8 md:p-10 space-y-6 border-rose-400/20">
+      <h3 className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xl sm:text-2xl font-bold text-rose-400">
+  <span>Phase 3: Sentinel Deployment</span>
+  <span className="text-sm font-medium text-zinc-500">(Week 7–10)</span>
+</h3>
+
+
+      <ul className="space-y-3 text-zinc-400 text-sm sm:text-base">
+         <li>• 14-day creative rotation (launch → scale → retire)</li>
+          <li>• Broad + interest stack + retargeting architecture</li>
+          <li>• 20% Blue Swan budget for wild-card tests</li>
+          <li>• Live dashboard: ROAS, CPM, CTR, Frequency, Saturation</li>
+      </ul>
+
+      <div className="bg-[#26262a] p-4 rounded-xl text-sm text-rose-300 font-bold">
+        Deliverable: 4–6x ROAS enforcement
+      </div>
+    </Card>
+
+    <Card inset className="p-6 sm:p-8 md:p-10 space-y-6 border-amber-300/20">
+      <h3 className="text-xl sm:text-2xl font-bold text-amber-300">
+        Phase 4: Vault Construction{" "} <br/>
+        <span className="text-sm text-zinc-500">(Week 11–16)</span>
+      </h3>
+
+      <ul className="space-y-3 text-zinc-400 text-sm sm:text-base">
+       <li>• Email/SMS capture (30–50% target)</li>
+          <li>• Welcome flows + campaign calendar</li>
+          <li>• Buyer vs non-buyer segmentation</li>
+          <li>• 100% front-end profit reinvestment (Months 1–3)</li>
+      </ul>
+
+      <div className="bg-[#26262a] p-4 rounded-xl text-sm text-amber-300 font-bold">
+        Deliverable: $30–80K/mo backend
+      </div>
+    </Card>
+
+    {/* ===== ROW 3 (FULL WIDTH) ===== */}
+    <Card
+      inset
+      className="p-6 sm:p-8 md:p-10 space-y-6 border-yellow-400/30 md:col-span-2"
+    >
+      <h3 className="text-xl sm:text-2xl font-bold text-yellow-400">
+        Phase 5: The Compounding Loop{" "}
+        <span className="text-sm text-zinc-500">(Month 5–12)</span>
+      </h3>
+
+      <ul className="space-y-3 text-zinc-400 text-sm sm:text-base">
+        <li>• Creative velocity automation (100–120 ads/month)</li>
+        <li>• Real-time algorithm adaptation</li>
+        <li>• Vault grows 3–5K subs/month</li>
+        <li>• Blue Swan outliers hit 7–10x ROAS</li>
+      </ul>
+
+      <div className="bg-[#26262a] p-4 rounded-xl text-sm text-yellow-300 font-bold">
+        Deliverable: Platform-independent growth engine
+      </div>
+    </Card>
+
+  </div>
+</section>
+
 
 
         {/* 7. THE INSIGHT (Decision Tree) */}
-         <div className="flex justify-center mb-4"> <Badge color="cyan">THE INSIGHT</Badge></div>
-        <section>
-           <div className="text-center mb-10">
-             <h2 className="text-4xl font-bold text-zinc-300">Why 95% Fail (Decision Tree)</h2>
-             <p className="text-zinc-500 mt-4 text-lg">The difference between stagnation and scale is one strategic choice.</p>
-           </div>
-           <InsightDecisionTree />
-        </section>
+         {/* ================= SECTION 7: THE INSIGHT ================= */}
+<section className="py-24 space-y-24">
+
+  {/* ---------- HEADER ---------- */}
+  <div className="text-center max-w-5xl mx-auto px-4 space-y-6">
+    <Badge color="info">THE INSIGHT</Badge>
+
+    <h2 className="text-4xl md:text-5xl font-black text-zinc-300">
+      Why 95% of Fashion Brands Fail at TikTok Scaling
+      <br />
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-teal-400">
+        (And How the 5% Dominate)
+      </span>
+    </h2>
+
+    <p className="text-zinc-500 text-lg md:text-xl leading-relaxed">
+      The difference between brands stuck at <strong>$100K/month</strong> and brands
+      scaling to <strong>$1M+</strong> isn’t talent, budget, or product quality.
+      <br />
+      <span className="text-zinc-300 font-semibold">
+        It’s whether they understand these three truths.
+      </span>
+    </p>
+  </div>
+
+  {/* ---------- TRUTH #1 ---------- */}
+  <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-start">
+    <div className="space-y-6">
+      <h3 className="text-2xl font-bold text-rose-400">
+        1. Creative Diversity Is Algorithm Currency (Not Budget)
+      </h3>
+
+      <p className="text-zinc-400 leading-relaxed">
+        The 95% believe scaling = increasing budget on winning ads.
+        They pour $10K → $50K/week into 3–5 “proven” creatives.
+        By Week 3, ROAS collapses.
+      </p>
+
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-4">The Math:</p>
+        <ul className="space-y-3 text-sm text-zinc-400">
+          <li>
+            <strong className="text-zinc-300">Brand A (Creative Scarcity):</strong>
+            <br />
+            5 ads, $60K budget → ROAS 2.2x → $132K/month (stuck)
+          </li>
+          <li>
+            <strong className="text-zinc-300">Brand B (Creative Velocity):</strong>
+            <br />
+            90 ads, $60K budget → ROAS 4.9x → $294K/month
+          </li>
+        </ul>
+      </div>
+
+      <p className="text-zinc-500 text-sm">
+        Same budget. <strong className="text-zinc-300">123% more revenue.</strong>
+      </p>
+    </div>
+
+    <div className="space-y-6">
+      <p className="text-zinc-400 leading-relaxed">
+        TikTok’s 2025 algorithm doesn’t reward spend.
+        It rewards <strong>creative diversity</strong>.
+        Every new creative is a new “key” to unlock a new audience segment.
+      </p>
+
+      <div className={`p-6 rounded-2xl ${neuShadow} border border-[#333339]`}>
+        <p className="font-bold text-teal-400 mb-2">The 5% Insight</p>
+        <p className="text-zinc-500">
+          Creative is your targeting.  
+          80 creatives = 80 audience unlocks.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* ---------- TRUTH #2 ---------- */}
+  <div className="max-w-6xl mx-auto px-4 space-y-8">
+    <h3 className="text-2xl font-bold text-rose-400">
+      2. Data Accuracy Determines Destiny (And TikTok Lies 15–25%)
+    </h3>
+
+    <p className="text-zinc-400 leading-relaxed max-w-4xl">
+      TikTok over-attributes conversions. If the dashboard shows 4.2x ROAS,
+      your real blended ROAS is likely 3.2–3.6x.
+      If your margins don’t support that, you’re bleeding cash while celebrating fake wins.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-6">
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">TikTok Dashboard</p>
+        <p className="text-zinc-500 text-sm">Optimistic, incomplete</p>
+      </div>
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">Server-Side (CAPI)</p>
+        <p className="text-zinc-500 text-sm">Delayed but accurate</p>
+      </div>
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">Blended MER</p>
+        <p className="text-zinc-500 text-sm">Truth: Revenue ÷ Total Spend</p>
+      </div>
+    </div>
+  </div>
+
+  {/* ---------- TRUTH #3 ---------- */}
+  <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12">
+    <div className="space-y-6">
+      <h3 className="text-2xl font-bold text-rose-400">
+        3. The Attention War Is Won With Owned Assets
+      </h3>
+
+      <p className="text-zinc-400 leading-relaxed">
+        The 95% celebrate TikTok revenue.
+        The 5% build an asset that survives TikTok.
+      </p>
+
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">Brand A (Rented Attention)</p>
+        <p className="text-zinc-500 text-sm">
+          TikTok ban tomorrow → $0 revenue
+        </p>
+      </div>
+    </div>
+
+    <div className={`p-8 rounded-3xl ${neuShadow} border border-[#333339]`}>
+      <p className="font-bold text-teal-400 mb-4">
+        Brand B (Owned Attention)
+      </p>
+      <p className="text-zinc-500 leading-relaxed text-sm">
+        30K email/SMS subscribers → $180K/month backend revenue  
+        0 ad spend · 80% margins · survives algorithm changes
+      </p>
+    </div>
+  </div>
+
+  {/* ---------- DECISION TREE ---------- */}
+  <div className="max-w-6xl mx-auto px-4">
+    <InsightDecisionTree />
+  </div>
+
+  {/* ---------- BOTTOM LINE ---------- */}
+  <Card inset className="max-w-5xl mx-auto p-8 text-center space-y-6">
+    <p className="text-zinc-400 text-lg leading-relaxed">
+      The 95% optimize <strong>tactics</strong> (bids, audiences, budgets).
+      <br />
+      The 5% build <strong>systems</strong> (creative velocity, data accuracy, owned attention).
+    </p>
+
+    <p className="text-zinc-300 font-bold text-xl">
+      Tactics get you to $200K/month.
+      <br />
+      Systems get you to $2M/month.
+    </p>
+  </Card>
+
+</section>
 
         {/* 8. UNIQUENESS */}
-        <section>
-                     <div className="flex justify-center mb-4"> <Badge color="cyan">UNIQUENESS</Badge></div>
+        {/* ================= SECTION 8: UNIQUENESS ================= */}
+<section className="py-24 space-y-24">
 
-          <div className="mb-12 flex items-center gap-6">
-             <SectionIcon icon={<Globe />} colorClass={theme.primary} />
-             <h2 className="text-4xl font-bold text-zinc-300">Why Arlox Is Different</h2>
-          </div>
-          <UniquenessList />
-        </section>
+  {/* ---------- HEADER ---------- */}
+  <div className="text-center max-w-5xl mx-auto px-4 space-y-6">
+    <Badge color="violet">THE UNIQUENESS</Badge>
+
+    <h2 className="text-4xl md:text-5xl font-black text-zinc-300">
+      Why Arlox Is Different
+      <br />
+     
+    </h2>
+
+    <p className="text-zinc-500 text-lg md:text-xl leading-relaxed">
+      You’ve seen agencies promise TikTok growth before.
+      <br />
+      Most are lying — or structurally incapable of delivering.
+      <br />
+      <span className="text-zinc-300 font-semibold">
+        Here’s why Arlox is different at the system level.
+      </span>
+    </p>
+  </div>
+
+  {/* ---------- CORE DIFFERENCE (ANCHOR) ---------- */}
+  <Card inset className="max-w-5xl mx-auto p-8 md:p-10 space-y-6">
+    <h3 className="text-2xl font-bold text-teal-400">
+      We’re a Growth Engineering Firm — Not a Media Buying Agency
+    </h3>
+
+    <p className="text-zinc-400 leading-relaxed">
+      Traditional agencies manage spend.  
+      They optimize vanity metrics.  
+      They get paid whether you win or lose.
+    </p>
+
+    <p className="text-zinc-300 font-semibold leading-relaxed">
+      Arlox engineers a self-sustaining growth system:
+      <br />
+      <span className="text-teal-400">
+        Mythos (Creative Velocity) + Sentinel (Scientific Media Buying) + Vault (Owned Attention)
+      </span>
+    </p>
+
+    <div className="grid md:grid-cols-2 gap-6 text-sm">
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-rose-400 mb-2">Traditional Agency</p>
+        <p className="text-zinc-500">
+          Incentive = keep you spending more.
+          <br />
+          Their fee scales even if your profit doesn’t.
+        </p>
+      </div>
+
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-teal-400 mb-2">Arlox</p>
+        <p className="text-zinc-400">
+          Incentive = your profitability.
+          <br />
+          If you don’t scale, we don’t scale.
+        </p>
+      </div>
+    </div>
+  </Card>
+
+  {/* ---------- SCALE TRINITY ---------- */}
+  <div className="max-w-6xl mx-auto px-4 space-y-10">
+    <h3 className="text-3xl font-bold text-zinc-300 text-center">
+      The Scale Trinity™
+    </h3>
+
+    <div className="grid md:grid-cols-3 gap-6 text-sm">
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">Media Buying Only</p>
+        <p className="text-zinc-500">
+          You rent attention.
+          <br />
+          One algorithm change = collapse.
+        </p>
+      </div>
+
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-zinc-300 mb-2">Media + Creative</p>
+        <p className="text-zinc-500">
+          Faster growth.
+          <br />
+          Still 100% platform-dependent.
+        </p>
+      </div>
+
+      <div className={`p-6 rounded-2xl ${neuInset}`}>
+        <p className="font-bold text-teal-400 mb-2">The Scale Trinity™</p>
+        <p className="text-zinc-400">
+          Creative Velocity + Scientific Buying + Owned Attention
+          <br />
+          <strong>40%+ profit from owned assets by Month 9.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* ---------- UNIQUENESS LIST (COMPARATIVE PROOF) ---------- */}
+  <div className="max-w-6xl mx-auto px-4">
+    <UniquenessList />
+  </div>
+
+  {/* ---------- STRICT QUALIFICATION ---------- */}
+  <Card inset className="max-w-5xl mx-auto p-8 md:p-10 space-y-6">
+    <h3 className="text-2xl font-bold text-rose-400">
+      We Say “No” (And That’s Why Our Clients Win)
+    </h3>
+
+    <ul className="space-y-3 text-zinc-400 text-sm md:text-base">
+      <li>• Pre-product-market fit brands (0–50 orders/month)</li>
+      <li>• Gross margins under 55%</li>
+      <li>• “Let’s test TikTok with $5K” mindsets</li>
+      <li>• Founders unwilling to reinvest front-end profit</li>
+      <li>• Teams that already have in-house TikTok systems</li>
+    </ul>
+
+    <p className="text-zinc-300 font-semibold">
+      We reject ~70% of applicants.
+      <br />
+      If we take you on, it’s because we’ve validated your business can scale.
+    </p>
+  </Card>
+
+  {/* ---------- BOTTOM LINE ---------- */}
+  <Card inset className="max-w-5xl mx-auto p-8 text-center space-y-6">
+    <p className="text-zinc-400 text-lg leading-relaxed">
+      Arlox isn’t “a better TikTok agency.”
+      <br />
+      We’re the only firm building the complete growth system.
+    </p>
+
+    <p className="text-zinc-300 font-bold text-xl">
+      Your competitors hire media buyers.
+      <br />
+      <span className="text-teal-400">You hire growth engineers.</span>
+    </p>
+  </Card>
+
+</section>
+
 
         {/* 9. COMPARISON TABLE */}
-        <section>
-                                 <div className="flex justify-center mb-4"> <Badge color="cyan">COMPARISON</Badge></div>
+ {/* ================= SECTION 9: COMPARISON ================= */}
+<section className="py-24 space-y-24">
 
-           <Card className="overflow-hidden p-0 border border-[#333339]">
-             <div className="overflow-x-auto">
-               <table className="w-full text-left">
-                 <thead>
-                   <tr className="bg-[#26262a] border-b border-[#333339]">
-                     <th className="p-8 text-zinc-500 font-bold uppercase text-xs tracking-wider">Factor</th>
-                     <th className="p-8 text-zinc-500 font-bold uppercase text-xs tracking-wider">Traditional Agency</th>
-                     <th className={`p-8 ${theme.primary} font-bold uppercase text-xs tracking-wider bg-teal-500/5 border-l border-teal-500/10`}>Arlox Scale Trinity</th>
-                   </tr>
-                 </thead>
-                 <tbody className="divide-y divide-[#333339]">
-                    <tr>
-                      <td className="p-8 font-bold text-zinc-400">Creative Output</td>
-                      <td className="p-8 text-zinc-500">5-12 ads/month</td>
-                      <td className="p-8 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">80-120 ads/month</td>
-                    </tr>
-                    <tr>
-                      <td className="p-8 font-bold text-zinc-400">Owned Attention</td>
-                      <td className="p-8 text-zinc-500">None</td>
-                      <td className="p-8 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">Vault (80% Margin)</td>
-                    </tr>
-                    <tr className="align-middle">
-  <td className="p-8 font-bold text-zinc-400 align-middle">
-    Platform Risk
-  </td>
+  {/* ---------- HEADER ---------- */}
+  <div className="text-center max-w-5xl mx-auto px-4 space-y-6">
+    <div className="flex justify-center">
+      <Badge color="warning">COMPARISON</Badge>
+    </div>
 
-  <td className="p-8 text-rose-400 align-middle">
-    <div className="flex items-center gap-3">
-      <AlertTriangle size={16} />
-      <span>100% Dependent</span>
+    <h2 className="text-4xl md:text-5xl font-black text-zinc-300">
+      Arlox vs. Traditional TikTok Agencies vs. DIY
+    </h2>
+
+    <p className="text-zinc-500 text-lg md:text-xl leading-relaxed">
+      Three paths. Very different outcomes.
+    </p>
+  </div>
+  <Card className="overflow-hidden p-0 border border-[#333339] max-w-7xl mx-auto">
+    <div className="overflow-x-auto">
+      <table className="w-full text-left text-sm">
+        <thead>
+          <tr className="bg-[#26262a] border-b border-[#333339]">
+            <th className="p-6 text-zinc-500 font-bold uppercase text-xs tracking-wider">
+              Factor
+            </th>
+            <th className="p-6 text-zinc-500 font-bold uppercase text-xs tracking-wider">
+              DIY (In-House)
+            </th>
+            <th className="p-6 text-zinc-500 font-bold uppercase text-xs tracking-wider">
+              Traditional TikTok Agency
+            </th>
+            <th className={`p-6 font-bold uppercase text-xs tracking-wider bg-teal-500/5 border-l border-teal-500/10 ${theme.primary}`}>
+              Arlox Scale Trinity™
+            </th>
+          </tr>
+        </thead>
+
+        <tbody className="divide-y divide-[#333339]">
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Monthly Cost</td>
+            <td className="p-6 text-zinc-500">$8–15K (team salaries)</td>
+            <td className="p-6 text-zinc-500">$5–10K fee + 10–15% of ad spend</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              Performance-based (details in consultation)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Creative Output</td>
+            <td className="p-6 text-zinc-500">5–12 ads/month</td>
+            <td className="p-6 text-zinc-500">15–25 ads/month</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              80–120 ads/month (Mythos)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Creative Quality</td>
+            <td className="p-6 text-zinc-500">Generic, no fashion expertise</td>
+            <td className="p-6 text-zinc-500">Template-driven, reused across clients</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              Fashion-specific (300+ proven hook library)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Media Buying Strategy</td>
+            <td className="p-6 text-zinc-500">Guessing (blogs, YouTube tutorials)</td>
+            <td className="p-6 text-zinc-500">2018 playbook (audiences + single winners)</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              2025 Sentinel system (creative rotation + algorithm mastery)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Owned Attention</td>
+            <td className="p-6 text-zinc-500">None</td>
+            <td className="p-6 text-zinc-500">None (not their job)</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              Vault system (30–50% email capture, backend profit engine)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Data Accuracy</td>
+            <td className="p-6 text-zinc-500">Trust TikTok dashboard (15–25% error)</td>
+            <td className="p-6 text-zinc-500">Trust TikTok dashboard (no verification)</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              Triple verification (CAPI + manual tracking + MER)
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">ROAS (Typical)</td>
+            <td className="p-6 text-zinc-500">2.0–2.8x</td>
+            <td className="p-6 text-zinc-500">2.5–3.8x</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              4.2–5.8x sustained
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Scalability Ceiling</td>
+            <td className="p-6 text-zinc-500">$40–80K/mo spend</td>
+            <td className="p-6 text-zinc-500">$100–150K/mo spend</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              $300–500K+/mo spend
+            </td>
+          </tr>
+
+          <tr>
+  <td className="p-6 font-bold text-zinc-400">Platform Risk</td>
+  <td className="p-6 text-rose-400">
+    <div className="flex items-center gap-2">
+      <AlertTriangle size={14} /> 100% TikTok-dependent
     </div>
   </td>
-
-  <td className="p-8 font-bold text-teal-400 bg-teal-500/5 border-l border-teal-500/10 align-middle">
-    <div className="flex items-center gap-3">
-      <CheckCircle size={16} />
-      <span>Diversified</span>
+  <td className="p-6 text-rose-400">
+    <div className="flex items-center gap-2">
+      <AlertTriangle size={14} /> 100% TikTok-dependent
+    </div>
+  </td>
+  <td className="p-6 font-bold text-teal-400 bg-teal-500/5 border-l border-teal-500/10">
+    <div className="flex items-center gap-2">
+      <CheckCircle size={14} /> 40% diversified (owned profit)
     </div>
   </td>
 </tr>
 
-                    <tr>
-                      <td className="p-8 font-bold text-zinc-400">Algorithm Strategy</td>
-                      <td className="p-8 text-zinc-500">Slow reaction</td>
-                      <td className="p-8 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">48-Hour Adaptation</td>
-                    </tr>
-                 </tbody>
-               </table>
-             </div>
-           </Card>
-        </section>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Algorithm Adaptation</td>
+            <td className="p-6 text-zinc-500">2–4 weeks</td>
+            <td className="p-6 text-zinc-500">1–2 weeks</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              48 hours
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Knowledge Transfer</td>
+            <td className="p-6 text-zinc-500">Trial-and-error learning</td>
+            <td className="p-6 text-zinc-500">None (black box)</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              SOPs, playbooks, monthly deep-dives
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">Blue Swan Discovery</td>
+            <td className="p-6 text-zinc-500">Random luck</td>
+            <td className="p-6 text-zinc-500">None</td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              20% budget to wild-card outliers
+            </td>
+          </tr>
+
+          <tr>
+            <td className="p-6 font-bold text-zinc-400">12-Month Outcome</td>
+            <td className="p-6 text-zinc-500">
+              $1.2M revenue<br />$180K profit<br />0 owned audience
+            </td>
+            <td className="p-6 text-zinc-500">
+              $2.4M revenue<br />$420K profit<br />0 owned audience
+            </td>
+            <td className="p-6 font-bold text-zinc-200 bg-teal-500/5 border-l border-teal-500/10">
+              $5.8M revenue<br />$1.6M profit<br />50K owned audience
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </Card>
+  <Card inset className="max-w-6xl mx-auto p-10 space-y-10">
+  <h3 className="text-3xl font-bold text-zinc-300 text-center">
+    The ROI Calculation <span className="text-zinc-500">(12 Months)</span>
+  </h3>
+
+  <div className="grid md:grid-cols-3 gap-8">
+
+    {/* ---------- DIY ---------- */}
+    <div className="p-6 rounded-2xl bg-[#26262a] border border-[#333339] space-y-4">
+      <h4 className="font-bold text-zinc-300">DIY (In-House)</h4>
+
+      <div className="text-sm text-zinc-500 space-y-1">
+        <p>Cost: $600K total</p>
+        <p>Revenue: $1.2M</p>
+        <p>Profit: $180K</p>
+        <p>Assets: None</p>
+      </div>
+
+      <div className="pt-4 border-t border-[#333339]">
+        <p className="text-xs uppercase tracking-wider text-zinc-500 mb-1">
+          ROI
+        </p>
+        <p className="text-3xl font-black text-rose-400">
+          0.3×
+        </p>
+      </div>
+    </div>
+
+    {/* ---------- TRADITIONAL AGENCY ---------- */}
+    <div className="p-6 rounded-2xl bg-[#26262a] border border-[#333339] space-y-4">
+      <h4 className="font-bold text-zinc-300">Traditional Agency</h4>
+
+      <div className="text-sm text-zinc-500 space-y-1">
+        <p>Cost: $570K total</p>
+        <p>Revenue: $2.4M</p>
+        <p>Profit: $420K</p>
+        <p>Assets: None</p>
+      </div>
+
+      <div className="pt-4 border-t border-[#333339]">
+        <p className="text-xs uppercase tracking-wider text-zinc-500 mb-1">
+          ROI
+        </p>
+        <p className="text-3xl font-black text-amber-400">
+          0.74×
+        </p>
+      </div>
+    </div>
+
+    {/* ---------- ARLOX ---------- */}
+    <div className="relative p-6 rounded-2xl bg-teal-500/5 border border-teal-500/30 space-y-4">
+      
+      {/* Subtle emphasis */}
+      <div className="absolute -top-3 right-4 text-xs px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 font-bold">
+        DOMINANT
+      </div>
+
+      <h4 className="font-bold text-teal-400">
+        Arlox Scale Trinity™
+      </h4>
+
+      <div className="text-sm text-zinc-400 space-y-1">
+        <p>Cost: $900K total</p>
+        <p>Revenue: $5.8M</p>
+        <p>Profit: $1.6M</p>
+        <p>Assets: 50K owned audience</p>
+      </div>
+
+      <div className="pt-4 border-t border-teal-500/20">
+        <p className="text-xs uppercase tracking-wider text-teal-300 mb-1">
+          ROI
+        </p>
+        <p className="text-4xl font-black text-teal-400">
+          1.78×
+        </p>
+      </div>
+    </div>
+
+  </div>
+</Card>
+
+  <Card inset className="max-w-5xl mx-auto p-10 space-y-8">
+
+  <div className="space-y-4 text-sm md:text-base">
+
+    {/* DIY */}
+    <div className="flex items-start gap-4">
+      <div className="mt-1 w-2 h-2 rounded-full bg-rose-400" />
+      <p className="text-zinc-400">
+        <span className="font-semibold text-zinc-300">DIY:</span>{" "}
+        You burn capital learning expensive lessons the hard way.
+      </p>
+    </div>
+
+    {/* Traditional Agency */}
+    <div className="flex items-start gap-4">
+      <div className="mt-1 w-2 h-2 rounded-full bg-amber-400" />
+      <p className="text-zinc-400">
+        <span className="font-semibold text-zinc-300">Traditional Agency:</span>{" "}
+        You rent competence — when you leave, you’re back to zero.
+      </p>
+    </div>
+
+    {/* Arlox */}
+    <div className="flex items-start gap-4">
+      <div className="mt-1 w-2 h-2 rounded-full bg-teal-400" />
+      <p className="text-zinc-300 font-semibold">
+        Arlox: You build a compounding business moat that keeps paying you.
+      </p>
+    </div>
+
+  </div>
+
+  {/* Verdict */}
+  <div className="pt-6 border-t border-[#333339] text-center">
+    <p className="text-lg md:text-xl font-bold text-teal-400">
+      This isn’t a service choice. It’s a business model decision.
+    </p>
+  </div>
+
+</Card>
+
+
+</section>
+
+
 
         {/* 10. OBJECTIONS */}
         <section>
+          <div className="flex justify-center mb-4">
+      <Badge color="lime">Faq</Badge>
+    </div>
           <h2 className="text-4xl font-bold text-zinc-300 mb-12 text-center">But What About...</h2>
           <Objections />
           
@@ -1158,6 +1831,9 @@ const App = () => {
 
         {/* 11. TWO FUTURES & CTA */}
         <section id="audit" className="pb-12">
+          <div className="flex justify-center mb-4">
+      <Badge color="indigo">The Close</Badge>
+    </div>
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-zinc-300">Two Futures. Choose One.</h2>
             <p className="mt-6 text-xl text-zinc-500">Six months from today, where will your brand be?</p>
@@ -1166,53 +1842,87 @@ const App = () => {
           <FuturesComparison />
 
           <div className="mt-24 text-center space-y-12">
-            <div className="relative inline-block rounded-3xl group">
-              {/* Glow ring - ultra diffused */}
-              <div
-                className="
-                  absolute inset-0 rounded-3xl
-                  bg-gradient-to-r from-teal-500 to-rose-500
-                  blur-[20px] opacity-10
-                  group-hover:opacity-20
-                  transition-opacity duration-700
-                "
-              />
+           <div className="relative inline-block rounded-full group">
+  {/* Glow ring - ultra diffused */}
+  <div
+    className="
+      absolute inset-0 rounded-full
+      bg-gradient-to-r from-teal-500 to-rose-500
+      blur-[20px] opacity-10
+      group-hover:opacity-20
+      transition-opacity duration-700
+    "
+  />
 
-              {/* Border line */}
-              <div
-                className="
-                  absolute inset-0 rounded-3xl
-                  bg-gradient-to-r from-teal-500/20 to-rose-500/20
-                  p-[1px]
-                "
-              >
-                <div className="h-full w-full rounded-3xl bg-transparent" />
-              </div>
+  {/* Border line */}
+  <div
+    className="
+      absolute inset-0 rounded-full
+      bg-gradient-to-r from-teal-500/20 to-rose-500/20
+      p-[1px]
+    "
+  >
+    <div className="h-full w-full rounded-full bg-transparent" />
+  </div>
 
-              {/* Glass content */}
-              <div
-                className="
-                  relative rounded-3xl
-                  bg-[#2b2b30]/60
-                  backdrop-blur-xl
-                  shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]
-                "
-              >
-                <WhatsappCTA
-                  whatsappNumber="+919910220335"
-                  calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
-                >
-                  <GlassButton
-                    label="APPLY FOR FREE GROWTH AUDIT"
-                    icon={ArrowRight}
-                    className="h-4 sm:h-5 text-zinc-200"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(251,113,133,0.1) 0%, rgba(45,212,191,0.1) 100%)'
-                    }}
-                  />
-                </WhatsappCTA>
-              </div>
-            </div>
+  {/* Glass content with transparency */}
+  <div
+    className="
+      relative rounded-full
+      backdrop-blur-xl
+      shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]
+    "
+    style={{
+      background: 'rgba(43, 43, 48, 0.3)',
+    }}
+  >
+    <WhatsappCTA
+      whatsappNumber="+919910220335"
+      calendlyUrl="https://calendly.com/arlox-/strategy-call-1"
+    >
+      <button className="
+        group relative inline-flex items-center justify-center gap-3
+        px-8 py-4 rounded-full
+        overflow-hidden
+        transition-all duration-300 ease-out
+        hover:scale-[1.02] active:scale-[0.98]
+        w-full sm:w-auto
+      "
+      style={{
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        background: "linear-gradient(135deg, rgba(251,113,133,0.12) 0%, rgba(45,212,191,0.12) 100%)",
+        border: "1px solid rgba(255,255,255,0.18)",
+        boxShadow: `
+          0 8px 32px 0 rgba(251,113,133,0.15),
+          inset 0 1px 0 0 rgba(255,255,255,0.5),
+          inset 0 -1px 0 0 rgba(255,255,255,0.1)
+        `,
+      }}>
+        
+        {/* Top glass shine */}
+        <div 
+          className="absolute inset-x-0 top-0 h-1/2 rounded-t-full pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%)',
+          }}
+        />
+        
+        {/* Liquid ripple on hover */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-rose-400/20 via-purple-400/10 to-teal-400/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
+        
+        {/* Icon */}
+        <ArrowRight className="w-5 h-5 text-white relative z-10 flex-shrink-0" strokeWidth={2.5} />
+        
+        {/* Text */}
+        <span className="text-white font-bold text-xs sm:text-sm relative z-10 whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+          APPLY FOR FREE GROWTH AUDIT
+        </span>
+      </button>
+    </WhatsappCTA>
+  </div>
+</div>
+
 
             <div className="max-w-2xl mx-auto space-y-8">
               <p className="text-zinc-500 font-medium text-lg">

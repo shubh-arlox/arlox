@@ -10,18 +10,18 @@ const GlassButton = ({
   ...props 
 }) => {
   return (
-    <div className={`relative group inline-block rounded-[40px] w-full sm:w-auto ${className}`}>
+    <div className={`relative group inline-block rounded-[40px] ${className}`}>
       
       {/* 0. CAUSTIC CAST - #364F78 shadow */}
       <div className="absolute -inset-1 bg-gradient-to-b from-[#364F78]/20 to-[#364F78]/40 rounded-[45px] blur-md translate-y-2 opacity-70 pointer-events-none" />
 
       <button 
         className={`
-          relative flex items-center justify-between 
-          gap-2 sm:gap-3 md:gap-4 
-          px-4 sm:px-5 md:px-6 lg:px-7
-          py-2 sm:py-2.5 md:py-3
-          rounded-[40px] overflow-hidden w-full
+          relative flex items-center justify-center
+          gap-2.5 sm:gap-3 md:gap-4 
+          px-5 sm:px-6 md:px-7
+          py-3 sm:py-3 md:py-3.5
+          rounded-[40px] overflow-visible
           transition-transform duration-300 ease-out active:scale-[0.97]
           hover:shadow-lg
           ${buttonClassName}
@@ -64,28 +64,28 @@ const GlassButton = ({
 
         {/* --- DYNAMIC CONTENT --- */}
         
-        {/* Left: Icon Circle */}
+        {/* Left: Icon */}
         {Icon && (
           <div className="relative z-10 flex items-center justify-center flex-shrink-0">
             <Icon 
-              className="text-white w-4 h-4 sm:w-5 sm:h-5 md:w-5 md:h-5" 
+              className="text-white w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6" 
+              strokeWidth={2.5}
             />
           </div>
         )}
         
         {/* Middle: Text Label */}
         <span className="relative z-10 text-white
-          text-xs sm:text-sm md:text-base lg:text-base
+          text-sm sm:text-base md:text-base lg:text-lg
           font-bold tracking-wide 
           drop-shadow-[0_2px_3px_rgba(30,45,70,0.4)] 
-          flex-grow text-center
-          truncate whitespace-nowrap">
+          whitespace-nowrap">
           {label}
         </span>
 
         {/* Right: Custom Element (if provided) */}
         {rightElement && (
-          <div className="relative z-10 flex-shrink-0 text-white">
+          <div className="relative z-10 flex-shrink-0 text-white flex items-center justify-center">
             {rightElement}
           </div>
         )}
