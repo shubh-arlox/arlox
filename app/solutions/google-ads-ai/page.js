@@ -10,6 +10,12 @@ import Hidden from './hidden';
 import ArloxPowerPack from './solution';
 import ArloxImplementationPlan from './method';
 import ArloxRoadmap from './method';
+import SevenSurfaceCoverageGap from './insight';
+import UniquenessSection from './unique';
+import WhyBrandsFailSection from './insight';
+import ArloxUniquenessSection from './unique';
+import ArloxObjections from './faq';
+import ArloxCloseSection from './close';
 
 export default function App() {
   return (
@@ -24,6 +30,10 @@ export default function App() {
       <Hidden/>
       <ArloxPowerPack/>
      <ArloxRoadmap/>
+     <WhyBrandsFailSection/>
+     <ArloxUniquenessSection/>
+     <ArloxObjections/>
+     <ArloxCloseSection/>
     </div>
   );
 }
