@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Users, Zap, Heart, Target, Stars } from 'lucide-react';
+import { Users, Zap, Heart, Target } from 'lucide-react';
+import Image from 'next/image';
 
 const WhoWeAreSection = () => {
   const colors = {
@@ -8,88 +9,100 @@ const WhoWeAreSection = () => {
     purple: '#7c3aed',
     teal: '#0d9488',
     darkest: '#0f172a',
-    slate: '#475569'
+    slate: '#475569',
+    gold: '#fbbf24'
   };
 
-  const neuBg = 'bg-gradient-to-br from-slate-50 to-slate-100';
-  const neuCard = 'shadow-[8px_8px_16px_#d1d5db,-8px_-8px_16px_#ffffff]';
-  const neuFlat = 'shadow-[inset_2px_2px_5px_#d1d5db,inset_-2px_-2px_5px_#ffffff]';
+  const neuCard = 'shadow-[10px_10px_20px_#d1d5db,-10px_-10px_20px_#ffffff]';
+  const neuInset = 'shadow-[inset_4px_4px_8px_#d1d5db,inset_-4px_-4px_8px_#ffffff]';
+  const neuBtn = 'shadow-[6px_6px_12px_#d1d5db,-6px_-6px_12px_#ffffff]';
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6">
+    <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 bg-[#ecf0f3]">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+
+        {/* === HEADER === */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12 sm:mb-16 md:mb-20"
+          className="text-center mb-16 sm:mb-20"
         >
-          <Users size={48} className="sm:hidden mx-auto mb-4" style={{ color: colors.navy }} />
-          <Users size={56} className="hidden sm:block md:hidden mx-auto mb-5" style={{ color: colors.navy }} />
-          <Users size={64} className="hidden md:block mx-auto mb-6" style={{ color: colors.navy }} />
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 px-4" style={{ color: colors.darkest }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-8 px-4 leading-tight tracking-tight" style={{ color: colors.darkest }}>
             Who We Are
           </h2>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto px-4" style={{ color: colors.slate }}>
-            Arlox stands at the forefront of redefining quality and customer satisfaction through scientific advertising and data-driven growth strategies
-          </p>
+
+          {/* Main Narrative Content */}
+          <div className={`max-w-5xl mx-auto p-8 sm:p-12 rounded-[2.5rem] ${neuInset} border border-white/50 text-left sm:text-center`}>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold leading-relaxed mb-6" style={{ color: colors.navy }}>
+              Arlox stands at the forefront of redefining quality and customer satisfaction.
+            </p>
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed text-slate-600 mb-6">
+              Our hallmark is aggressiveness in problem-solving, proactiveness in communication, and no-compromise standards that consistently surpass expectations.
+            </p>
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed text-slate-600">
+              We remain calm, joyful, organized, premium, and health-conscious—finishing tasks ahead of schedule. We emphasize clarity over chaos, focus over frenzy, straightforwardness and candor above all, and accountability over excuses.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Mobile: Stack all cards, Desktop: Bento Grid */}
-        <div className="space-y-6 sm:space-y-8 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8 mb-12 sm:mb-16">
-          {/* Center Image - Full width on mobile */}
+        {/* === WIDER & SHORTER IMAGE SECTION (16:9 landscape) === */}
+        <motion.div 
+          className="flex justify-center mb-16 sm:mb-20"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
           <motion.div 
-            className="lg:col-span-3 lg:row-span-1"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            className={`relative rounded-[2rem] overflow-hidden ${neuCard} p-4 sm:p-6 group w-full max-w-5xl`}
+            whileHover={{ scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
-            <motion.div 
-              className={`relative rounded-2xl sm:rounded-3xl overflow-hidden ${neuCard} bg-white p-4 sm:p-6`}
-              whileHover={{ scale: 1.02 }}
+            {/* Landscape Container with 16:9 aspect ratio (wider and shorter) */}
+            <div className={`relative w-full aspect-video rounded-[1.5rem] overflow-hidden ${neuInset} bg-slate-100`}>
+              {/* Placeholder Icon */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                <Users size={80} style={{ color: colors.navy }} />
+              </div>
+
+              {/* Image */}
+              <Image
+                src="/team.jpg"
+                alt="Arlox Culture"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1024px"
+                className="object-cover opacity-80 mix-blend-multiply"
+              />
+            </div>
+
+            {/* Floating Badge */}
+            <div 
+              className={`absolute bottom-8 left-1/2 -translate-x-1/2 px-8 py-3 rounded-full bg-[#ecf0f3]/90 backdrop-blur-md border border-white/40 ${neuBtn}`}
             >
-              <div className="relative h-64 sm:h-80 md:h-96 lg:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-teal-50">
-                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8">
-                  <div className="text-center">
-                    <Users size={60} className="sm:hidden mx-auto mb-3 opacity-40" style={{ color: colors.navy }} />
-                    <Users size={80} className="hidden sm:block md:hidden mx-auto mb-4 opacity-40" style={{ color: colors.navy }} />
-                    <Users size={100} className="hidden md:block mx-auto mb-4 opacity-40" style={{ color: colors.navy }} />
-                    <p className="font-semibold text-base sm:text-lg" style={{ color: colors.slate }}>Digital Marketing Excellence</p>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2">Scaling eCommerce Brands • Data-Driven Growth</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Badge */}
-              <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 right-4 sm:right-6 md:right-8 backdrop-blur-xl bg-white/90 rounded-xl sm:rounded-2xl p-3 sm:p-4 border-2"
-                   style={{ borderColor: colors.navy }}>
-                <p className="text-xs sm:text-sm font-black text-center" style={{ color: colors.navy }}>
-                  Grace • Beauty • Excellence
-                </p>
-              </div>
-            </motion.div>
+              <p className="text-xs sm:text-sm font-black uppercase tracking-widest text-center whitespace-nowrap" style={{ color: colors.navy }}>
+                Grace • Beauty • Excellence
+              </p>
+            </div>
           </motion.div>
+        </motion.div>
 
-          {/* Value Cards - Stack on mobile, 3 columns on desktop */}
+        {/* === FEATURES GRID === */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {[
             {
               icon: <Zap size={28} />,
-              iconMobile: <Zap size={24} />,
-              title: "Aggressive Problem-Solving",
-              desc: "No-compromise standards that consistently surpass expectations with proactive communication",
+              title: "Aggressive & Proactive",
+              desc: "Aggressiveness in problem-solving. No-compromise standards that consistently surpass expectations.",
               color: colors.navy
             },
             {
               icon: <Heart size={28} />,
-              iconMobile: <Heart size={24} />,
               title: "Calm & Joyful",
-              desc: "Never in hurry but completely relaxed—finishing ahead of schedule with premium quality",
+              desc: "Never in a hurry but completely relaxed—finishing ahead of schedule. Health-conscious and organized.",
               color: colors.purple
             },
             {
               icon: <Target size={28} />,
-              iconMobile: <Target size={24} />,
               title: "Clarity Over Chaos",
               desc: "Focus over frenzy. Straightforwardness and candor above all. Accountability over excuses.",
               color: colors.teal
@@ -101,73 +114,24 @@ const WhoWeAreSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`p-6 sm:p-8 rounded-2xl sm:rounded-3xl ${neuBg} ${neuCard} cursor-pointer`}
-              whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${item.color}40` }}
+              className={`p-8 rounded-[2rem] ${neuCard} cursor-pointer group`}
+              whileHover={{ y: -5 }}
             >
               <div 
-                className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}
-                style={{ 
-                  backgroundColor: `${item.color}20`,
-                  color: item.color
-                }}
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 ${neuInset}`}
+                style={{ color: item.color }}
               >
-                <span className="sm:hidden">{item.iconMobile}</span>
-                <span className="hidden sm:block">{item.icon}</span>
+                {item.icon}
               </div>
-              <h3 className="text-lg sm:text-xl font-black mb-2 sm:mb-3" style={{ color: colors.darkest }}>
+              <h3 className="text-xl font-black mb-3" style={{ color: colors.darkest }}>
                 {item.title}
               </h3>
-              <p className="leading-relaxed text-sm sm:text-base" style={{ color: colors.slate }}>{item.desc}</p>
+              <p className="leading-relaxed text-sm font-medium opacity-80" style={{ color: colors.slate }}>
+                {item.desc}
+              </p>
             </motion.div>
           ))}
         </div>
-
-        {/* Known For */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className={`p-8 sm:p-12 md:p-16 rounded-2xl sm:rounded-3xl lg:rounded-[3rem] ${neuBg} ${neuCard} border-l-4 sm:border-l-6 md:border-l-8`}
-          style={{ borderColor: colors.navy }}
-        >
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-8 sm:mb-12 flex items-center gap-3 sm:gap-4" style={{ color: colors.darkest }}>
-            <Stars size={32} className="sm:hidden" style={{ color: colors.navy }} />
-            <Stars size={40} className="hidden sm:block md:hidden" style={{ color: colors.navy }} />
-            <Stars size={48} className="hidden md:block" style={{ color: colors.navy }} />
-            Arlox is Known For:
-          </h3>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {[
-              "Aggressiveness & proactiveness",
-              "Precise, high-quality work",
-              "Responsible, smart effort winning",
-              "Proper organization",
-              "Joyful, never in hurry",
-              "Creating clarity and focus",
-              "Enjoying work, premium standards",
-              "Prioritizing health",
-              "Finishing before deadlines",
-              "Being straightforward and candid",
-              "No-compromise standards",
-              "Relentless quest for perfection"
-            ].map((trait, i) => (
-              <motion.div 
-                key={i}
-                className={`flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white ${neuFlat}`}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
-              >
-                <Stars className="shrink-0" size={14} style={{ color: colors.navy }} />
-                <span className="font-bold text-xs sm:text-sm" style={{ color: colors.darkest }}>
-                  {trait}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );
