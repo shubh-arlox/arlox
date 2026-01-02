@@ -14,6 +14,7 @@ import NeumorphicHero from './hero';
 
 
 import ArloxProblemSolution from './problem';
+import WhoWeAre from './who';
 
 
 const ArloxVisionMission = () => {
@@ -299,6 +300,7 @@ const ArloxVisionMission = () => {
      
 
       {/* === WHO WE ARE === */}
+      <WhoWeAre/>
       <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
 
