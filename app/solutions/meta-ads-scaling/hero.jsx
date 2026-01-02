@@ -119,7 +119,12 @@ const RefactoredMetaHero = () => {
 
         {/* === 1. THE PROMISE HEADER === */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <ProtocolBadge label="Creative Velocity System" icon={Instagram} />
+          <ProtocolBadge
+  label="Creative Velocity System"
+  icon={Instagram}
+  iconColor="#5239dd"
+ 
+/>
 
           <motion.h1
   initial={{ opacity: 0, y: 20 }}

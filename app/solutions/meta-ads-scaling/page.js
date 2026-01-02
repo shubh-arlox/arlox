@@ -1,6 +1,8 @@
 // app/meta-ads/page.js
 
 import InstagramMetaHero from "./hero";
+import MetaConsequences from "./hidden";
+import MetaDeathCycle from "./problem";
 
 
 // OPTIONAL future sections (example)
@@ -20,11 +22,12 @@ export default function MetaAdsPage() {
       
       {/* HERO — Instagram-style scaling simulation */}
       <InstagramMetaHero />
-
+        
       {/* =====================================================
           ADD SECTIONS BELOW (ORDER MATTERS)
           ===================================================== */}
-
+<MetaDeathCycle/>
+<MetaConsequences/>
       {/*
       <MetaProofSection />
       <CreativeVelocitySection />
