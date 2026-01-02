@@ -59,21 +59,20 @@ const WhoWeAreSection = () => {
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
           >
             {/* Landscape Container with 16:9 aspect ratio (wider and shorter) */}
-            <div className={`relative w-full aspect-video rounded-[1.5rem] overflow-hidden ${neuInset} bg-slate-100`}>
-              {/* Placeholder Icon */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <Users size={80} style={{ color: colors.navy }} />
-              </div>
+           <div className="relative w-full aspect-video rounded-[1.5rem] overflow-hidden bg-slate-100">
+  <Image
+    src="/team1.png"
+    alt="Arlox Culture"
+    fill
+    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1024px"
+    className="object-cover"
+    priority
+  />
 
-              {/* Image */}
-              <Image
-                src="/team.jpg"
-                alt="Arlox Culture"
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1024px"
-                className="object-cover opacity-80 mix-blend-multiply"
-              />
-            </div>
+  {/* OPTIONAL: very subtle vignette (premium, not muddy) */}
+  <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/5" />
+</div>
+
 
             {/* Floating Badge */}
             <div 
