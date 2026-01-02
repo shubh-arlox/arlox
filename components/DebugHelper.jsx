@@ -37,7 +37,7 @@ export default function DebugHelper({ data }) {
             * Check your Browser Console (F12) for an interactive view.
           </p>
           <pre className="whitespace-pre-wrap break-all">
-            {JSON.stringify(data[0], null, 2)}
+            {JSON.stringify(data, null, 2)}
           </pre>
         </div>
       )}

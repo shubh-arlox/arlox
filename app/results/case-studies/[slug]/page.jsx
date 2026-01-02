@@ -3,30 +3,37 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getCaseStudyBySlug, getCaseStudies } from '@/lib/webflow';
 import RichText from '@/components/RichText'; // <--- Import the new component
+import { db } from '@/lib/googleSheets';
 
 // ... generateStaticParams and generateMetadata functions remain the same ...
 
 export default async function CaseStudyPage({ params }) {
   const { slug } = await params;
-  const data = await getCaseStudyBySlug(slug);
+  const data = await db.findOne('slug',slug,'case-studies')
 
   if (!data) {
     return <div className="min-h-screen flex items-center justify-center bg-[#e0e5ec]">Not Found</div>;
   }
-
-  const { 
-    name, 
-    'short-description': description, // This is your HTML content
-    'founder-pic': founderPic,
-    'brand-logo': brandLogo,
-    'client-name': clientName,
-    'presentation':presentation,
-    before, 
-    after, 
+  const {
+    brand_name,
+    brand_logo,
+    Founder_name,
+    Founder_image,
+    OLD_MRR,
     timeline,
-    category 
-  } = data.fieldData;
-
+    New_MRR,
+    Cover_Image_link,
+    Cover_text_1,
+    body_image,
+    body_text_1,
+    body_image2,
+    body_text_2,
+    botttom_shopfiy_screenshot,
+    Custom_CTA,
+    SEO_meta_data,
+    Category_tags,
+    tag
+  } = data;
   return (
     <main className="min-h-screen bg-[#e0e5ec] py-20 px-6 md:px-12 font-sans">
       <div className="max-w-7xl mx-auto">
@@ -46,11 +53,11 @@ export default async function CaseStudyPage({ params }) {
           {/* LEFT SIDE: Main Content */}
           <div className="flex-1 order-2 lg:order-1">
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 leading-tight">
-              {name}
+              {Cover_text_1}
             </h1>
-
+            
             {/* UPDATED SECTION: Use RichText component */}
-            <RichText content={presentation} />
+            <RichText content={body_text_1} />
             
           </div>
 
@@ -68,14 +75,14 @@ export default async function CaseStudyPage({ params }) {
                 className="relative w-40 h-40 rounded-full border-4 border-[#e0e5ec] overflow-hidden mb-4"
                 style={{ boxShadow: "5px 5px 10px #b8b9be, -5px -5px 10px #ffffff" }}
               >
-                {founderPic?.url ? (
-                   <Image src={founderPic.url} alt={clientName || "Founder"} fill className="object-cover" />
+                {Founder_image ? (
+                   <Image src={Founder_image} alt={Founder_name || "Founder"} fill className="object-cover" />
                 ) : (
                    <div className="flex h-full w-full items-center justify-center bg-gray-200 text-xs">No Photo</div>
                 )}
               </div>
 
-              <h3 className="text-2xl font-bold text-gray-800">{clientName}</h3>
+              <h3 className="text-2xl font-bold text-gray-800">{Founder_name}</h3>
               <p className="text-sm text-gray-500 mb-6 uppercase tracking-wider font-bold">Founder</p>
 
               {/* Metrics List */}
@@ -85,14 +92,14 @@ export default async function CaseStudyPage({ params }) {
                 <div className="bg-[#e0e5ec] rounded-xl p-4" 
                      style={{ boxShadow: "inset 4px 4px 8px #bec3c9, inset -4px -4px 8px #ffffff" }}>
                   <p className="text-xs font-bold text-gray-400 uppercase">Before</p>
-                  <p className="text-red-500 font-bold text-lg">{before || '-'}</p>
+                  <p className="text-red-500 font-bold text-lg">{OLD_MRR || '-'}</p>
                 </div>
 
                 {/* After */}
                 <div className="bg-[#e0e5ec] rounded-xl p-4" 
                      style={{ boxShadow: "inset 4px 4px 8px #bec3c9, inset -4px -4px 8px #ffffff" }}>
                   <p className="text-xs font-bold text-gray-400 uppercase">After</p>
-                  <p className="text-green-600 font-bold text-xl">{after || '-'}</p>
+                  <p className="text-green-600 font-bold text-xl">{New_MRR || '-'}</p>
                 </div>
 
                 {/* Timeline */}
@@ -105,7 +112,7 @@ export default async function CaseStudyPage({ params }) {
                  <div className="flex justify-between items-center px-2">
                    <span className="text-sm font-bold text-gray-500">Category:</span>
                    <span className="text-blue-500 font-bold cursor-pointer hover:underline">
-                     {category || 'Fashion'}
+                     {Category_tags || 'Fashion'}
                    </span>
                 </div>
 
@@ -113,8 +120,8 @@ export default async function CaseStudyPage({ params }) {
 
               {/* Logo Footer */}
               <div className="mt-8 pt-6 border-t border-gray-300 w-full flex justify-center">
-                 {brandLogo?.url && (
-                    <img src={brandLogo.url} alt="Brand" className="h-auto w-auto object-contain opacity-80 mix-blend-multiply" />
+                 {brand_logo && (
+                    <img src={brand_logo} alt="Brand" className="h-auto w-auto object-contain opacity-80 mix-blend-multiply" />
                  )}
               </div>
 
