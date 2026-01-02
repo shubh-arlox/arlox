@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image'; // Import Next.js Image component
 
 const LeadershipPage = () => {
   // Arlox Brand Colors
@@ -92,17 +93,22 @@ const LeadershipPage = () => {
                     border: `4px solid ${colors.bg}`
                   }}
                 >
-                  <img 
+                  {/* Next.js Image for INSTANT loading */}
+                  <Image 
                     src={member.image} 
                     alt={member.name}
+                    fill // Fills the aspect-square container
+                    priority={true} // <--- FORCES INSTANT LOADING
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                     className="
-                      w-full h-full object-cover object-center 
+                      object-cover object-center 
                       transition-transform duration-500 
                       group-hover:scale-110
                     "
                   />
+                  
                   {/* Subtle Inner Shadow overlay for depth (inset feeling on edges) */}
-                  <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] pointer-events-none rounded-xl" />
+                  <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] pointer-events-none rounded-xl z-10" />
                 </div>
                 
                 {/* Text Details */}
