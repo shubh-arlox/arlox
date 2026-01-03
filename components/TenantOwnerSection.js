@@ -2,7 +2,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useMotionValue } from "framer-motion";
 import { useEffect } from "react";
 import WhatsappCTA from "./WhatsAppCTA";
 
@@ -36,7 +36,8 @@ export default function TenantOwnerSection() {
 
 function HamsterWheelCard() {
   const controls = useAnimation();
-
+  const rotate = useMotionValue(0);
+  let currentRotation = 0
   useEffect(() => {
     controls.start({
       rotate: 360,
@@ -44,13 +45,17 @@ function HamsterWheelCard() {
     });
   }, [controls]);
 
-  const handleHoverStart = () => controls.stop();
-  const handleHoverEnd = () =>
+  const handleHoverStart = () =>
+  {
+    currentRotation = rotate.get();
+    controls.stop();
+  }
+  const handleHoverEnd = () =>{
     controls.start({
-      rotate: 360,
+      rotate: currentRotation+360,
       transition: { repeat: Infinity, duration: 5, ease: "linear" },
     });
-
+  }
   return (
     <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(143,155,179,0.35),-5px_-5px_32px_rgba(255,255,255,0.95)] p-5 md:p-7 flex">
       <div className="bg-[#E0E5EC] rounded-3xl shadow-[8px_8px_16px_rgba(150,162,186,0.25),-5px_-5px_32px_rgba(255,255,255,0.96)] p-5 flex flex-col w-full">
@@ -73,7 +78,7 @@ function HamsterWheelCard() {
               <motion.div
                 animate={controls}
                 className="relative w-[78%] h-[78%] rounded-full border-[3px] border-[#c2c5d0] flex items-center justify-center bg-gradient-to-br from-[#f9fafb] to-[#e5e7eb]"
-                style={{ originX: 0.5, originY: 0.5 }}
+                style={{ rotate ,originX: 0.5, originY: 0.5 }}
               >
                 {Array.from({ length: 12 }).map((_, i) => (
                   <div
