@@ -589,61 +589,7 @@ const ArloxVisionMission = () => {
         </div>
       </section>
 
-      {/* === FOOTER CTA === */}
-      <section className="py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className={`p-12 sm:p-16 md:p-20 rounded-2xl sm:rounded-3xl lg:rounded-[3rem] ${neuCard} text-white relative overflow-hidden`}
-            style={{ 
-              background: `linear-gradient(135deg, ${colors.deepNavy} 0%, ${colors.navy} 100%)`
-            }}
-          >
-            {/* Orbs - Hidden on mobile */}
-            <div className="hidden md:block">
-              <motion.div 
-                className="absolute top-0 right-0 w-80 h-80 rounded-full blur-[120px] opacity-30"
-                style={{ backgroundColor: colors.teal }}
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 8, repeat: Infinity }}
-              />
-              <motion.div 
-                className="absolute bottom-0 left-0 w-80 h-80 rounded-full blur-[120px] opacity-30"
-                style={{ backgroundColor: colors.purple }}
-                animate={{ scale: [1.2, 1, 1.2] }}
-                transition={{ duration: 8, repeat: Infinity, delay: 1 }}
-              />
-            </div>
-
-            <div className="relative z-10">
-              <Cpu size={48} className="sm:hidden mx-auto mb-6" />
-              <Cpu size={64} className="hidden sm:block md:hidden mx-auto mb-7" />
-              <Cpu size={72} className="hidden md:block mx-auto mb-8" />
-
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 leading-tight">
-                Ready to Transform<br />
-                <span style={{ color: colors.yellow }}>"From India"?</span>
-              </h2>
-
-              <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
-                Join us in redefining the global expectation of "From India"—
-                with grace, beauty, quality, and unstoppable excellence.
-              </p>
-
-              <motion.button 
-                className="px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-white rounded-full font-black text-base sm:text-lg md:text-xl transition-all inline-flex items-center gap-3 sm:gap-4 shadow-2xl"
-                style={{ color: colors.darkest }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Start The Journey
-                <ArrowRight size={20} className="sm:hidden" />
-                <ArrowRight size={24} className="hidden sm:block" />
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+     
 
     </div>
   );
