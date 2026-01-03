@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertCircle, Quote } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Quote, SquareCheckBig } from 'lucide-react';
 import Image from 'next/image';
+import Checkbox from './svg';
 
 const NeumorphicProblemSection = () => {
   // State to track which marker is touched on mobile
@@ -34,18 +35,36 @@ const NeumorphicProblemSection = () => {
       boxShadow: `25px 25px 50px ${colors.shadowDark}, -25px -25px 50px ${colors.shadowLight}`
     }
   };
+    const neuInset = `shadow-[inset_6px_6px_12px_${colors.shadowDark},inset_-6px_-6px_12px_${colors.shadowLight}]`;
+const neuBg = `bg-[#ecf0f3]`;
 
   // === DATA ===
-  const problems = [
-    { issue: 'No-quality control', top: '38%', left: '15%', placement: 'bottom' },
-    { issue: 'Service inconsistency', top: '22%', left: '18%', placement: 'top' },
-    { issue: 'No-tracking visibility', top: '65%', left: '28%', placement: 'bottom' },
-    { issue: 'Delayed fulfillment', top: '28%', left: '48%', placement: 'top' },
-    { issue: 'Supply chain disruptions', top: '18%', left: '65%', placement: 'top' },
-    { issue: 'Language barriers', top: '38%', left: '76%', placement: 'bottom' },
-    { issue: 'Poor infrastructure', top: '58%', left: '50%', placement: 'bottom' },
-    { issue: 'Complex customs', top: '45%', left: '60%', placement: 'bottom' }
-  ];
+ const problems = [
+  { issue: "Easy defensiveness", top: "22%", left: "15%", placement: "top" },
+  { issue: "Hard work without leverage", top: "38%", left: "18%", placement: "bottom" },
+  { issue: "Low quality work", top: "28%", left: "30%", placement: "top" },
+
+  { issue: "Victimization mindset", top: "65%", left: "20%", placement: "bottom" },
+  { issue: "Trying hard, still losing", top: "28%", left: "48%", placement: "top" },
+  { issue: "Disorganization", top: "18%", left: "65%", placement: "top" },
+
+  { issue: "No joy, always in a hurry", top: "38%", left: "76%", placement: "bottom" },
+  { issue: "Creating chaos", top: "58%", left: "50%", placement: "bottom" },
+  { issue: "Dreading work", top: "45%", left: "60%", placement: "bottom" },
+
+  { issue: "Ignoring health", top: "70%", left: "35%", placement: "bottom" },
+  { issue: "Creating confusion", top: "50%", left: "10%", placement: "bottom" },
+  { issue: "Proudly cheap & low quality", top: "20%", left: "80%", placement: "top" },
+
+  { issue: "Cutting corners", top: "55%", left: "75%", placement: "bottom" },
+  { issue: "Missing deadlines", top: "72%", left: "48%", placement: "bottom" },
+  { issue: "Delaying work", top: "48%", left: "42%", placement: "top" },
+
+  { issue: "Groupthink", top: "15%", left: "35%", placement: "top" },
+  { issue: "Lying by omission", top: "72%", left: "75%", placement: "bottom" },
+  { issue: "Sugarcoating the truth", top: "40%", left: "55%", placement: "top" },
+];
+
 
   // Helper: Position the card relative to the dot
   const getCalloutPosition = (placement) => {
@@ -96,12 +115,22 @@ const NeumorphicProblemSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16 sm:mb-20"
+          className="text-center mb-10 sm:mb-10"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight" style={{ color: colors.darkest }}>
-            The Problem we have with the<br />
-            <span style={{ color: colors.crimson }}>way things currently are</span>
+           The Uncomfortable Baseline of <br/>
+            <span style={{ color: colors.crimson }}> Global Expectation</span>
           </h2>
+           <p className="text-xs sm:text-sm font-semibold" style={{ color: colors.slate }}>
+             We have worked with
+              <span className="text-sm sm:text-lg font-black block sm:inline mt-2 sm:mt-0" style={{ color: colors.navy }}>
+                {' '}1000+
+              </span>{' '}
+             international brands to understand what they see when they look at <span className="text-sm sm:text-lg font-black block sm:inline mt-2 sm:mt-0" style={{ color: colors.navy }}>
+                {' '}India.
+              </span>{' '} <br/>
+              What follows is not just a list of flaws, but the persistent, solidified perception that defines their reality.
+            </p>
         </motion.div>
 
         {/* === WORLD MAP & CARDS === */}
@@ -113,7 +142,7 @@ const NeumorphicProblemSection = () => {
         >
           {/* Neumorphic Frame */}
           <div 
-            className="relative p-4 rounded-[2rem] bg-[#ecf0f3]"
+            className="relative px-4 rounded-[2rem] bg-[#ecf0f3]"
             style={shadows.neuCard}
           >
             <div 
@@ -146,10 +175,7 @@ const NeumorphicProblemSection = () => {
                 >
                   <div className="relative">
                     {/* Pulsing Dot */}
-                    <div className="relative z-20">
-                      <div className="absolute -inset-2 bg-red-500/20 rounded-full animate-ping" />
-                      <div className="w-3 h-3 bg-red-500 rounded-full shadow-lg border-2 border-[#ecf0f3]" />
-                    </div>
+                    
 
                     {/* ALWAYS VISIBLE CARD on Desktop */}
                     <motion.div
@@ -261,24 +287,7 @@ const NeumorphicProblemSection = () => {
             </div>
           </div>
 
-          {/* Stats Footer */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 mx-auto max-w-2xl text-center p-6 rounded-2xl"
-            style={shadows.neuInset}
-          >
-            <p className="text-xs sm:text-sm font-semibold" style={{ color: colors.slate }}>
-              Our studies are based on personally observed facts after working with
-              <br className="hidden sm:block" />
-              <span className="text-lg sm:text-xl font-black block sm:inline mt-2 sm:mt-0" style={{ color: colors.navy }}>
-                {' '}1000+ international brands
-              </span>{' '}
-              in our career.
-            </p>
-          </motion.div>
+          
         </motion.div>
 
         {/* === MISSION STATEMENT === */}
@@ -288,13 +297,51 @@ const NeumorphicProblemSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16 px-4"
         >
-          <p className="text-lg sm:text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto font-medium" style={{ color: colors.slate }}>
-            At Arlox, we believe even the smallest tasks deserve{' '}
-            <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700">
-              grace, beauty, quality, and effectiveness
-            </span>.
-            Our mission is to make Data recognized worldwide for these exacting standards.
-          </p>
+          <motion.div 
+  initial={{ opacity: 0, scale: 0.95 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.8, duration: 0.6 }}
+  whileHover={{ scale: 1.02 }}
+  className={`
+    relative
+    p-6 sm:p-8
+    rounded-3xl
+    overflow-hidden
+    backdrop-blur-lg
+    ${neuInset}
+  `}
+>
+  {/* Soft emerald presence */}
+  <div
+    className="absolute inset-0 opacity-[0.06] pointer-events-none"
+    style={{ backgroundColor: colors.emerald }}
+  />
+
+  <div className="flex items-center gap-4">
+  {/* Icon */}
+  <div className="shrink-0 text-emerald-500 flex items-center">
+    <Checkbox size={80} />
+  </div>
+
+  {/* Text */}
+  <p
+    className="
+      text-lg sm:text-xl md:text-2xl
+      leading-relaxed
+      font-medium
+    "
+    style={{ color: colors.slate }}
+  >
+    At Arlox, we believe even the<span className="font-black text-transparent bg-clip-text bg-emerald-500"> smallest tasks </span> deserve{" "}
+    
+      grace, beauty, quality, and effectiveness
+ 
+  </p>
+</div>
+
+</motion.div>
+
         </motion.div>
 
         {/* === PILLAR IMAGE (Floating) === */}
@@ -345,15 +392,58 @@ const NeumorphicProblemSection = () => {
                 drop-shadow-[0_40px_90px_rgba(20,30,55,0.45)]
               "
             />
+          
           </div>
+
         </motion.div>
+       <motion.div 
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ delay: 0.6, duration: 0.6 }}
+  whileHover={{ scale: 1.02 }}
+  className={`
+    p-6 sm:p-8
+    rounded-2xl sm:rounded-3xl
+    ${neuBg}
+    ${neuInset}
+    border-2
+    text-center
+  `}
+  style={{ borderColor: colors.amber }}
+>
+  <p
+    className="text-sm sm:text-base md:text-lg leading-relaxed font-medium max-w-3xl mx-auto"
+    style={{ color: colors.slate }}
+  >
+    Our mission is to make{" "}
+    <span className="font-black" style={{ color: colors.darkest }}>
+      India recognized worldwide
+    </span>{" "}
+    for exacting standards. <br/>
+    By redefining the benchmarks for{" "}
+    <span className="font-black" style={{ color: colors.darkest }}>
+      quality and customer satisfaction
+    </span>
+    , we aim to prove that{" "}
+    <span className="font-black text-transparent bg-clip-text bg-emerald-500">
+      “From India”
+    </span>{" "}
+    signifies impeccable craftsmanship, meticulous detail, and a relentless
+   quest for perfection.
+  </p>
+
+  
+</motion.div>
+
+
 
         {/* === CLOSING STATEMENT === */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mb-20"
+          className="mb-20 mt-20"
         >
           <div
             className="
